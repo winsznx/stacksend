@@ -53,6 +53,15 @@
       ((with-stx total-ustx))
       (try! (fold fold-stx-transfer recipients (ok true)))
     )
+ (begin
+      (print {
+        type: "stx-multisend",
+        sender: tx-sender,
+        recipients: count,
+        total-ustx: total-ustx
+      })
+      (ok true)
+    )
   )
 )
 
