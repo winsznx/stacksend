@@ -72,8 +72,10 @@
 }
 
 /* ============================================
-   Base Styles
+   Base Styles & Gaming Font Setup
    ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -90,14 +92,222 @@ body {
   padding: 0;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   min-height: 100vh;
 }
 
 /* ============================================
-   Utility Classes
+   Gaming Font Utilities
    ============================================ */
 
+.gaming-font {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+}
+
+.gaming-font-title {
+  font-family: 'Orbitron', 'Inter', sans-serif;
+  letter-spacing: 0.03em;
+  font-weight: 900;
+}
+
+/* ============================================
+   Grid Background Effect
+   ============================================ */
+
+.grid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.grid-background-light {
+  background-image: 
+    linear-gradient(0deg, transparent 24%, rgba(249, 115, 22, 0.08) 25%, rgba(249, 115, 22, 0.08) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.08) 75%, rgba(249, 115, 22, 0.08) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(249, 115, 22, 0.08) 25%, rgba(249, 115, 22, 0.08) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.08) 75%, rgba(249, 115, 22, 0.08) 76%, transparent 77%, transparent);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  animation: gridShift 30s linear infinite;
+}
+
+.grid-background-dark {
+  background-image: 
+    linear-gradient(0deg, transparent 24%, rgba(249, 115, 22, 0.12) 25%, rgba(249, 115, 22, 0.12) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.12) 75%, rgba(249, 115, 22, 0.12) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(249, 115, 22, 0.12) 25%, rgba(249, 115, 22, 0.12) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.12) 75%, rgba(249, 115, 22, 0.12) 76%, transparent 77%, transparent);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  animation: gridShift 30s linear infinite;
+}
+
+@keyframes gridShift {
+  0% {
+    background-position: 0 0, 25px 25px;
+  }
+  100% {
+    background-position: 50px 50px, 75px 75px;
+  }
+}
+
+/* ============================================
+   Glossy Card Effect
+   ============================================ */
+
+.glossy-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.glossy-card-light {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 244, 245, 0.95) 100%);
+  border: 1.5px solid rgba(249, 115, 22, 0.15);
+  backdrop-filter: blur(8px);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.glossy-card-dark {
+  background: linear-gradient(135deg, rgba(24, 24, 27, 0.9) 0%, rgba(39, 39, 42, 0.9) 100%);
+  border: 1.5px solid rgba(249, 115, 22, 0.2);
+  backdrop-filter: blur(8px);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glossy-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%);
+  animation: shine 4s infinite;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+.glossy-card:hover {
+  transform: translateY(-6px);
+}
+
+.glossy-card-light:hover {
+  border-color: rgba(249, 115, 22, 0.35);
+  box-shadow: 
+    0 12px 24px rgba(249, 115, 22, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.glossy-card-dark:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 
+    0 12px 24px rgba(249, 115, 22, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   Button Styles
+   ============================================ */
+
+.glow-button {
+  position: relative;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: 600;
+  padding: 0.875rem 1.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 
+    0 4px 15px rgba(249, 115, 22, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.glow-button:hover:not(:disabled) {
+  box-shadow: 
+    0 8px 30px rgba(249, 115, 22, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.glow-button:active:not(:disabled) {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.glow-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Secondary Button */
+.secondary-button {
+  position: relative;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  padding: 0.875rem 1.75rem;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.secondary-button-light {
+  background: linear-gradient(135deg, rgba(244, 244, 245, 0.95) 0%, rgba(229, 229, 231, 0.95) 100%);
+  border: 1.5px solid rgba(249, 115, 22, 0.2);
+  color: #18181b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.secondary-button-dark {
+  background: linear-gradient(135deg, rgba(39, 39, 42, 0.8) 0%, rgba(24, 24, 27, 0.8) 100%);
+  border: 1.5px solid rgba(249, 115, 22, 0.25);
+  color: #fafafa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.secondary-button:hover {
+  border-color: rgba(249, 115, 22, 0.5);
+  transform: translateY(-2px);
+}
+
+.secondary-button-light:hover {
+  box-shadow: 0 8px 16px rgba(249, 115, 22, 0.15);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(244, 244, 245, 0.95) 100%);
+}
+
+.secondary-button-dark:hover {
+  box-shadow: 0 8px 16px rgba(249, 115, 22, 0.25);
+  background: linear-gradient(135deg, rgba(52, 52, 55, 0.9) 0%, rgba(39, 39, 42, 0.9) 100%);
+}
+
+/* Utility Classes */
 .card {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -285,6 +495,12 @@ body {
 
   .btn-ghost {
     padding: 0.5rem;
+  }
+
+  .glow-button,
+  .secondary-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
   }
 
   /* Ensure minimum touch target size */
