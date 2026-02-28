@@ -6,10 +6,13 @@ import { Buffer } from 'buffer'
 globalThis.Buffer = Buffer
 
 import App from './App.tsx'
+import { AuthProvider } from './hooks/useAuth.ts'
 import './index.css' // Import Tailwind
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </React.StrictMode>,
 )
