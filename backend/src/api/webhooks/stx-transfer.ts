@@ -1,106 +1,108 @@
 import { Request, Response } from 'express';
 import { db } from '../../db/client.js';
 import { telegramService } from '../../services/telegram.js';
+import { config } from '../../config/env.js';
+import { isWebhookAuthorized } from '../../utils/security.js';
+
+function normalizeContractIdentifier(contractIdentifier: string): string {
+    return contractIdentifier.replace('::', '.');
+}
 
 export async function handleSTXTransferWebhook(req: Request, res: Response): Promise<void> {
     try {
-        const payload = req.body;
-
-        // Send immediate 200 OK to acknowledge receipt
-        res.status(200).json({ received: true });
-
-        // Extract network from predicate contract address since payload.chainhook.network is not reliable
-        const contractIdentifier = payload.chainhook?.predicate?.contract_identifier || '';
-        const network = contractIdentifier.startsWith('SP') ? 'mainnet' :
-            contractIdentifier.startsWith('ST') ? 'testnet' : 'unknown';
-
-        console.log('🔍 ===== STX WEBHOOK =====');
-        console.log('📥 STX Webhook received');
-        console.log(`🌐 Network detected from contract: ${network}`);
-        console.log(`📝 Contract: ${contractIdentifier}`);
-        console.log(`🔗 Chainhook UUID: ${payload.chainhook?.uuid}`);
-        console.log(`📛 Chainhook predicate: ${JSON.stringify(payload.chainhook?.predicate).slice(0, 100)}...`);
-
-        // Validate payload structure (but don't fail the request)
-        if (!payload?.apply || !Array.isArray(payload.apply)) {
-            console.warn('⚠️  Invalid payload structure');
+        if (!isWebhookAuthorized(req)) {
+            res.status(401).json({ error: 'Unauthorized webhook request' });
             return;
         }
 
+        const payload = req.body;
+        const contractIdentifier = normalizeContractIdentifier(payload.chainhook?.predicate?.contract_identifier || '');
+        const network = contractIdentifier.startsWith('SP') ? 'mainnet'
+            : contractIdentifier.startsWith('ST') ? 'testnet'
+                : 'unknown';
+        const expectedContracts = new Set([
+            normalizeContractIdentifier(config.contracts.mainnet),
+            normalizeContractIdentifier(config.contracts.testnet),
+        ]);
 
-        // Process each block from apply array
+        console.log('===== STX WEBHOOK =====');
+        console.log('STX webhook received');
+        console.log(`Network from contract: ${network}`);
+        console.log(`Contract: ${contractIdentifier}`);
+        console.log(`Chainhook UUID: ${payload.chainhook?.uuid}`);
+
+        if (!expectedContracts.has(contractIdentifier)) {
+            console.warn(`Unexpected contract identifier: ${contractIdentifier}`);
+            res.status(400).json({ error: 'Unexpected contract identifier' });
+            return;
+        }
+
+        if (!payload?.apply || !Array.isArray(payload.apply)) {
+            console.warn('Invalid payload structure');
+            res.status(400).json({ error: 'Invalid payload structure' });
+            return;
+        }
+
         for (const block of payload.apply) {
             const blockHeight = block.block_identifier?.index;
             const timestamp = block.timestamp;
-            const transactions = block.transactions || [];
+            const transactions = Array.isArray(block.transactions) ? block.transactions : [];
 
-            console.log(`📦 Block ${blockHeight}, ${transactions.length} transaction(s)`);
+            if (typeof blockHeight !== 'number' || typeof timestamp !== 'number') {
+                continue;
+            }
 
-            // Process each transaction
+            console.log(`Block ${blockHeight}, ${transactions.length} transaction(s)`);
+
             for (const tx of transactions) {
                 const txId = tx.transaction_identifier?.hash;
                 const success = tx.metadata?.success;
-                const operations = tx.operations || [];
+                const operations = Array.isArray(tx.operations) ? tx.operations : [];
 
-                console.log(`🔍 TX ${txId?.slice(0, 12)}... success=${success}`);
-
-                if (!success) {
-                    console.log('⚠️  Skipping failed transaction');
+                if (!txId || !success) {
                     continue;
                 }
 
-                // Check if this is a send-many-stx call by examining metadata.description
                 const description = tx.metadata?.description || '';
                 if (!description.includes('send-many-stx')) {
-                    console.log('⚠️  Not a send-many-stx transaction');
                     continue;
                 }
 
-                console.log('✅ Found send-many-stx call!');
-
-                // Extract sender from metadata
                 const senderAddress = tx.metadata?.sender;
                 if (!senderAddress) {
-                    console.log('❌ No sender address found');
                     continue;
                 }
 
-                // Parse recipients from operations (CREDIT operations)
                 const creditOps = operations.filter((op: any) => op.type === 'CREDIT');
-
-                console.log(`📊 Found ${creditOps.length} CREDIT operations`);
-
                 const recipients: Array<{ address: string; amount: number }> = [];
                 let totalAmount = 0;
 
-                // Extract recipients from CREDIT operations
                 for (const op of creditOps) {
                     const recipient = op.account?.address;
-                    const amount = parseInt(op.amount?.value || '0');
+                    const amount = Number.parseInt(op.amount?.value || '0', 10);
 
-                    // Filter out non-STX transfers and sender receiving change
-                    if (recipient && amount > 0 && op.amount?.currency?.symbol === 'STX' && recipient !== senderAddress) {
+                    if (
+                        recipient &&
+                        Number.isFinite(amount) &&
+                        amount > 0 &&
+                        op.amount?.currency?.symbol === 'STX' &&
+                        recipient !== senderAddress
+                    ) {
                         recipients.push({ address: recipient, amount });
                         totalAmount += amount;
                     }
                 }
 
                 if (recipients.length === 0) {
-                    console.log('⚠️  No valid recipients found');
                     continue;
                 }
 
-                console.log(`📋 Parsed ${recipients.length} recipient(s), total: ${totalAmount} µSTX`);
-
-                // Check if this transaction was already processed
                 const alreadyProcessed = await db.transferExists(txId);
                 if (alreadyProcessed) {
-                    console.log(`⏭️  Transaction ${txId.slice(0, 12)}... already processed, skipping`);
                     continue;
                 }
 
-                // Save transfer to database
-                const transferId = await db.insertTransfer({
+                const insertedTransferId = await db.insertTransfer({
                     tx_id: txId,
                     block_height: blockHeight,
                     timestamp,
@@ -111,17 +113,17 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
                     recipient_count: recipients.length,
                     network,
                 });
+                const transferId = insertedTransferId ?? await db.getTransferIdByTxId(txId);
 
-                console.log(`✅ Transfer saved with ID: ${transferId}`);
+                if (!transferId) {
+                    console.warn(`Unable to resolve transfer ID for ${txId}`);
+                    continue;
+                }
 
-                // Process each recipient
                 for (let i = 0; i < recipients.length; i++) {
                     const { address: recipientAddress, amount } = recipients[i];
-
-                    // Convert microSTX to STX
                     const amountInSTX = amount / 1_000_000;
 
-                    // Save recipient
                     const recipientId = await db.insertRecipient({
                         transfer_id: transferId,
                         recipient_address: recipientAddress,
@@ -130,13 +132,8 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
                         position_in_list: i,
                     });
 
-                    console.log(`💾 Recipient ${i + 1}: ${recipientAddress} - ${amountInSTX} STX`);
-
-                    // Check if user has Telegram linked
                     const user = await db.getUserByAddress(recipientAddress);
-
                     if (user?.telegram_chat_id && user.notification_enabled) {
-                        // Send Telegram notification
                         const messageId = await telegramService.sendTransferNotification({
                             chatId: user.telegram_chat_id,
                             recipientAddress,
@@ -147,7 +144,6 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
                             network,
                         });
 
-                        // Log notification
                         await db.insertNotification({
                             recipient_id: recipientId,
                             telegram_chat_id: user.telegram_chat_id,
@@ -156,17 +152,11 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
                             telegram_message_id: messageId,
                         });
 
-                        // Mark as sent
                         if (messageId) {
                             await db.markNotificationSent(recipientId);
                         }
-
-                        console.log(`📱 Notification ${messageId ? 'sent' : 'failed'} to ${user.telegram_chat_id}`);
-                    } else {
-                        console.log(`ℹ️  No Telegram linked for ${recipientAddress}`);
                     }
 
-                    // Add to activity feed
                     await db.insertActivityFeed({
                         user_address: recipientAddress,
                         event_type: 'received',
@@ -180,10 +170,9 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
                     });
                 }
 
-                // Send notification to sender
                 const senderUser = await db.getUserByAddress(senderAddress);
                 if (senderUser?.telegram_chat_id && senderUser.notification_enabled) {
-                    const senderMessageId = await telegramService.sendSenderNotification({
+                    await telegramService.sendSenderNotification({
                         chatId: senderUser.telegram_chat_id,
                         senderAddress,
                         recipientCount: recipients.length,
@@ -191,13 +180,8 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
                         txId,
                         network,
                     });
-
-                    console.log(`📱 Sender notification ${senderMessageId ? 'sent' : 'failed'} to ${senderUser.telegram_chat_id}`);
-                } else {
-                    console.log(`ℹ️  No Telegram linked for sender ${senderAddress}`);
                 }
 
-                // Add sender activity
                 await db.insertActivityFeed({
                     user_address: senderAddress,
                     event_type: 'sent',
@@ -212,13 +196,13 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
             }
         }
 
-
-        console.log('🔍 ===== END WEBHOOK =====');
-        // Response already sent at the beginning
-
+        console.log('===== END WEBHOOK =====');
+        res.status(200).json({ received: true });
     } catch (error: any) {
-        console.error('❌ Webhook error:', error);
+        console.error('Webhook error:', error);
         console.error('Stack:', error.stack);
-        // Don't send response - already sent at the beginning
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Failed to process webhook' });
+        }
     }
 }
