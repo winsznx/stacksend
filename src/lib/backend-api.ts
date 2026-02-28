@@ -2,9 +2,8 @@
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 
 export interface User {
-    id: number;
     wallet_address: string;
-    telegram_chat_id: number | null;
+    telegram_linked: boolean;
     telegram_username: string | null;
     notification_enabled: boolean;
     created_at: string;
