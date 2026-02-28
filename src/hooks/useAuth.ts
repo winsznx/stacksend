@@ -1,11 +1,11 @@
 import { connect, disconnect, isConnected, getLocalStorage, request } from '@stacks/connect';
 import { createNetwork } from '@stacks/network';
 import type { StacksNetwork } from '@stacks/network';
-import { useState, useEffect, useCallback } from 'react';
+import { createContext, createElement, useContext, useState, useEffect, useCallback } from 'react';
+import type { ReactNode } from 'react';
 import { reownModal, isReownConfigured } from '../config/reown-config';
 import { useAppKitAccount, useAppKitProvider } from '@reown/appkit/react';
 
-// Types for the stored address data
 interface StoredAddresses {
     addresses?: {
         stx?: Array<{ address: string; publicKey?: string }>;
@@ -23,7 +23,31 @@ interface AuthState {
     walletType: WalletType;
 }
 
-export const useAuth = () => {
+interface AuthContextValue {
+    isAuthenticated: boolean;
+    stxAddress: string | null;
+    btcAddress: string | null;
+    publicKey: string | null;
+    walletType: WalletType;
+    loading: boolean;
+    userData: {
+        stxAddress: string | null;
+        btcAddress: string | null;
+        publicKey: string | null;
+    } | null;
+    authenticate: () => Promise<unknown>;
+    connectBitcoin: () => Promise<void>;
+    disconnect: () => Promise<void>;
+    getStxAddress: () => Promise<unknown>;
+    network: StacksNetwork;
+    setNetwork: (network: StacksNetwork) => void;
+    isReownConfigured: boolean;
+    walletProvider: unknown;
+}
+
+const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+
+function useProvideAuth(): AuthContextValue {
     const [authState, setAuthState] = useState<AuthState>({
         isAuthenticated: false,
         stxAddress: null,
@@ -34,14 +58,11 @@ export const useAuth = () => {
     const [network, setNetwork] = useState<StacksNetwork>(createNetwork('mainnet'));
     const [loading, setLoading] = useState(false);
 
-    // Reown AppKit hooks for Bitcoin wallet
     const { address: reownAddress, isConnected: isReownConnected } = useAppKitAccount();
     const { walletProvider } = useAppKitProvider('bip122');
 
-    // Check initial connection state on mount
     useEffect(() => {
         const checkConnection = () => {
-            // Check Stacks connection
             if (isConnected()) {
                 const data = getLocalStorage() as StoredAddresses | null;
                 if (data?.addresses?.stx?.[0]) {
@@ -54,8 +75,6 @@ export const useAuth = () => {
                         walletType: 'stacks',
                     });
 
-                    // Auto-detect network from address prefix
-                    // ST = testnet, SP = mainnet
                     if (address.startsWith('ST')) {
                         setNetwork(createNetwork('testnet'));
                     } else if (address.startsWith('SP')) {
@@ -67,7 +86,6 @@ export const useAuth = () => {
         checkConnection();
     }, []);
 
-    // Monitor Reown Bitcoin wallet connection
     useEffect(() => {
         if (isReownConnected && reownAddress) {
             setAuthState(prev => ({
@@ -77,7 +95,6 @@ export const useAuth = () => {
                 walletType: 'bitcoin',
             }));
         } else if (!isReownConnected && authState.walletType === 'bitcoin') {
-            // Bitcoin wallet disconnected
             setAuthState({
                 isAuthenticated: false,
                 stxAddress: null,
@@ -88,14 +105,10 @@ export const useAuth = () => {
         }
     }, [isReownConnected, reownAddress, authState.walletType]);
 
-    // Connect Stacks wallet using @stacks/connect API
     const authenticate = useCallback(async () => {
         setLoading(true);
         try {
-            // The connect() function opens wallet selector and requests addresses
             const response = await connect();
-
-            // After connect, get the stored data
             const data = getLocalStorage() as StoredAddresses | null;
 
             if (data?.addresses?.stx?.[0]) {
@@ -108,7 +121,6 @@ export const useAuth = () => {
                     walletType: 'stacks',
                 });
 
-                // Auto-detect network from address prefix
                 if (address.startsWith('ST')) {
                     setNetwork(createNetwork('testnet'));
                 } else if (address.startsWith('SP')) {
@@ -125,7 +137,6 @@ export const useAuth = () => {
         }
     }, []);
 
-    // Connect Bitcoin wallet using Reown AppKit
     const connectBitcoin = useCallback(async () => {
         if (!isReownConfigured()) {
             throw new Error('Reown is not configured. Please add VITE_REOWN_PROJECT_ID to your .env file.');
@@ -133,9 +144,7 @@ export const useAuth = () => {
 
         setLoading(true);
         try {
-            // Open Reown modal for Bitcoin wallet connection
             await reownModal?.open();
-            // State will be updated by the useEffect monitoring isReownConnected
         } catch (error) {
             console.error('Failed to connect Bitcoin wallet:', error);
             throw error;
@@ -144,9 +153,7 @@ export const useAuth = () => {
         }
     }, []);
 
-    // Disconnect wallet
     const signOut = useCallback(async () => {
-        // Disconnect based on wallet type
         if (authState.walletType === 'stacks') {
             disconnect();
         } else if (authState.walletType === 'bitcoin') {
@@ -162,11 +169,9 @@ export const useAuth = () => {
         });
     }, [authState.walletType]);
 
-    // Helper to get current STX address
     const getStxAddress = useCallback(async () => {
         try {
-            const response = await request('stx_getAddresses');
-            return response;
+            return await request('stx_getAddresses');
         } catch (error) {
             console.error('Failed to get STX addresses:', error);
             throw error;
@@ -174,33 +179,37 @@ export const useAuth = () => {
     }, []);
 
     return {
-        // Auth state
         isAuthenticated: authState.isAuthenticated,
         stxAddress: authState.stxAddress,
         btcAddress: authState.btcAddress,
         publicKey: authState.publicKey,
         walletType: authState.walletType,
         loading,
-
-        // For backwards compatibility with existing code
         userData: authState.isAuthenticated ? {
             stxAddress: authState.stxAddress,
             btcAddress: authState.btcAddress,
             publicKey: authState.publicKey,
         } : null,
-
-        // Actions
-        authenticate, // Stacks wallet connection
-        connectBitcoin, // Bitcoin wallet connection via Reown
+        authenticate,
+        connectBitcoin,
         disconnect: signOut,
         getStxAddress,
-
-        // Network
         network,
         setNetwork,
-
-        // Reown helpers
         isReownConfigured: isReownConfigured(),
-        walletProvider, // Bitcoin wallet provider from Reown
+        walletProvider,
     };
-};
+}
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+    const auth = useProvideAuth();
+    return createElement(AuthContext.Provider, { value: auth }, children);
+}
+
+export function useAuth(): AuthContextValue {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within AuthProvider');
+    }
+    return context;
+}
