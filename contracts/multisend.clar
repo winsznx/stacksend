@@ -132,17 +132,21 @@
       (r9 (element-at? recipients u9))
     )
     ;; Transfer to each recipient if present
-    (and
-      (match r0 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r1 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r2 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r3 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r4 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r5 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r6 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r7 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r8 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
-      (match r9 recipient (is-ok (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+    ;; Any transfer err aborts the full function through try!.
+    (asserts!
+      (and
+        (match r0 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r1 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r2 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r3 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r4 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r5 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r6 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r7 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r8 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+        (match r9 recipient (try! (contract-call? token transfer (get amount recipient) tx-sender (get to recipient) none)) true)
+      )
+      ERR_TRANSFER_FAILED
     )
     (ok true)
   )

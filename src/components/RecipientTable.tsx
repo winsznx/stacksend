@@ -11,10 +11,20 @@ import { PasteModal } from './PasteModal';
 import { BulkAmountModal } from './BulkAmountModal';
 import type { AmountRange } from './BulkAmountModal';
 
+const FT_MAX_RECIPIENTS = 10;
+
 const schema = z.object({
     mode: z.enum(['stx', 'ft']),
     tokenContract: z.string().optional(),
     recipients: z.array(z.object({ to: z.string(), amount: z.string() })).min(1).max(50),
+}).superRefine((value, context) => {
+    if (value.mode === 'ft' && value.recipients.length > FT_MAX_RECIPIENTS) {
+        context.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ['recipients'],
+            message: `FT mode supports up to ${FT_MAX_RECIPIENTS} recipients per transaction.`,
+        });
+    }
 });
 
 type FormData = z.infer<typeof schema>;
@@ -37,10 +47,13 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
     const { fields, append, remove } = useFieldArray({ control, name: 'recipients' });
     const mode = watch('mode');
     const recipients = watch('recipients');
+    const modeMaxRecipients = mode === 'ft'
+        ? Math.min(maxRecipients, FT_MAX_RECIPIENTS)
+        : maxRecipients;
     const total = recipients.reduce((sum, r) => sum + Number(r.amount || 0), 0);
 
     const onPaste = (addresses: string[]) => {
-        const remaining = maxRecipients - fields.length;
+        const remaining = modeMaxRecipients - fields.length;
         if (remaining <= 0) return;
 
         const newRecips = addresses.slice(0, remaining).map(addr => ({ to: addr, amount: '' }));
@@ -75,6 +88,11 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
 
         if (!isAuthenticated || !stxAddress) {
             setStatus("Error: Wallet not connected");
+            return;
+        }
+
+        if (data.recipients.length > modeMaxRecipients) {
+            setStatus(`Error: ${mode === 'ft' ? `FT mode supports up to ${FT_MAX_RECIPIENTS}` : modeMaxRecipients} recipients.`);
             return;
         }
 
@@ -241,14 +259,20 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                     type="button"
                     onClick={() => append({ to: '', amount: '' })}
                     className="btn-secondary flex-1 sm:flex-initial justify-center"
-                    disabled={fields.length >= maxRecipients}
+                    disabled={fields.length >= modeMaxRecipients}
                 >
                     <Plus className="w-4 h-4" />
                     <span>Add Recipient</span>
                 </button>
-                <PasteModal onPaste={onPaste} max={maxRecipients} />
+                <PasteModal onPaste={onPaste} max={modeMaxRecipients} />
                 <BulkAmountModal onApply={onBulkAmount} recipientCount={fields.length} />
             </div>
+
+            {mode === 'ft' && (
+                <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
+                    FT contract limit: up to {FT_MAX_RECIPIENTS} recipients per transaction.
+                </p>
+            )}
 
             {/* Recipients Table */}
             <div className="table-wrapper mb-6">
@@ -337,7 +361,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                 style={{ backgroundColor: 'var(--bg-tertiary)' }}
             >
                 <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                    {fields.length} / {maxRecipients} recipients
+                    {fields.length} / {modeMaxRecipients} recipients
                 </span>
                 <span className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
                     Total: {total.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 6 })} {mode === 'stx' ? 'STX' : 'tokens'}
@@ -347,7 +371,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             {/* Submit Button */}
             <button
                 type="submit"
-                disabled={fields.length === 0 || fields.length > maxRecipients || isSubmitting}
+                disabled={fields.length === 0 || fields.length > modeMaxRecipients || isSubmitting}
                 className="btn-primary w-full justify-center text-lg py-4"
             >
                 {isSubmitting ? (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Bell, BellOff, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { backendAPI } from '../lib/backend-api';
 
 interface TelegramLinkWidgetProps {
@@ -8,8 +8,6 @@ interface TelegramLinkWidgetProps {
 
 export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
     const [user, setUser] = useState<any>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (walletAddress) {
@@ -28,27 +26,11 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
         }
     };
 
-    const toggleNotifications = async () => {
-        if (!walletAddress || !user) return;
-
-        setLoading(true);
-        setError(null);
-
-        try {
-            await backendAPI.setNotificationEnabled(walletAddress, !user.notification_enabled);
-            await loadUser();
-        } catch (err: any) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     if (!walletAddress) {
         return null;
     }
 
-    const isTelegramLinked = user?.telegram_chat_id;
+    const isTelegramLinked = Boolean(user?.telegram_linked);
 
     return (
         <div className="card p-6 shadow-xl">
@@ -57,31 +39,7 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                     <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Telegram Notifications</h3>
                     <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Get instant alerts when you receive transfers</p>
                 </div>
-                {isTelegramLinked && (
-                    <button
-                        onClick={toggleNotifications}
-                        disabled={loading}
-                        className="p-2 rounded-lg transition-all"
-                        style={{
-                            backgroundColor: user.notification_enabled ? 'var(--accent-orange-light)' : 'var(--bg-tertiary)',
-                            color: user.notification_enabled ? 'var(--accent-orange)' : 'var(--text-muted)'
-                        }}
-                        title={user.notification_enabled ? 'Notifications enabled' : 'Notifications disabled'}
-                    >
-                        {user.notification_enabled ? (
-                            <Bell className="w-5 h-5" />
-                        ) : (
-                            <BellOff className="w-5 h-5" />
-                        )}
-                    </button>
-                )}
             </div>
-
-            {error && (
-                <div className="mb-4 p-3 rounded-lg text-sm" style={{ backgroundColor: 'var(--error-light)', border: '1px solid var(--error)', color: 'var(--error)' }}>
-                    {error}
-                </div>
-            )}
 
             {isTelegramLinked ? (
                 <div className="space-y-4">
@@ -96,8 +54,8 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                             )}
                         </div>
                         <div className="text-right">
-                            <span className="text-sm" style={{ color: user.notification_enabled ? 'var(--accent-orange)' : 'var(--text-muted)' }}>
-                                {user.notification_enabled ? 'Notifications ON' : 'Notifications OFF'}
+                            <span className="text-sm" style={{ color: 'var(--accent-orange)' }}>
+                                Notifications ON
                             </span>
                         </div>
                     </div>
@@ -108,6 +66,9 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                         </p>
                         <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                             Connected on {new Date(user.created_at).toLocaleDateString()}
+                        </p>
+                        <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
+                            Manage notifications in Telegram using <code>/enable</code> and <code>/disable</code>.
                         </p>
                     </div>
                 </div>

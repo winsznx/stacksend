@@ -32,7 +32,12 @@ Required environment variables:
 - `HIRO_API_KEY` - Your Hiro Platform API key
 - `TELEGRAM_BOT_TOKEN` - From BotFather
 - `BACKEND_URL` - Your deployed backend URL
-- `MULTISEND_CONTRACT_MAINNET` / `MULTISEND_CONTRACT_TESTNET`
+- `MULTISEND_CONTRACT_MAINNET` / `MULTISEND_CONTRACT_TESTNET` (dot format: `SP....contract-name`)
+- `ALLOWED_ORIGINS` - Comma-separated frontend origins for CORS
+- `WEBHOOK_SECRET` - Shared secret for chainhook webhook authentication
+- `TELEGRAM_LINK_API_SECRET` - Secret required for `POST /api/telegram/link`
+
+Production safety: `WEBHOOK_SECRET` is required when `NODE_ENV=production`.
 
 ### 3. Set Up Database
 
@@ -89,6 +94,7 @@ GET /health
 POST /api/webhooks/stx-transfer
 POST /api/webhooks/ft-transfer
 ```
+If `WEBHOOK_SECRET` is configured, requests must include a matching `secret` query parameter (added automatically by `npm run register-chainhooks`) or `x-webhook-secret` header.
 
 ### User Management
 ```
@@ -97,6 +103,8 @@ GET /api/users/:address
 GET /api/users/:address/activity
 POST /api/users/:address/notifications
 ```
+`POST /api/telegram/link` is disabled unless `TELEGRAM_LINK_API_SECRET` is configured, and requires `x-telegram-link-secret`.
+`POST /api/users/:address/notifications` also requires `x-telegram-link-secret`.
 
 ### Transfers
 ```

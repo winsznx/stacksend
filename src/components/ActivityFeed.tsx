@@ -66,6 +66,13 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
         return `${address.slice(0, 6)}...${address.slice(-4)}`;
     };
 
+    const getCounterpartyAddress = (event: ActivityEvent) => {
+        if (event.event_type === 'received') {
+            return typeof event.metadata?.from === 'string' ? event.metadata.from : event.sender_address;
+        }
+        return event.sender_address;
+    };
+
     const formatDate = (timestamp: string) => {
         const date = new Date(timestamp);
         const now = new Date();
@@ -172,7 +179,9 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
                                             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                                                 {event.event_type === 'received' ? 'From' : 'To'}{' '}
                                                 <code className="px-1.5 py-0.5 rounded text-xs" style={{ backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
-                                                    {formatAddress(event.sender_address)}
+                                                    {event.event_type === 'sent' && event.metadata?.recipient_count
+                                                        ? `${event.metadata.recipient_count} recipient${event.metadata.recipient_count > 1 ? 's' : ''}`
+                                                        : formatAddress(getCounterpartyAddress(event))}
                                                 </code>
                                             </p>
                                             {event.event_type === 'sent' && event.metadata?.recipient_count && (

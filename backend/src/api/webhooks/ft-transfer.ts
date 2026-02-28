@@ -1,103 +1,104 @@
 import { Request, Response } from 'express';
 import { db } from '../../db/client.js';
 import { telegramService } from '../../services/telegram.js';
+import { config } from '../../config/env.js';
+import { isWebhookAuthorized } from '../../utils/security.js';
+
+function normalizeContractIdentifier(contractIdentifier: string): string {
+    return contractIdentifier.replace('::', '.');
+}
 
 export async function handleFTTransferWebhook(req: Request, res: Response): Promise<void> {
     try {
-        const payload = req.body;
-
-        // Send immediate 200 OK to acknowledge receipt
-        res.status(200).json({ received: true });
-
-        // Extract network from predicate contract address since payload.chainhook.network is not reliable
-        const contractIdentifier = payload.chainhook?.predicate?.contract_identifier || '';
-        const network = contractIdentifier.startsWith('SP') ? 'mainnet' :
-            contractIdentifier.startsWith('ST') ? 'testnet' : 'unknown';
-
-        console.log('🔍 ===== FT WEBHOOK =====');
-        console.log('📥 FT Webhook received');
-        console.log(`🌐 Network detected from contract: ${network}`);
-
-
-        // Validate payload structure (but don't fail the request)
-        if (!payload?.apply || !Array.isArray(payload.apply)) {
-            console.warn('⚠️  Invalid payload structure');
+        if (!isWebhookAuthorized(req)) {
+            res.status(401).json({ error: 'Unauthorized webhook request' });
             return;
         }
 
-        // Process each block
+        const payload = req.body;
+        const contractIdentifier = normalizeContractIdentifier(payload.chainhook?.predicate?.contract_identifier || '');
+        const network = contractIdentifier.startsWith('SP') ? 'mainnet'
+            : contractIdentifier.startsWith('ST') ? 'testnet'
+                : 'unknown';
+        const expectedContracts = new Set([
+            normalizeContractIdentifier(config.contracts.mainnet),
+            normalizeContractIdentifier(config.contracts.testnet),
+        ]);
+
+        console.log('===== FT WEBHOOK =====');
+        console.log('FT webhook received');
+        console.log(`Network from contract: ${network}`);
+        console.log(`Contract: ${contractIdentifier}`);
+
+        if (!expectedContracts.has(contractIdentifier)) {
+            console.warn(`Unexpected contract identifier: ${contractIdentifier}`);
+            res.status(400).json({ error: 'Unexpected contract identifier' });
+            return;
+        }
+
+        if (!payload?.apply || !Array.isArray(payload.apply)) {
+            console.warn('Invalid payload structure');
+            res.status(400).json({ error: 'Invalid payload structure' });
+            return;
+        }
+
         for (const block of payload.apply) {
             const blockHeight = block.block_identifier?.index;
             const timestamp = block.timestamp;
-            const transactions = block.transactions || [];
+            const transactions = Array.isArray(block.transactions) ? block.transactions : [];
 
-            console.log(`📦 Block ${blockHeight}, ${transactions.length} transaction(s)`);
+            if (typeof blockHeight !== 'number' || typeof timestamp !== 'number') {
+                continue;
+            }
 
             for (const tx of transactions) {
                 const txId = tx.transaction_identifier?.hash;
                 const success = tx.metadata?.success;
-                const operations = tx.operations || [];
+                const operations = Array.isArray(tx.operations) ? tx.operations : [];
 
-                console.log(`🔍 TX ${txId?.slice(0, 12)}... success=${success}`);
-
-                if (!success) {
-                    console.log('⚠️  Skipping failed transaction');
+                if (!txId || !success) {
                     continue;
                 }
 
-                // Find contract call operation for send-many-ft
                 const contractCallOp = operations.find(
                     (op: any) => op.type === 'CONTRACT_CALL' && op.metadata?.function_name === 'send-many-ft'
                 );
 
                 if (!contractCallOp) {
-                    console.log('⚠️  No send-many-ft contract call found');
                     continue;
                 }
 
                 const senderAddress = contractCallOp.account?.address || tx.metadata?.sender;
+                if (!senderAddress) {
+                    continue;
+                }
 
-                // Extract function arguments
-                // For FT: first arg is token contract, second is recipients list
                 const functionArgs = contractCallOp.metadata?.function_args_decoded || contractCallOp.metadata?.function_args;
-
-                if (!functionArgs || !Array.isArray(functionArgs) || functionArgs.length < 2) {
-                    console.log('⚠️  Missing or invalid function arguments');
+                if (!Array.isArray(functionArgs) || functionArgs.length < 2) {
                     continue;
                 }
 
-                const tokenContract = functionArgs[0]; // Token contract principal
-                const recipientsList = functionArgs[1]; // Recipients list
-
+                const tokenContract = String(functionArgs[0] || '');
+                const recipientsList = functionArgs[1];
                 if (!Array.isArray(recipientsList)) {
-                    console.log('⚠️  Recipients is not an array');
                     continue;
                 }
 
-                console.log(`📋 Token: ${tokenContract}`);
-                console.log(`📋 Found ${recipientsList.length} recipient(s)`);
-
-                // Extract token symbol from contract (simplified - assumes last part is name)
-                const tokenSymbol = tokenContract.includes('Wrapped-Bitcoin') ? 'sBTC'
+                const tokenSymbol = tokenContract.includes('Wrapped-Bitcoin')
+                    ? 'sBTC'
                     : tokenContract.split('.').pop() || 'FT';
-
-                // Determine decimals (8 for sBTC, 6 for most others)
                 const decimals = tokenSymbol === 'sBTC' ? 8 : 6;
 
-                // Calculate total amount
                 const totalAmount = recipientsList.reduce((sum: number, r: any) => {
-                    return sum + (typeof r.amount === 'number' ? r.amount : parseInt(r.amount || '0'));
+                    return sum + (typeof r.amount === 'number' ? r.amount : Number.parseInt(r.amount || '0', 10));
                 }, 0);
 
-                // Check if this transaction was already processed
                 const alreadyProcessed = await db.transferExists(txId);
                 if (alreadyProcessed) {
-                    console.log(`⏭️  Transaction ${txId.slice(0, 12)}... already processed, skipping`);
                     continue;
                 }
 
-                // Save transfer
-                const transferId = await db.insertTransfer({
+                const insertedTransferId = await db.insertTransfer({
                     tx_id: txId,
                     block_height: blockHeight,
                     timestamp,
@@ -108,19 +109,26 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
                     recipient_count: recipientsList.length,
                     network,
                 });
+                const transferId = insertedTransferId ?? await db.getTransferIdByTxId(txId);
 
-                console.log(`✅ Transfer saved with ID: ${transferId}`);
+                if (!transferId) {
+                    console.warn(`Unable to resolve transfer ID for ${txId}`);
+                    continue;
+                }
 
-                // Process each recipient
                 for (let i = 0; i < recipientsList.length; i++) {
                     const recipient = recipientsList[i];
                     const recipientAddress = recipient.to;
-                    const amount = typeof recipient.amount === 'number' ? recipient.amount : parseInt(recipient.amount || '0');
+                    const amount = typeof recipient.amount === 'number'
+                        ? recipient.amount
+                        : Number.parseInt(recipient.amount || '0', 10);
 
-                    // Convert to human-readable amount
+                    if (!recipientAddress || !Number.isFinite(amount) || amount <= 0) {
+                        continue;
+                    }
+
                     const amountInTokens = amount / Math.pow(10, decimals);
 
-                    // Save recipient
                     const recipientId = await db.insertRecipient({
                         transfer_id: transferId,
                         recipient_address: recipientAddress,
@@ -129,13 +137,8 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
                         position_in_list: i,
                     });
 
-                    console.log(`💾 Recipient ${i + 1}: ${recipientAddress} - ${amountInTokens} ${tokenSymbol}`);
-
-                    // Check if user has Telegram linked
                     const user = await db.getUserByAddress(recipientAddress);
-
                     if (user?.telegram_chat_id && user.notification_enabled) {
-                        // Send Telegram notification
                         const messageId = await telegramService.sendTransferNotification({
                             chatId: user.telegram_chat_id,
                             recipientAddress,
@@ -146,7 +149,6 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
                             network,
                         });
 
-                        // Log notification
                         await db.insertNotification({
                             recipient_id: recipientId,
                             telegram_chat_id: user.telegram_chat_id,
@@ -155,17 +157,11 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
                             telegram_message_id: messageId,
                         });
 
-                        // Mark as sent
                         if (messageId) {
                             await db.markNotificationSent(recipientId);
                         }
-
-                        console.log(`📱 Notification ${messageId ? 'sent' : 'failed'} to ${user.telegram_chat_id}`);
-                    } else {
-                        console.log(`ℹ️  No Telegram linked for ${recipientAddress}`);
                     }
 
-                    // Add to activity feed
                     await db.insertActivityFeed({
                         user_address: recipientAddress,
                         event_type: 'received',
@@ -180,7 +176,6 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
                     });
                 }
 
-                // Add sender activity
                 await db.insertActivityFeed({
                     user_address: senderAddress,
                     event_type: 'sent',
@@ -196,13 +191,13 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
             }
         }
 
-
-        console.log('🔍 ===== END WEBHOOK =====');
-        // Response already sent at the beginning
-
+        console.log('===== END WEBHOOK =====');
+        res.status(200).json({ received: true });
     } catch (error: any) {
-        console.error('❌ Webhook error:', error);
+        console.error('Webhook error:', error);
         console.error('Stack:', error.stack);
-        // Don't send response - already sent at the beginning
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Failed to process webhook' });
+        }
     }
 }

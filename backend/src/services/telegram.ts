@@ -15,6 +15,10 @@ class TelegramService {
         console.log('✅ Telegram bot initialized with polling');
     }
 
+    private escapeMarkdown(text: string): string {
+        return text.replace(/([_*`\[])/g, '\\$1');
+    }
+
     private setupCommands() {
         // Handle /start command (with optional wallet address parameter)
         this.bot.onText(/\/start(.*)/, async (msg, match) => {
@@ -109,17 +113,21 @@ class TelegramService {
         network: string;
     }): Promise<number | null> {
         const { chatId, recipientAddress, amount, tokenSymbol, txId, senderAddress, network } = params;
+        const safeAmount = this.escapeMarkdown(amount);
+        const safeTokenSymbol = this.escapeMarkdown(tokenSymbol);
+        const safeRecipient = this.escapeMarkdown(`${recipientAddress.slice(0, 8)}...${recipientAddress.slice(-6)}`);
+        const safeSender = this.escapeMarkdown(`${senderAddress.slice(0, 8)}...${senderAddress.slice(-6)}`);
 
         const explorerUrl = network === 'mainnet'
             ? `https://explorer.hiro.so/txid/${txId}`
             : `https://explorer.hiro.so/txid/${txId}?chain=testnet`;
 
         const message = `
-🎉 *You received ${amount} ${tokenSymbol}!*
+🎉 *You received ${safeAmount} ${safeTokenSymbol}!*
 
-💰 *Amount:* ${amount} ${tokenSymbol}
-📬 *To:* \`${recipientAddress.slice(0, 8)}...${recipientAddress.slice(-6)}\`
-👤 *From:* \`${senderAddress.slice(0, 8)}...${senderAddress.slice(-6)}\`
+💰 *Amount:* ${safeAmount} ${safeTokenSymbol}
+📬 *To:* \`${safeRecipient}\`
+👤 *From:* \`${safeSender}\`
 🔗 [View Transaction](${explorerUrl})
     `.trim();
 
@@ -148,6 +156,7 @@ class TelegramService {
         network: string;
     }): Promise<number | null> {
         const { chatId, senderAddress, recipientCount, totalAmount, txId, network } = params;
+        const safeSender = this.escapeMarkdown(`${senderAddress.slice(0, 8)}...${senderAddress.slice(-6)}`);
 
         const explorerUrl = network === 'mainnet'
             ? `https://explorer.hiro.so/txid/${txId}`
@@ -158,7 +167,7 @@ class TelegramService {
 
 💰 *Total Amount:* ${totalAmount} STX
 👥 *Recipients:* ${recipientCount}
-📬 *From:* \`${senderAddress.slice(0, 8)}...${senderAddress.slice(-6)}\`
+📬 *From:* \`${safeSender}\`
 🔗 [View Transaction](${explorerUrl})
     `.trim();
 
@@ -179,11 +188,12 @@ class TelegramService {
      * Send welcome message when user links their wallet
      */
     async sendWelcomeMessage(chatId: number, walletAddress: string): Promise<void> {
+        const safeWalletAddress = this.escapeMarkdown(walletAddress);
         const message = `
 👋 *Welcome to StackSend Notifications!*
 
 Your wallet has been linked:
-\`${walletAddress}\`
+\`${safeWalletAddress}\`
 
 You'll receive instant notifications whenever you receive STX or fungible tokens via StackSend.
 
@@ -221,10 +231,11 @@ You'll receive instant notifications whenever you receive STX or fungible tokens
      */
     async sendStatusMessage(chatId: number, walletAddress: string, enabled: boolean): Promise<void> {
         const status = enabled ? '✅ Enabled' : '🔕 Disabled';
+        const safeWalletAddress = this.escapeMarkdown(walletAddress);
         const message = `
 📊 *Notification Status*
 
-Wallet: \`${walletAddress}\`
+Wallet: \`${safeWalletAddress}\`
 Status: ${status}
 
 ${enabled ? 'You will receive notifications when you receive STX or fungible tokens.' : 'Notifications are currently disabled. Use /enable to turn them back on.'}

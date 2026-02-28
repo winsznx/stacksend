@@ -29,9 +29,9 @@ export const PrincipalSchema = z.string().refine(
 export const AmountSchema = z.string().refine(
   (val) => {
     const num = Number(val);
-    return !isNaN(num) && num > 0 && Number.isInteger(num);
+    return !isNaN(num) && num > 0;
   },
-  { message: 'Amount must be a positive integer.' }
+  { message: 'Amount must be a positive number.' }
 );
 
 // Parse addresses from pasted input (newline or comma separated)

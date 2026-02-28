@@ -1,6 +1,15 @@
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 import { config } from '../config/env.js';
 
+function withWebhookSecret(path: string): string {
+    const base = `${config.server.url}${path}`;
+    if (!config.webhooks.secret) {
+        return base;
+    }
+    const secret = encodeURIComponent(config.webhooks.secret);
+    return `${base}?secret=${secret}`;
+}
+
 /**
  * Register STX transfer chainhook
  */
@@ -30,7 +39,7 @@ export async function registerSTXTransferChainhook(network: 'mainnet' | 'testnet
         },
         action: {
             type: 'http_post' as const,
-            url: `${config.server.url}/api/webhooks/stx-transfer`,
+            url: withWebhookSecret('/api/webhooks/stx-transfer'),
         },
         options: {
             decode_clarity_values: true,
@@ -77,7 +86,7 @@ export async function registerFTTransferChainhook(network: 'mainnet' | 'testnet'
         },
         action: {
             type: 'http_post' as const,
-            url: `${config.server.url}/api/webhooks/ft-transfer`,
+            url: withWebhookSecret('/api/webhooks/ft-transfer'),
         },
         options: {
             decode_clarity_values: true,
