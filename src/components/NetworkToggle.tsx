@@ -5,7 +5,7 @@ import { Globe, TestTube, AlertCircle } from 'lucide-react';
 
 export const NetworkToggle: React.FC = () => {
     const { setNetwork, network } = useAuth();
-    const [isMainnet, setIsMainnet] = useState(network?.chainId !== 2147483648);
+    const isMainnet = network?.chainId !== 2147483648;
     const [showAlert, setShowAlert] = useState(false);
 
     const toggle = () => {
@@ -15,7 +15,6 @@ export const NetworkToggle: React.FC = () => {
         // Update local state
         const newNetwork = createNetwork(targetNetwork);
         setNetwork(newNetwork);
-        setIsMainnet(newIsMainnet);
 
         // Show alert to remind user to switch in their wallet
         setShowAlert(true);
