@@ -113,6 +113,12 @@ class DatabaseClient {
         return result.rows.length > 0;
     }
 
+    async getTransferIdByTxId(txId: string): Promise<number | null> {
+        const query = 'SELECT id FROM transfers WHERE tx_id = $1';
+        const result = await this.pool.query(query, [txId]);
+        return result.rows[0]?.id ?? null;
+    }
+
     // Recipient methods
     async insertRecipient(params: {
         transfer_id: number;
