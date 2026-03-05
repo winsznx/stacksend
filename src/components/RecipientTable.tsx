@@ -6,17 +6,21 @@ import { Plus, Trash2, Send, Loader2, Coins, DollarSign } from 'lucide-react';
 import { request } from '@stacks/connect';
 import { Cl, Pc } from '@stacks/transactions';
 import { useAuth } from '../hooks/useAuth';
-import { validateRecipient } from '../utils/validation';
+import { StandardPrincipalSchema, AmountSchema } from '../utils/validation';
 import { PasteModal } from './PasteModal';
 import { BulkAmountModal } from './BulkAmountModal';
 import type { AmountRange } from './BulkAmountModal';
 
 const FT_MAX_RECIPIENTS = 10;
+const recipientSchema = z.object({
+    to: StandardPrincipalSchema,
+    amount: AmountSchema,
+});
 
 const schema = z.object({
     mode: z.enum(['stx', 'ft']),
     tokenContract: z.string().optional(),
-    recipients: z.array(z.object({ to: z.string(), amount: z.string() })).min(1).max(50),
+    recipients: z.array(recipientSchema).min(1, 'Add at least one recipient.').max(50, 'Maximum of 50 recipients.'),
 }).superRefine((value, context) => {
     if (value.mode === 'ft' && value.recipients.length > FT_MAX_RECIPIENTS) {
         context.addIssue({
@@ -40,7 +44,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
     const [tokenDecimals, setTokenDecimals] = useState(8); // Default to 8 decimals (like sBTC)
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const { control, handleSubmit, watch, setValue, register } = useForm<FormData>({
+    const { control, handleSubmit, watch, setValue, register, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: { mode: 'stx', recipients: [{ to: '', amount: '' }] },
     });
@@ -57,7 +61,10 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
         if (remaining <= 0) return;
 
         const newRecips = addresses.slice(0, remaining).map(addr => ({ to: addr, amount: '' }));
-        setValue('recipients', [...recipients, ...newRecips]);
+        setValue('recipients', [...recipients, ...newRecips], {
+            shouldValidate: true,
+            shouldDirty: true,
+        });
     };
 
     const onBulkAmount = (ranges: AmountRange[]) => {
@@ -76,7 +83,10 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             }
         });
 
-        setValue('recipients', updatedRecipients);
+        setValue('recipients', updatedRecipients, {
+            shouldValidate: true,
+            shouldDirty: true,
+        });
     };
 
     const onSubmit = async (data: FormData) => {
@@ -93,17 +103,6 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
 
         if (data.recipients.length > modeMaxRecipients) {
             setStatus(`Error: ${mode === 'ft' ? `FT mode supports up to ${FT_MAX_RECIPIENTS}` : modeMaxRecipients} recipients.`);
-            return;
-        }
-
-        // Validate all recipients have valid addresses and amounts
-        const invalidRecipients = data.recipients.filter((r) => {
-            const validation = validateRecipient(r.to, r.amount);
-            return !validation.valid;
-        });
-
-        if (invalidRecipients.length > 0) {
-            setStatus(`Error: ${invalidRecipients.length} recipient(s) have invalid addresses or amounts.`);
             return;
         }
 
@@ -189,7 +188,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="p-6">
+        <form onSubmit={handleSubmit(onSubmit, () => setStatus('Error: Please fix the highlighted fields.'))} className="p-6">
             {/* Mode Selector */}
             <div className="flex flex-col sm:flex-row gap-2 mb-6">
                 <label
@@ -273,6 +272,11 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                     FT contract limit: up to {FT_MAX_RECIPIENTS} recipients per transaction.
                 </p>
             )}
+            {typeof errors.recipients?.message === 'string' && (
+                <p className="text-xs mb-4" style={{ color: 'var(--error)' }}>
+                    {errors.recipients.message}
+                </p>
+            )}
 
             {/* Recipients Table */}
             <div className="table-wrapper mb-6">
@@ -308,24 +312,39 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                                     }}
                                 >
                                     <td className="px-2 sm:px-4 py-2">
-                                        <input
-                                            {...register(`recipients.${index}.to`)}
-                                            placeholder="SP... or ST..."
-                                            className="w-full py-2 bg-transparent outline-none font-mono text-xs sm:text-sm"
-                                            style={{ color: 'var(--text-primary)' }}
-                                            onBlur={(e) => validateRecipient(e.target.value, watch(`recipients.${index}.amount`))}
-                                        />
+                                        <div>
+                                            <input
+                                                {...register(`recipients.${index}.to`)}
+                                                placeholder="SP... or ST..."
+                                                aria-invalid={Boolean(errors.recipients?.[index]?.to)}
+                                                className="w-full py-2 bg-transparent outline-none font-mono text-xs sm:text-sm"
+                                                style={{ color: 'var(--text-primary)' }}
+                                            />
+                                            {errors.recipients?.[index]?.to?.message && (
+                                                <p className="mt-1 text-xs" style={{ color: 'var(--error)' }}>
+                                                    {errors.recipients?.[index]?.to?.message}
+                                                </p>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-2 sm:px-4 py-2">
-                                        <input
-                                            type="number"
-                                            {...register(`recipients.${index}.amount`)}
-                                            placeholder={mode === 'stx' ? '0.001' : '0.00001'}
-                                            step="any"
-                                            className="w-full py-2 bg-transparent outline-none text-xs sm:text-sm"
-                                            style={{ color: 'var(--text-primary)' }}
-                                            min="0"
-                                        />
+                                        <div>
+                                            <input
+                                                type="number"
+                                                {...register(`recipients.${index}.amount`)}
+                                                placeholder={mode === 'stx' ? '0.001' : '0.00001'}
+                                                step="any"
+                                                aria-invalid={Boolean(errors.recipients?.[index]?.amount)}
+                                                className="w-full py-2 bg-transparent outline-none text-xs sm:text-sm"
+                                                style={{ color: 'var(--text-primary)' }}
+                                                min="0"
+                                            />
+                                            {errors.recipients?.[index]?.amount?.message && (
+                                                <p className="mt-1 text-xs" style={{ color: 'var(--error)' }}>
+                                                    {errors.recipients?.[index]?.amount?.message}
+                                                </p>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-2 py-2">
                                         <button
