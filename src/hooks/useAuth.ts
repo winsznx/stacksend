@@ -1,10 +1,12 @@
 import { connect, disconnect, isConnected, getLocalStorage, request } from '@stacks/connect';
 import { createNetwork } from '@stacks/network';
-import type { StacksNetwork } from '@stacks/network';
+import type { NetworkType, StacksNetwork } from '@stacks/network';
 import { createContext, createElement, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { reownModal, isReownConfigured } from '../config/reown-config';
 import { useAppKitAccount, useAppKitProvider } from '@reown/appkit/react';
+
+type BitcoinWalletProvider = ReturnType<typeof useAppKitProvider>['walletProvider'];
 
 interface StoredAddresses {
     addresses?: {
@@ -42,7 +44,13 @@ interface AuthContextValue {
     network: StacksNetwork;
     setNetwork: (network: StacksNetwork) => void;
     isReownConfigured: boolean;
-    walletProvider: unknown;
+    walletProvider: BitcoinWalletProvider;
+}
+
+function detectNetwork(address: string): StacksNetwork {
+    const prefix = address.slice(0, 2);
+    const type: NetworkType = prefix === 'ST' ? 'testnet' : 'mainnet';
+    return createNetwork(type);
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -74,12 +82,7 @@ function useProvideAuth(): AuthContextValue {
                         publicKey: data.addresses.stx[0].publicKey || null,
                         walletType: 'stacks',
                     });
-
-                    if (address.startsWith('ST')) {
-                        setNetwork(createNetwork('testnet'));
-                    } else if (address.startsWith('SP')) {
-                        setNetwork(createNetwork('mainnet'));
-                    }
+                    setNetwork(detectNetwork(address));
                 }
             }
         };
@@ -120,12 +123,7 @@ function useProvideAuth(): AuthContextValue {
                     publicKey: data.addresses.stx[0].publicKey || null,
                     walletType: 'stacks',
                 });
-
-                if (address.startsWith('ST')) {
-                    setNetwork(createNetwork('testnet'));
-                } else if (address.startsWith('SP')) {
-                    setNetwork(createNetwork('mainnet'));
-                }
+                setNetwork(detectNetwork(address));
             }
 
             return response;
