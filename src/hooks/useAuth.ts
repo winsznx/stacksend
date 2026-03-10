@@ -1,6 +1,6 @@
 import { connect, disconnect, isConnected, getLocalStorage, request } from '@stacks/connect';
 import { createNetwork } from '@stacks/network';
-import type { NetworkType, StacksNetwork } from '@stacks/network';
+import type { StacksNetwork } from '@stacks/network';
 import { createContext, createElement, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { reownModal, isReownConfigured } from '../config/reown-config';
@@ -48,9 +48,7 @@ interface AuthContextValue {
 }
 
 function detectNetwork(address: string): StacksNetwork {
-    const prefix = address.slice(0, 2);
-    const type: NetworkType = prefix === 'ST' ? 'testnet' : 'mainnet';
-    return createNetwork(type);
+    return createNetwork(address.startsWith('ST') ? 'testnet' : 'mainnet');
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
