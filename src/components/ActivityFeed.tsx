@@ -179,12 +179,15 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
                                             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                                                 {event.event_type === 'received' ? 'From' : 'To'}{' '}
                                                 <code className="px-1.5 py-0.5 rounded text-xs" style={{ backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
-                                                    {event.event_type === 'sent' && event.metadata?.recipient_count
-                                                        ? `${event.metadata.recipient_count} recipient${event.metadata.recipient_count > 1 ? 's' : ''}`
-                                                        : formatAddress(getCounterpartyAddress(event))}
+                                                    {(() => {
+                                                            const count = typeof event.metadata?.recipient_count === 'number' ? event.metadata.recipient_count : null;
+                                                            return event.event_type === 'sent' && count
+                                                                ? `${count} recipient${count > 1 ? 's' : ''}`
+                                                                : formatAddress(getCounterpartyAddress(event));
+                                                        })()}
                                                 </code>
                                             </p>
-                                            {event.event_type === 'sent' && event.metadata?.recipient_count && (
+                                            {event.event_type === 'sent' && typeof event.metadata?.recipient_count === 'number' && (
                                                 <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                                                     {event.metadata.recipient_count} recipient{event.metadata.recipient_count > 1 ? 's' : ''}
                                                 </p>
