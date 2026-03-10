@@ -47,6 +47,6 @@ export const NETWORKS = {
     },
     testnet: {
         name: 'Testnet',
-        explorerUrl: 'https://explorer.stacks.co',
+        explorerUrl: 'https://explorer.stacks.co/?chain=testnet',
     },
 } as const;
