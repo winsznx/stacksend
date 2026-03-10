@@ -29,7 +29,7 @@ export interface ActivityEvent {
     event_type: 'received' | 'sent';
     transfer_id: number;
     recipient_id: number | null;
-    metadata: any;
+    metadata: Record<string, unknown>;
     created_at: string;
     tx_id: string;
     sender_address: string;
