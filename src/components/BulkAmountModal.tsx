@@ -162,6 +162,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                     </Dialog.Title>
                                     <button
                                         onClick={handleClose}
+                                        aria-label="Close bulk amount dialog"
                                         className="p-2 rounded-lg transition-colors"
                                         style={{ color: 'var(--text-muted)' }}
                                     >
@@ -225,6 +226,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                             type="number"
                                             value={fillAllAmount}
                                             onChange={(e) => setFillAllAmount(e.target.value)}
+                                            aria-label="Amount for all recipients"
                                             placeholder="0.001"
                                             step="any"
                                             min="0"
