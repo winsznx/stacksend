@@ -19,6 +19,8 @@ cd backend
 npm install
 ```
 
+The backend has its own `package.json` and lockfile, so install and build commands should be run from `backend/` instead of the repository root.
+
 ### 2. Configure Environment
 
 Copy `.env.example` to `.env` and fill in the values:
