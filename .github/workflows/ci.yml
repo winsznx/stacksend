@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: web
+            working-directory: .
+            install-command: npm ci
+            build-command: npm run build
+            cache-path: package-lock.json
+          - name: backend
+            working-directory: backend
+            install-command: npm ci
+            build-command: npm run build
+            cache-path: backend/package-lock.json
+          - name: stacks-utils
+            working-directory: packages/stacks-utils
+            install-command: npm install
+            build-command: npm run build
+            cache-path: packages/stacks-utils/package.json
+
+    name: ${{ matrix.name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ${{ matrix.cache-path }}
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.working-directory }}
+        run: ${{ matrix.install-command }}
+
+      - name: Build
+        working-directory: ${{ matrix.working-directory }}
+        run: ${{ matrix.build-command }}
