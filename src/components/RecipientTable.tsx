@@ -316,6 +316,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                                             <input
                                                 {...register(`recipients.${index}.to`)}
                                                 placeholder="SP... or ST..."
+                                                aria-label={`Recipient ${index + 1} address`}
                                                 aria-invalid={Boolean(errors.recipients?.[index]?.to)}
                                                 className="w-full py-2 bg-transparent outline-none font-mono text-xs sm:text-sm"
                                                 style={{ color: 'var(--text-primary)' }}
@@ -334,6 +335,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                                                 {...register(`recipients.${index}.amount`)}
                                                 placeholder={mode === 'stx' ? '0.001' : '0.00001'}
                                                 step="any"
+                                                aria-label={`Recipient ${index + 1} amount`}
                                                 aria-invalid={Boolean(errors.recipients?.[index]?.amount)}
                                                 className="w-full py-2 bg-transparent outline-none text-xs sm:text-sm"
                                                 style={{ color: 'var(--text-primary)' }}
@@ -350,6 +352,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                                         <button
                                             type="button"
                                             onClick={() => remove(index)}
+                                            aria-label={`Remove recipient ${index + 1}`}
                                             className="p-2 rounded-lg transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"
                                             style={{ color: 'var(--error)' }}
                                         >
