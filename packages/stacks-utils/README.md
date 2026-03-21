@@ -32,6 +32,8 @@ npm install @winsznx/stacks-utils zod --registry https://npm.pkg.github.com --@w
 
 `parseAddresses(input)` only returns standard Stacks principals (`SP...` / `ST...`) and filters out contract principals.
 
+`AmountSchema` and `validateRecipient(address, amount)` both expect string amounts such as `"0.25"`.
+
 ## Example
 
 ```ts
