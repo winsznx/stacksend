@@ -26,6 +26,7 @@ export const NetworkToggle: React.FC = () => {
             <button
                 onClick={toggle}
                 className="btn-ghost text-sm"
+                aria-label={`Switch to ${isMainnet ? 'Testnet' : 'Mainnet'}`}
                 style={{
                     color: isMainnet ? 'var(--success)' : 'var(--warning)',
                 }}
@@ -48,6 +49,7 @@ export const NetworkToggle: React.FC = () => {
             {showAlert && (
                 <div
                     className="absolute top-full right-0 mt-2 p-3 rounded-lg shadow-lg z-50 w-64 animate-slide-up"
+                    aria-live="polite"
                     style={{
                         backgroundColor: 'var(--bg-secondary)',
                         border: '1px solid var(--border-color)'
