@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* ============================================
    Theme Configuration - StackSend
@@ -74,8 +75,6 @@
 /* ============================================
    Base Styles & Gaming Font Setup
    ============================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
