@@ -71,6 +71,7 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                     </Dialog.Title>
                                     <button
                                         onClick={() => setIsOpen(false)}
+                                        aria-label="Close paste addresses dialog"
                                         className="p-2 rounded-lg transition-colors"
                                         style={{ color: 'var(--text-muted)' }}
                                     >
@@ -88,6 +89,7 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                 <textarea
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
+                                    aria-label="Paste recipient addresses"
                                     placeholder="SP1234...&#10;SP5678...&#10;or SP1234..., SP5678..."
                                     className="input-field h-40 resize-none font-mono text-sm mb-4"
                                 />
