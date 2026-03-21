@@ -20,6 +20,8 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({ onPlanChange }) => {
             <select
                 onChange={handleChange}
                 value={selected}
+                aria-label="Select recipient plan limit"
+                title="Select recipient plan limit"
                 className="appearance-none cursor-pointer pl-3 pr-8 py-2 text-sm font-medium rounded-lg transition-colors"
                 style={{
                     backgroundColor: 'var(--bg-tertiary)',
