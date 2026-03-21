@@ -110,6 +110,8 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
                         onClick={loadActivity}
                         disabled={loading}
                         className="btn-ghost p-2"
+                        aria-label="Refresh transfer activity"
+                        title="Refresh transfer activity"
                     >
                         <Loader2 className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} style={{ color: loading ? 'var(--accent-orange)' : 'currentColor' }} />
                     </button>
