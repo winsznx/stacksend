@@ -30,6 +30,8 @@ npm install @winsznx/stacks-utils zod --registry https://npm.pkg.github.com --@w
 - `stxToMicroStx(stx)`
 - `microStxToStx(microStx)`
 
+`parseAddresses(input)` only returns standard Stacks principals (`SP...` / `ST...`) and filters out contract principals.
+
 ## Example
 
 ```ts
