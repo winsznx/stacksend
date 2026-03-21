@@ -256,6 +256,10 @@ clarinet check
 clarinet test
 ```
 
+### GitHub CI
+
+Pushes and pull requests run GitHub Actions builds for the root web app, `backend`, and `packages/stacks-utils`.
+
 ### Building for Production
 
 ```bash
