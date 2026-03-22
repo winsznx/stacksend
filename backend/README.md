@@ -115,6 +115,7 @@ POST /api/users/:address/notifications
 ```
 GET /api/transfers/recent
 ```
+`GET /api/transfers/recent` accepts `?limit=` with a default of `50` and a maximum of `200`.
 
 ## Deployment
 
