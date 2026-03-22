@@ -22,6 +22,7 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
 
         setIsLoading(true);
         setError(null);
+        setUser(null);
         try {
             const userData = await backendAPI.getUser(walletAddress);
             setUser(userData);
