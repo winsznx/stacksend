@@ -399,6 +399,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             <button
                 type="submit"
                 disabled={fields.length === 0 || fields.length > modeMaxRecipients || isSubmitting}
+                aria-busy={isSubmitting}
                 className="btn-primary w-full justify-center text-lg py-4"
             >
                 {isSubmitting ? (
