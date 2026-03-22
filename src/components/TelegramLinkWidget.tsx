@@ -61,7 +61,11 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                     </p>
                 </div>
             ) : error ? (
-                <div className="p-4 rounded-lg" style={{ backgroundColor: 'var(--error-light)', color: 'var(--error)' }}>
+                <div
+                    role="alert"
+                    className="p-4 rounded-lg"
+                    style={{ backgroundColor: 'var(--error-light)', color: 'var(--error)' }}
+                >
                     <p className="text-sm">{error}</p>
                 </div>
             ) : isTelegramLinked ? (
