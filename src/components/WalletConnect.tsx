@@ -689,6 +689,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         <button
                             onClick={selectedWalletType === 'stacks' ? handleConnectStacks : handleConnectBitcoin}
                             disabled={isConnecting || loading}
+                            aria-busy={isConnecting || loading}
                             className="glow-button w-full"
                         >
                             {isConnecting || loading ? (
