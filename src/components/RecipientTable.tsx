@@ -380,6 +380,8 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
 
             {/* Summary */}
             <div
+                role="status"
+                aria-live="polite"
                 className="flex items-center justify-between p-4 rounded-xl mb-6"
                 style={{ backgroundColor: 'var(--bg-tertiary)' }}
             >
