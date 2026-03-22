@@ -274,6 +274,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                                 type="number"
                                                                 value={range.startIndex}
                                                                 onChange={(e) => updateRange(index, 'startIndex', Number(e.target.value))}
+                                                                aria-label={`Range ${index + 1} start recipient index`}
                                                                 min="1"
                                                                 max={recipientCount}
                                                                 className="input-field text-sm"
@@ -290,6 +291,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                                 type="number"
                                                                 value={range.endIndex}
                                                                 onChange={(e) => updateRange(index, 'endIndex', Number(e.target.value))}
+                                                                aria-label={`Range ${index + 1} end recipient index`}
                                                                 min="1"
                                                                 max={recipientCount}
                                                                 className="input-field text-sm"
@@ -307,6 +309,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                             type="number"
                                                             value={range.amount}
                                                             onChange={(e) => updateRange(index, 'amount', e.target.value)}
+                                                            aria-label={`Range ${index + 1} amount`}
                                                             placeholder="0.001"
                                                             step="any"
                                                             min="0"
@@ -318,6 +321,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                             type="button"
                                                             onClick={() => removeRange(index)}
                                                             disabled={ranges.length === 1}
+                                                            aria-label={`Remove range ${index + 1}`}
                                                             className="p-2 rounded-lg transition-colors hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-30 disabled:cursor-not-allowed"
                                                             style={{ color: 'var(--error)' }}
                                                         >
