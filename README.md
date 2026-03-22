@@ -78,6 +78,8 @@ npm install @winsznx/stacks-utils zod
 npm install @winsznx/stacks-utils zod --registry https://npm.pkg.github.com --@winsznx:registry=https://npm.pkg.github.com
 ```
 
+`zod` is required because `@winsznx/stacks-utils` declares it as a peer dependency.
+
 ---
 
 ## Getting Started
