@@ -22,6 +22,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
 
         setLoading(true);
         setError(null);
+        setActivity([]);
 
         try {
             const events = await backendAPI.getUserActivity(walletAddress, 50);
