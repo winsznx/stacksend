@@ -289,6 +289,7 @@ function App() {
                 onClick={toggleTheme}
                 className="btn-ghost p-2 rounded-lg transition-all duration-200 hover:scale-110"
                 aria-label="Toggle theme"
+                aria-pressed={theme === 'dark'}
                 title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? (
