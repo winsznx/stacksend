@@ -36,6 +36,8 @@ npm install @winsznx/stacks-utils zod --registry https://npm.pkg.github.com --@w
 
 `AmountSchema` and `validateRecipient(address, amount)` both expect string amounts such as `"0.25"`.
 
+`formatAddress(address)` defaults to a `6...4` truncation pattern unless you pass custom segment lengths.
+
 ## Example
 
 ```ts
