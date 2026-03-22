@@ -110,6 +110,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
                     <button
                         onClick={loadActivity}
                         disabled={loading}
+                        aria-busy={loading}
                         className="btn-ghost p-2"
                         aria-label="Refresh transfer activity"
                         title="Refresh transfer activity"
