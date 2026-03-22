@@ -70,8 +70,6 @@ function App() {
     <div key="main-app" className="min-h-screen relative overflow-hidden" style={{ backgroundColor: isDark ? 'var(--bg-primary)' : '#fafafa', color: 'var(--text-primary)' }}>
       {/* Enhanced CSS with Gaming Effects */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-        
         .gaming-font {
           font-family: 'Space Grotesk', 'Inter', sans-serif;
           letter-spacing: 0.02em;
