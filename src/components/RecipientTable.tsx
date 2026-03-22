@@ -231,6 +231,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                 <div className="space-y-3 mb-6">
                     <input
                         {...register('tokenContract')}
+                        aria-label="Fungible token contract address"
                         placeholder="Token Contract (e.g., SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.Wrapped-Bitcoin)"
                         className="input-field"
                     />
@@ -242,6 +243,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                             type="number"
                             value={tokenDecimals}
                             onChange={(e) => setTokenDecimals(Number(e.target.value))}
+                            aria-label="Fungible token decimals"
                             min="0"
                             max="18"
                             className="input-field w-24"
