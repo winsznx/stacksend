@@ -60,6 +60,7 @@ export const NetworkToggle: React.FC = () => {
             {/* Network Switch Alert */}
             {showAlert && (
                 <div
+                    role="status"
                     className="absolute top-full right-0 mt-2 p-3 rounded-lg shadow-lg z-50 w-64 animate-slide-up"
                     aria-live="polite"
                     style={{
