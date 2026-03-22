@@ -185,7 +185,6 @@ stacksend/
 │   │   ├── constants.ts         # App configuration & contracts
 │   │   └── validation.ts        # Address & amount validation
 │   ├── App.tsx                  # Main app component
-│   ├── App.css                  # App-specific styles
 │   ├── index.css                # Global styles & themes
 │   └── main.tsx                 # React entry point
 ├── public/
