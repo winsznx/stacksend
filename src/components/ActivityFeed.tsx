@@ -120,14 +120,14 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
 
             {/* Error State */}
             {error && (
-                <div className="p-4 m-4 rounded-lg text-sm" style={{ backgroundColor: 'var(--error-light)', border: '1px solid var(--error)', color: 'var(--error)' }}>
+                <div className="p-4 m-4 rounded-lg text-sm" aria-live="polite" style={{ backgroundColor: 'var(--error-light)', border: '1px solid var(--error)', color: 'var(--error)' }}>
                     {error}
                 </div>
             )}
 
             {/* Loading State */}
             {loading && activity.length === 0 && (
-                <div className="p-12 text-center">
+                <div className="p-12 text-center" aria-live="polite">
                     <Loader2 className="w-8 h-8 animate-spin mx-auto mb-3" style={{ color: 'var(--accent-orange)' }} />
                     <p style={{ color: 'var(--text-secondary)' }}>Loading activity...</p>
                 </div>
