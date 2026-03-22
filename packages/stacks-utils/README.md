@@ -18,6 +18,8 @@ npm install @winsznx/stacks-utils zod --registry https://npm.pkg.github.com --@w
 
 `zod` is a peer dependency and must be installed by the consumer.
 
+The package publishes both ESM (`import`) and CommonJS (`require`) entrypoints.
+
 ## Exports
 
 - `isValidPrincipal(address)`
