@@ -57,7 +57,7 @@ Full dark theme support for comfortable viewing.
 | **Framework** | React 19 + TypeScript |
 | **Build Tool** | Vite 7 |
 | **Styling** | Tailwind CSS 4 |
-| **Wallet** | @stacks/connect v8 |
+| **Wallet** | @stacks/connect v8 + Reown AppKit |
 | **Transactions** | @stacks/transactions v7 |
 | **Smart Contract** | Clarity 4 |
 | **Icons** | react-icons + Lucide React |
