@@ -82,8 +82,6 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
         >
             {/* Enhanced CSS with Moving Glowing Border */}
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-                
                 .gaming-font {
                     font-family: 'Space Grotesk', 'Inter', sans-serif;
                     letter-spacing: 0.02em;
