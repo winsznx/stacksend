@@ -36,6 +36,8 @@ The package publishes both ESM (`import`) and CommonJS (`require`) entrypoints.
 
 `parseAddresses(input)` only returns standard Stacks principals (`SP...` / `ST...`) and filters out contract principals.
 
+`parseAddresses(input)` accepts newline-, comma-, and semicolon-separated input.
+
 `AmountSchema` and `validateRecipient(address, amount)` both expect string amounts such as `"0.25"`.
 
 `formatAddress(address)` defaults to a `6...4` truncation pattern unless you pass custom segment lengths.
