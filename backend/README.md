@@ -38,7 +38,7 @@ Required environment variables:
 - `MULTISEND_CONTRACT_MAINNET` / `MULTISEND_CONTRACT_TESTNET` (dot format: `SP....contract-name`)
 - `ALLOWED_ORIGINS` - Comma-separated frontend origins for CORS (optional in development; defaults to localhost frontend origins)
 - `WEBHOOK_SECRET` - Shared secret for chainhook webhook authentication
-- `TELEGRAM_LINK_API_SECRET` - Secret required for `POST /api/telegram/link`
+- `TELEGRAM_LINK_API_SECRET` - Optional secret that enables `POST /api/telegram/link` and notification settings updates
 
 Production safety: `WEBHOOK_SECRET` is required when `NODE_ENV=production`.
 
