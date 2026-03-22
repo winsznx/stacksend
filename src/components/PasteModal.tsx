@@ -95,6 +95,7 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                 />
 
                                 <div
+                                    role="status"
                                     className="flex items-center justify-between text-sm mb-4"
                                     aria-live="polite"
                                     style={{ color: 'var(--text-muted)' }}
