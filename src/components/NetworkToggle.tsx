@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createNetwork } from '@stacks/network';
 import { useAuth } from '../hooks/useAuth';
 import { Globe, TestTube, AlertCircle } from 'lucide-react';
@@ -7,6 +7,15 @@ export const NetworkToggle: React.FC = () => {
     const { setNetwork, network } = useAuth();
     const isMainnet = network?.chainId !== 2147483648;
     const [showAlert, setShowAlert] = useState(false);
+    const alertTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (alertTimeoutRef.current) {
+                clearTimeout(alertTimeoutRef.current);
+            }
+        };
+    }, []);
 
     const toggle = () => {
         const newIsMainnet = !isMainnet;
@@ -18,7 +27,10 @@ export const NetworkToggle: React.FC = () => {
 
         // Show alert to remind user to switch in their wallet
         setShowAlert(true);
-        setTimeout(() => setShowAlert(false), 5000);
+        if (alertTimeoutRef.current) {
+            clearTimeout(alertTimeoutRef.current);
+        }
+        alertTimeoutRef.current = setTimeout(() => setShowAlert(false), 5000);
     };
 
     return (
