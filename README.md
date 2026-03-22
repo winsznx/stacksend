@@ -60,7 +60,7 @@ Full dark theme support for comfortable viewing.
 | **Wallet** | @stacks/connect v8 |
 | **Transactions** | @stacks/transactions v7 |
 | **Smart Contract** | Clarity 4 |
-| **Icons** | Lucide React |
+| **Icons** | react-icons + Lucide React |
 | **Forms** | React Hook Form + Zod |
 | **Deployment** | Vercel |
 
