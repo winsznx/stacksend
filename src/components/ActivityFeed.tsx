@@ -214,6 +214,8 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-1 text-xs transition-opacity"
+                                        aria-label={`View transaction ${event.tx_id} in the explorer`}
+                                        title="View transaction in the explorer"
                                         style={{ color: 'var(--accent-orange)' }}
                                         onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
                                         onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
