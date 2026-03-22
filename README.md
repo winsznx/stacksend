@@ -66,6 +66,16 @@ Full dark theme support for comfortable viewing.
 
 ---
 
+## Published Package
+
+This repository also publishes `@winsznx/stacks-utils`, a small validation and formatting package for Stacks principals and transfer amounts.
+
+```bash
+npm install @winsznx/stacks-utils zod
+```
+
+---
+
 ## Getting Started
 
 ### Prerequisites
