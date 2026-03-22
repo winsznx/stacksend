@@ -104,6 +104,8 @@ npm run dev
 
 The app will be available at `http://localhost:5173`
 
+Telegram linking and transfer activity also require the backend service described in `backend/README.md`.
+
 ### Environment Variables
 
 Create a `.env` file in the root directory:
