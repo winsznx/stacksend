@@ -55,6 +55,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
         ? Math.min(maxRecipients, FT_MAX_RECIPIENTS)
         : maxRecipients;
     const total = recipients.reduce((sum, r) => sum + Number(r.amount || 0), 0);
+    const isStatusError = status.includes('Error') || status.includes('cancelled');
 
     const onPaste = (addresses: string[]) => {
         const remaining = modeMaxRecipients - fields.length;
@@ -412,13 +413,14 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             {/* Status Message */}
             {status && (
                 <div
+                    role={isStatusError ? 'alert' : 'status'}
                     className="mt-4 p-4 rounded-xl text-sm"
                     aria-live="polite"
                     style={{
-                        backgroundColor: status.includes('Error') || status.includes('cancelled')
+                        backgroundColor: isStatusError
                             ? 'var(--error-light)'
                             : 'var(--success-light)',
-                        color: status.includes('Error') || status.includes('cancelled')
+                        color: isStatusError
                             ? 'var(--error)'
                             : 'var(--success)'
                     }}
