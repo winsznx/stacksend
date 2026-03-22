@@ -65,6 +65,8 @@ psql $DATABASE_URL
 npm run register-chainhooks
 ```
 
+Re-run `npm run register-chainhooks` after changing `BACKEND_URL` or `WEBHOOK_SECRET`, since those values are embedded in the registered webhook URLs.
+
 This will register 4 chainhooks:
 - STX transfers on mainnet
 - STX transfers on testnet
