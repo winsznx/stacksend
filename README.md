@@ -74,6 +74,10 @@ This repository also publishes `@winsznx/stacks-utils`, a small validation and f
 npm install @winsznx/stacks-utils zod
 ```
 
+```bash
+npm install @winsznx/stacks-utils zod --registry https://npm.pkg.github.com --@winsznx:registry=https://npm.pkg.github.com
+```
+
 ---
 
 ## Getting Started
