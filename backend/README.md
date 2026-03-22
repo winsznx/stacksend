@@ -33,6 +33,7 @@ Required environment variables:
 - `DATABASE_URL` - PostgreSQL connection string
 - `HIRO_API_KEY` - Your Hiro Platform API key
 - `TELEGRAM_BOT_TOKEN` - From BotFather
+- `TELEGRAM_BOT_USERNAME` - Telegram bot username without the `@`
 - `BACKEND_URL` - Your deployed backend URL
 - `MULTISEND_CONTRACT_MAINNET` / `MULTISEND_CONTRACT_TESTNET` (dot format: `SP....contract-name`)
 - `ALLOWED_ORIGINS` - Comma-separated frontend origins for CORS (optional in development; defaults to localhost frontend origins)
