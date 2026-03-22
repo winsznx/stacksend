@@ -337,6 +337,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                 {/* Errors */}
                                 {errors.length > 0 && (
                                     <div
+                                        role="alert"
                                         className="mb-4 p-3 rounded-lg text-sm"
                                         style={{
                                             backgroundColor: 'var(--error-light)',
