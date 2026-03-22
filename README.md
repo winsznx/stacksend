@@ -197,6 +197,7 @@ stacksend/
 │   ├── Testnet.toml             # Clarinet testnet config
 │   └── Mainnet.toml             # Clarinet mainnet config
 ├── deployments/                 # Generated deployment plans
+├── backend/                     # Chainhooks + Telegram notification service
 ├── packages/
 │   └── stacks-utils/            # Published Stacks validation utilities package
 ├── Clarinet.toml                # Clarinet project config
