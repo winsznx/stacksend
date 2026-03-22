@@ -413,6 +413,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             {status && (
                 <div
                     className="mt-4 p-4 rounded-xl text-sm"
+                    aria-live="polite"
                     style={{
                         backgroundColor: status.includes('Error') || status.includes('cancelled')
                             ? 'var(--error-light)'
