@@ -714,7 +714,11 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
 
                 {/* Error Message */}
                 {error && (
-                    <div className={`${isDark ? 'error-box-dark' : 'error-box-light'} p-4 rounded-xl max-w-md mx-auto mb-8 text-left`}>
+                    <div
+                        role="alert"
+                        aria-live="assertive"
+                        className={`${isDark ? 'error-box-dark' : 'error-box-light'} p-4 rounded-xl max-w-md mx-auto mb-8 text-left`}
+                    >
                         <p className={`text-sm font-medium gaming-font ${isDark ? 'text-red-300' : 'text-red-700'}`}>
                             {error}
                         </p>
