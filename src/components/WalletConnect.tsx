@@ -555,6 +555,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                 onClick={toggleTheme}
                 className="absolute top-6 right-6 theme-toggle z-20"
                 aria-label="Toggle theme"
+                aria-pressed={isDark}
                 title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
                 {isDark ? (
