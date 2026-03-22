@@ -132,7 +132,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
 
             {/* Loading State */}
             {loading && activity.length === 0 && (
-                <div className="p-12 text-center" aria-live="polite">
+                <div className="p-12 text-center" role="status" aria-live="polite">
                     <Loader2 className="w-8 h-8 animate-spin mx-auto mb-3" style={{ color: 'var(--accent-orange)' }} />
                     <p style={{ color: 'var(--text-secondary)' }}>Loading activity...</p>
                 </div>
