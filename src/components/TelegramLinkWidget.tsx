@@ -9,6 +9,7 @@ interface TelegramLinkWidgetProps {
 export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
     const [user, setUser] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (walletAddress) {
@@ -20,11 +21,13 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
         if (!walletAddress) return;
 
         setIsLoading(true);
+        setError(null);
         try {
             const userData = await backendAPI.getUser(walletAddress);
             setUser(userData);
         } catch (err: any) {
             console.error('Failed to load user:', err);
+            setError('Unable to load Telegram link status right now.');
         } finally {
             setIsLoading(false);
         }
@@ -50,6 +53,10 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                     <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                         Checking Telegram link status...
                     </p>
+                </div>
+            ) : error ? (
+                <div className="p-4 rounded-lg" style={{ backgroundColor: 'var(--error-light)', color: 'var(--error)' }}>
+                    <p className="text-sm">{error}</p>
                 </div>
             ) : isTelegramLinked ? (
                 <div className="space-y-4">
