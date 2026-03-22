@@ -274,7 +274,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                 </p>
             )}
             {typeof errors.recipients?.message === 'string' && (
-                <p className="text-xs mb-4" style={{ color: 'var(--error)' }}>
+                <p role="alert" className="text-xs mb-4" style={{ color: 'var(--error)' }}>
                     {errors.recipients.message}
                 </p>
             )}
