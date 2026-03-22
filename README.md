@@ -209,9 +209,9 @@ stacksend/
 
 ### Connecting Your Wallet
 
-1. Click **"Connect Wallet"** on the landing page
-2. Select your wallet (Leather or Xverse)
-3. Approve the connection request
+1. Choose **Stacks Wallet** or **Bitcoin Wallet** on the landing page
+2. Click the connect button for the wallet type you selected
+3. Approve the connection request in Leather, Xverse, or another compatible wallet
 4. The app automatically detects your network (Mainnet/Testnet)
 
 ### Sending STX to Multiple Recipients
