@@ -27,7 +27,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
             const events = await backendAPI.getUserActivity(walletAddress, 50);
             setActivity(events);
         } catch (err: any) {
-            setError(err.message);
+            setError(err?.message || 'Unable to load transfer activity right now.');
         } finally {
             setLoading(false);
         }
