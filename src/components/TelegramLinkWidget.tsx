@@ -50,7 +50,12 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
             </div>
 
             {isLoading ? (
-                <div className="p-4 rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+                <div
+                    role="status"
+                    aria-live="polite"
+                    className="p-4 rounded-lg"
+                    style={{ backgroundColor: 'var(--bg-tertiary)' }}
+                >
                     <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                         Checking Telegram link status...
                     </p>
