@@ -32,6 +32,8 @@ The package publishes both ESM (`import`) and CommonJS (`require`) entrypoints.
 - `stxToMicroStx(stx)`
 - `microStxToStx(microStx)`
 
+`isValidPrincipal(address)` trims surrounding whitespace before validating standard or contract principals.
+
 `StandardPrincipalSchema` only accepts wallet principals, while `PrincipalSchema` accepts both wallet and contract principals.
 
 `parseAddresses(input)` only returns standard Stacks principals (`SP...` / `ST...`) and filters out contract principals.
