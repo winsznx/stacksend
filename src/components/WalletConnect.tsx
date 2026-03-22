@@ -602,7 +602,11 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                             <span>Go to App</span>
                             <FiArrowRight className="w-5 h-5" />
                         </button>
-                        <div className={`status-indicator ${isDark ? 'status-indicator-dark' : 'status-indicator-light'}`}>
+                        <div
+                            role="status"
+                            aria-live="polite"
+                            className={`status-indicator ${isDark ? 'status-indicator-dark' : 'status-indicator-light'}`}
+                        >
                             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                             <span className="text-sm font-mono">
                                 {walletType === 'stacks' && stxAddress && `${stxAddress.slice(0, 8)}...${stxAddress.slice(-6)}`}
