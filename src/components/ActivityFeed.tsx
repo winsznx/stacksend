@@ -121,7 +121,11 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
 
             {/* Error State */}
             {error && (
-                <div className="p-4 m-4 rounded-lg text-sm" aria-live="polite" style={{ backgroundColor: 'var(--error-light)', border: '1px solid var(--error)', color: 'var(--error)' }}>
+                <div
+                    role="alert"
+                    className="p-4 m-4 rounded-lg text-sm"
+                    style={{ backgroundColor: 'var(--error-light)', border: '1px solid var(--error)', color: 'var(--error)' }}
+                >
                     {error}
                 </div>
             )}
