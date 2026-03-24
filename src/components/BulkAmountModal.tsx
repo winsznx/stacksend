@@ -188,6 +188,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                     >
                                         <input
                                             type="radio"
+                                            name="bulk-amount-mode"
                                             value="fill-all"
                                             checked={mode === 'fill-all'}
                                             onChange={(e) => setMode(e.target.value as InputMode)}
@@ -204,6 +205,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                     >
                                         <input
                                             type="radio"
+                                            name="bulk-amount-mode"
                                             value="ranges"
                                             checked={mode === 'ranges'}
                                             onChange={(e) => setMode(e.target.value as InputMode)}
