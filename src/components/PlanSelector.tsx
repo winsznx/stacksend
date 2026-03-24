@@ -36,6 +36,7 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({ onPlanChange }) => {
                 ))}
             </select>
             <ChevronDown
+                aria-hidden="true"
                 className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
                 style={{ color: 'var(--text-muted)' }}
             />
