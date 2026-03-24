@@ -28,7 +28,7 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                 onClick={() => setIsOpen(true)}
                 className="btn-secondary flex-1 sm:flex-initial justify-center"
             >
-                <Clipboard className="w-4 h-4" />
+                <Clipboard aria-hidden="true" className="w-4 h-4" />
                 <span>Paste Addresses</span>
             </button>
 
@@ -75,7 +75,7 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                         className="p-2 rounded-lg transition-colors"
                                         style={{ color: 'var(--text-muted)' }}
                                     >
-                                        <X className="w-5 h-5" />
+                                        <X aria-hidden="true" className="w-5 h-5" />
                                     </button>
                                 </div>
 
