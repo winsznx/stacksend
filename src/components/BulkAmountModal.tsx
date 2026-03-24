@@ -28,7 +28,18 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
     const addRange = () => {
         const lastRange = ranges[ranges.length - 1];
         const newStart = lastRange ? lastRange.endIndex + 1 : 1;
-        setRanges([...ranges, { startIndex: newStart, endIndex: newStart + 9, amount: '' }]);
+        if (newStart > recipientCount) {
+            return;
+        }
+
+        setRanges([
+            ...ranges,
+            {
+                startIndex: newStart,
+                endIndex: Math.min(newStart + 9, recipientCount),
+                amount: '',
+            },
+        ]);
     };
 
     const removeRange = (index: number) => {
