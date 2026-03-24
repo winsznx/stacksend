@@ -247,7 +247,7 @@ function App() {
             {/* Logo & Title with Gaming Font */}
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-md flex-shrink-0">
-                <MdLayers className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                <MdLayers aria-hidden="true" className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div className="min-w-0">
                 <h1 
@@ -281,7 +281,7 @@ function App() {
                 aria-label="Go to home"
                 title="Go to landing page"
               >
-                <FiHome className="w-5 h-5" />
+                <FiHome aria-hidden="true" className="w-5 h-5" />
               </button>
 
               {/* Theme Toggle */}
@@ -293,9 +293,9 @@ function App() {
                 title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? (
-                  <FiSun className="w-5 h-5 text-yellow-500" />
+                  <FiSun aria-hidden="true" className="w-5 h-5 text-yellow-500" />
                 ) : (
-                  <FiMoon className="w-5 h-5 text-blue-500" />
+                  <FiMoon aria-hidden="true" className="w-5 h-5 text-blue-500" />
                 )}
               </button>
 
@@ -309,7 +309,7 @@ function App() {
                 aria-label="Disconnect wallet"
                 title="Disconnect wallet and go to landing"
               >
-                <FiLogOut className="w-5 h-5" />
+                <FiLogOut aria-hidden="true" className="w-5 h-5" />
               </button>
             </div>
           </div>
@@ -347,7 +347,7 @@ function App() {
                   boxShadow: '0 0 20px rgba(249, 115, 22, 0.1)'
                 }}
               >
-                <MdLayers className="w-5 h-5" style={{ color: 'var(--accent-orange)' }} />
+                <MdLayers aria-hidden="true" className="w-5 h-5" style={{ color: 'var(--accent-orange)' }} />
               </div>
               <div>
                 <p role="status" aria-live="polite" className="text-sm font-medium gaming-font" style={{ color: 'var(--text-primary)' }}>
