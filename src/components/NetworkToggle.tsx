@@ -39,6 +39,7 @@ export const NetworkToggle: React.FC = () => {
                 onClick={toggle}
                 className="btn-ghost text-sm"
                 aria-label={`Switch to ${isMainnet ? 'Testnet' : 'Mainnet'}`}
+                aria-pressed={!isMainnet}
                 style={{
                     color: isMainnet ? 'var(--success)' : 'var(--warning)',
                 }}
