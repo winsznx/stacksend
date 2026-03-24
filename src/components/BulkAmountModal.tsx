@@ -19,8 +19,9 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
     const [isOpen, setIsOpen] = useState(false);
     const [mode, setMode] = useState<InputMode>('fill-all');
     const [fillAllAmount, setFillAllAmount] = useState('');
+    const defaultEndIndex = Math.max(1, Math.min(10, recipientCount));
     const [ranges, setRanges] = useState<AmountRange[]>([
-        { startIndex: 1, endIndex: 10, amount: '' }
+        { startIndex: 1, endIndex: defaultEndIndex, amount: '' }
     ]);
     const [errors, setErrors] = useState<string[]>([]);
 
@@ -102,7 +103,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
     const resetForm = () => {
         setMode('fill-all');
         setFillAllAmount('');
-        setRanges([{ startIndex: 1, endIndex: 10, amount: '' }]);
+        setRanges([{ startIndex: 1, endIndex: defaultEndIndex, amount: '' }]);
         setErrors([]);
     };
 
