@@ -42,6 +42,8 @@ The package publishes both ESM (`import`) and CommonJS (`require`) entrypoints.
 
 `AmountSchema` and `validateRecipient(address, amount)` both expect string amounts such as `"0.25"`.
 
+`validateRecipient(address, amount)` trims surrounding whitespace from the address before validating it.
+
 `formatAddress(address)` defaults to a `6...4` truncation pattern unless you pass custom segment lengths.
 
 `stxToMicroStx(stx)` and `microStxToStx(microStx)` both accept numeric inputs for unit conversion.
