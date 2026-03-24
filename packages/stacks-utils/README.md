@@ -40,6 +40,8 @@ The package publishes both ESM (`import`) and CommonJS (`require`) entrypoints.
 
 `parseAddresses(input)` accepts newline-, comma-, and semicolon-separated input.
 
+`parseAddresses(input)` also drops empty entries created by extra separators or blank lines.
+
 `AmountSchema` and `validateRecipient(address, amount)` both expect string amounts such as `"0.25"`.
 
 `validateRecipient(address, amount)` trims surrounding whitespace from the address before validating it.
