@@ -89,6 +89,7 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                 <textarea
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
+                                    spellCheck={false}
                                     aria-label="Paste recipient addresses"
                                     placeholder="SP1234...&#10;SP5678...&#10;or SP1234..., SP5678..."
                                     className="input-field h-40 resize-none font-mono text-sm mb-4"
