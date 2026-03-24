@@ -243,6 +243,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                             type="number"
                             value={tokenDecimals}
                             onChange={(e) => setTokenDecimals(Number(e.target.value))}
+                            inputMode="numeric"
                             aria-label="Fungible token decimals"
                             min="0"
                             max="18"
