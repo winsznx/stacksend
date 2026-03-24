@@ -123,7 +123,7 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                         className="btn-primary flex items-center justify-center gap-2 w-full"
                     >
                         Open Telegram Bot
-                        <ExternalLink className="w-4 h-4" />
+                        <ExternalLink aria-hidden="true" className="w-4 h-4" />
                     </a>
                 </div>
             )}
