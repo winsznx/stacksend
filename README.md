@@ -87,7 +87,7 @@ npm install @winsznx/stacks-utils zod --registry https://npm.pkg.github.com --@w
 ### Prerequisites
 
 - **Node.js** 18 or higher
-- **npm** or **yarn**
+- **npm**
 - **Clarinet** v2+ ([Installation Guide](https://docs.hiro.so/clarinet/getting-started))
 - **Stacks Wallet** (Leather or Xverse)
 
