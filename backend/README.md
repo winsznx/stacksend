@@ -93,6 +93,7 @@ npm start
 ```
 GET /health
 ```
+Returns `{ "status": "ok", "timestamp": "..." }`.
 
 ### Webhooks (called by Hiro)
 ```
