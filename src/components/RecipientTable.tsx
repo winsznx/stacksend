@@ -336,6 +336,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                                             <input
                                                 type="number"
                                                 {...register(`recipients.${index}.amount`)}
+                                                inputMode="decimal"
                                                 placeholder={mode === 'stx' ? '0.001' : '0.00001'}
                                                 step="any"
                                                 aria-label={`Recipient ${index + 1} amount`}
