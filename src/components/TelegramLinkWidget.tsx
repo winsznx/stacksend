@@ -74,7 +74,12 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                 </div>
             ) : isTelegramLinked ? (
                 <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 rounded-lg" style={{ backgroundColor: 'var(--success-light)', border: `1px solid var(--success)` }}>
+                    <div
+                        role="status"
+                        aria-live="polite"
+                        className="flex items-center justify-between p-4 rounded-lg"
+                        style={{ backgroundColor: 'var(--success-light)', border: `1px solid var(--success)` }}
+                    >
                         <div>
                             <div className="flex items-center gap-2 mb-1">
                                 <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--success)' }} />
