@@ -240,6 +240,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                             type="number"
                                             value={fillAllAmount}
                                             onChange={(e) => setFillAllAmount(e.target.value)}
+                                            inputMode="decimal"
                                             aria-label="Amount for all recipients"
                                             placeholder="0.001"
                                             step="any"
@@ -288,6 +289,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                                 type="number"
                                                                 value={range.startIndex}
                                                                 onChange={(e) => updateRange(index, 'startIndex', Number(e.target.value))}
+                                                                inputMode="numeric"
                                                                 aria-label={`Range ${index + 1} start recipient index`}
                                                                 min="1"
                                                                 max={recipientCount}
@@ -305,6 +307,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                                 type="number"
                                                                 value={range.endIndex}
                                                                 onChange={(e) => updateRange(index, 'endIndex', Number(e.target.value))}
+                                                                inputMode="numeric"
                                                                 aria-label={`Range ${index + 1} end recipient index`}
                                                                 min="1"
                                                                 max={recipientCount}
@@ -323,6 +326,7 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                             type="number"
                                                             value={range.amount}
                                                             onChange={(e) => updateRange(index, 'amount', e.target.value)}
+                                                            inputMode="decimal"
                                                             aria-label={`Range ${index + 1} amount`}
                                                             placeholder="0.001"
                                                             step="any"
