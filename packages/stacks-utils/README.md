@@ -48,6 +48,8 @@ The package publishes both ESM (`import`) and CommonJS (`require`) entrypoints.
 
 `formatAddress(address)` defaults to a `6...4` truncation pattern unless you pass custom segment lengths.
 
+`formatAddress(address)` returns the original string when it is already shorter than the requested visible prefix and suffix lengths.
+
 `stxToMicroStx(stx)` and `microStxToStx(microStx)` both accept numeric inputs for unit conversion.
 
 ## Example
