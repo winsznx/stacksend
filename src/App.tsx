@@ -350,7 +350,7 @@ function App() {
                 <MdLayers className="w-5 h-5" style={{ color: 'var(--accent-orange)' }} />
               </div>
               <div>
-                <p className="text-sm font-medium gaming-font" style={{ color: 'var(--text-primary)' }}>
+                <p role="status" aria-live="polite" className="text-sm font-medium gaming-font" style={{ color: 'var(--text-primary)' }}>
                   Current Plan Limit
                 </p>
                 <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
