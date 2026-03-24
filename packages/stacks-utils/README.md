@@ -52,6 +52,8 @@ The package publishes both ESM (`import`) and CommonJS (`require`) entrypoints.
 
 `stxToMicroStx(stx)` and `microStxToStx(microStx)` both accept numeric inputs for unit conversion.
 
+`stxToMicroStx(stx)` rounds down to the nearest whole microSTX.
+
 ## Example
 
 ```ts
