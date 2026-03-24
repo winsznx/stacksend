@@ -29,6 +29,8 @@ Copy `.env.example` to `.env` and fill in the values:
 cp .env.example .env
 ```
 
+For local development, keep `BACKEND_URL` at `http://localhost:3001` unless you intentionally change the backend port.
+
 Required environment variables:
 - `DATABASE_URL` - PostgreSQL connection string
 - `HIRO_API_KEY` - Your Hiro Platform API key
