@@ -236,8 +236,9 @@ stacksend/
 
 1. Select the **"Fungible Token"** tab
 2. Enter the token contract address (e.g., `SP...token-name`)
-3. Add recipients and amounts
-4. Send and approve the transaction
+3. Set token decimals to match the asset you are sending
+4. Add recipients and amounts
+5. Send and approve the transaction
 
 ### Address Format
 
