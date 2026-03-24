@@ -187,6 +187,7 @@ stacksend/
 │   │   ├── NetworkToggle.tsx    # Network switcher
 │   │   ├── PlanSelector.tsx     # Plan tier selector
 │   │   ├── PasteModal.tsx       # Bulk address paste modal
+│   │   ├── BulkAmountModal.tsx  # Bulk amount assignment dialog
 │   │   ├── TelegramLinkWidget.tsx # Telegram notification linking status
 │   │   └── ActivityFeed.tsx     # Recent transfer activity
 │   ├── hooks/
