@@ -205,7 +205,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                         {...register('mode')}
                         className="hidden"
                     />
-                    <DollarSign className="w-4 h-4" />
+                    <DollarSign aria-hidden="true" className="w-4 h-4" />
                     <span className="font-medium">STX</span>
                 </label>
                 <label
@@ -221,7 +221,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                         {...register('mode')}
                         className="hidden"
                     />
-                    <Coins className="w-4 h-4" />
+                    <Coins aria-hidden="true" className="w-4 h-4" />
                     <span className="font-medium">Fungible Token</span>
                 </label>
             </div>
@@ -264,7 +264,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                     className="btn-secondary flex-1 sm:flex-initial justify-center"
                     disabled={fields.length >= modeMaxRecipients}
                 >
-                    <Plus className="w-4 h-4" />
+                    <Plus aria-hidden="true" className="w-4 h-4" />
                     <span>Add Recipient</span>
                 </button>
                 <PasteModal onPaste={onPaste} max={modeMaxRecipients} />
@@ -361,7 +361,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                                             className="p-2 rounded-lg transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"
                                             style={{ color: 'var(--error)' }}
                                         >
-                                            <Trash2 className="w-4 h-4" />
+                                            <Trash2 aria-hidden="true" className="w-4 h-4" />
                                         </button>
                                     </td>
                                 </tr>
@@ -406,12 +406,12 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             >
                 {isSubmitting ? (
                     <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <Loader2 aria-hidden="true" className="w-5 h-5 animate-spin" />
                         <span>Sending...</span>
                     </>
                 ) : (
                     <>
-                        <Send className="w-5 h-5" />
+                        <Send aria-hidden="true" className="w-5 h-5" />
                         <span>Send Transaction</span>
                     </>
                 )}
