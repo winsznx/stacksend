@@ -14,7 +14,11 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
     useEffect(() => {
         if (walletAddress) {
             loadActivity();
+            return;
         }
+
+        setActivity([]);
+        setError(null);
     }, [walletAddress]);
 
     const loadActivity = async () => {
