@@ -115,7 +115,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
                         aria-label="Refresh transfer activity"
                         title="Refresh transfer activity"
                     >
-                        <Loader2 className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} style={{ color: loading ? 'var(--accent-orange)' : 'currentColor' }} />
+                        <Loader2 aria-hidden="true" className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} style={{ color: loading ? 'var(--accent-orange)' : 'currentColor' }} />
                     </button>
                 </div>
             </div>
@@ -134,7 +134,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
             {/* Loading State */}
             {loading && activity.length === 0 && (
                 <div className="p-12 text-center" role="status" aria-live="polite">
-                    <Loader2 className="w-8 h-8 animate-spin mx-auto mb-3" style={{ color: 'var(--accent-orange)' }} />
+                    <Loader2 aria-hidden="true" className="w-8 h-8 animate-spin mx-auto mb-3" style={{ color: 'var(--accent-orange)' }} />
                     <p style={{ color: 'var(--text-secondary)' }}>Loading activity...</p>
                 </div>
             )}
@@ -143,7 +143,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
             {!loading && activity.length === 0 && !error && (
                 <div className="p-12 text-center">
                     <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
-                        <ArrowUpRight className="w-8 h-8" style={{ color: 'var(--text-muted)' }} />
+                        <ArrowUpRight aria-hidden="true" className="w-8 h-8" style={{ color: 'var(--text-muted)' }} />
                     </div>
                     <p className="mb-2" style={{ color: 'var(--text-secondary)' }}>No transfer activity yet</p>
                     <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Your received and sent transfers will appear here</p>
@@ -168,9 +168,9 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
                                     color: event.event_type === 'received' ? 'var(--success)' : 'var(--accent-orange)'
                                 }}>
                                     {event.event_type === 'received' ? (
-                                        <ArrowDownRight className="w-5 h-5" />
+                                        <ArrowDownRight aria-hidden="true" className="w-5 h-5" />
                                     ) : (
-                                        <ArrowUpRight className="w-5 h-5" />
+                                        <ArrowUpRight aria-hidden="true" className="w-5 h-5" />
                                     )}
                                 </div>
 
@@ -227,7 +227,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
                                         onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
                                     >
                                         View transaction
-                                        <ExternalLink className="w-3 h-3" />
+                                        <ExternalLink aria-hidden="true" className="w-3 h-3" />
                                     </a>
                                 </div>
                             </div>
