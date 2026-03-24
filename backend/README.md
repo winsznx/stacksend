@@ -112,6 +112,7 @@ POST /api/users/:address/notifications
 `POST /api/telegram/link` is disabled unless `TELEGRAM_LINK_API_SECRET` is configured, and requires `x-telegram-link-secret`.
 `POST /api/users/:address/notifications` also requires `x-telegram-link-secret`.
 `GET /api/users/:address/activity` accepts `?limit=` with a default of `50` and a maximum of `200`.
+`GET /api/users/:address` returns `404` if the wallet has not linked Telegram yet.
 
 ### Transfers
 ```
