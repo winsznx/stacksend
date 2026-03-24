@@ -14,7 +14,11 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
     useEffect(() => {
         if (walletAddress) {
             loadUser();
+            return;
         }
+
+        setUser(null);
+        setError(null);
     }, [walletAddress]);
 
     const loadUser = async () => {
