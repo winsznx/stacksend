@@ -54,7 +54,7 @@ class DatabaseClient {
         await this.ensureUser(walletAddress);
 
         const query = `
-      UPDATE users 
+      UPDATE users
       SET telegram_chat_id = $1, telegram_username = $2, updated_at = CURRENT_TIMESTAMP
       WHERE wallet_address = $3
     `;
@@ -63,7 +63,7 @@ class DatabaseClient {
 
     async setNotificationEnabled(walletAddress: string, enabled: boolean): Promise<void> {
         const query = `
-      UPDATE users 
+      UPDATE users
       SET notification_enabled = $1, updated_at = CURRENT_TIMESTAMP
       WHERE wallet_address = $2
     `;
@@ -148,7 +148,7 @@ class DatabaseClient {
 
     async markNotificationSent(recipientId: number): Promise<void> {
         const query = `
-      UPDATE recipients 
+      UPDATE recipients
       SET notification_sent = true, notification_sent_at = CURRENT_TIMESTAMP
       WHERE id = $1
     `;
@@ -209,7 +209,7 @@ class DatabaseClient {
 
     async getUserActivity(userAddress: string, limit: number = 50): Promise<any[]> {
         const query = `
-      SELECT 
+      SELECT
         af.*,
         t.tx_id,
         t.sender_address,
@@ -233,8 +233,8 @@ class DatabaseClient {
     // Query methods
     async getRecentTransfers(limit: number = 50): Promise<any[]> {
         const query = `
-      SELECT * FROM transfers 
-      ORDER BY created_at DESC 
+      SELECT * FROM transfers
+      ORDER BY created_at DESC
       LIMIT $1
     `;
         const result = await this.pool.query(query, [limit]);
