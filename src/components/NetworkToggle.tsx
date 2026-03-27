@@ -35,7 +35,7 @@ export const NetworkToggle: React.FC = () => {
 
     return (
         <div className="relative">
-            <button
+            <button type="button"
                 onClick={toggle}
                 className="btn-ghost text-sm"
                 aria-label={`Switch to ${isMainnet ? 'Testnet' : 'Mainnet'}`}
