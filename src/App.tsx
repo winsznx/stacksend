@@ -67,7 +67,7 @@ function App() {
 
   // Render main app - user clicked "Go to App"
   return (
-    <div key="main-app" className="min-h-screen relative overflow-hidden" style={{ backgroundColor: isDark ? 'var(--bg-primary)' : '#fafafa', color: 'var(--text-primary)' }}>
+    <div key="main-app" className={"min-h-screen relative overflow-hidden"} style={{ backgroundColor: isDark ? 'var(--bg-primary)' : '#fafafa', color: 'var(--text-primary)' }}>
       {/* Enhanced CSS with Gaming Effects */}
       <style>{`
         .gaming-font {
@@ -235,30 +235,30 @@ function App() {
 
       {/* Header with Enhanced Styling */}
       <header
-        className="sticky top-0 z-50 backdrop-blur-md border-b transition-all duration-300 relative"
+        className={"sticky top-0 z-50 backdrop-blur-md border-b transition-all duration-300 relative"}
         style={{
           backgroundColor: isDark ? 'rgba(24, 24, 27, 0.95)' : 'rgba(255, 255, 255, 0.95)',
           borderColor: 'var(--border-color)',
           boxShadow: isDark ? '0 4px 6px -1px rgba(0, 0, 0, 0.3)' : '0 4px 6px -1px rgba(0, 0, 0, 0.05)'
         }}
       >
-        <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
+        <div className={"max-w-6xl mx-auto px-3 sm:px-6 lg:px-8"}>
+          <div className={"flex items-center justify-between h-14 sm:h-16"}>
             {/* Logo & Title with Gaming Font */}
-            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-md flex-shrink-0">
-                <MdLayers aria-hidden="true" className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <div className={"flex items-center gap-2 sm:gap-3 min-w-0"}>
+              <div className={"w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-md flex-shrink-0"}>
+                <MdLayers aria-hidden="true" className={"w-4 h-4 sm:w-5 sm:h-5 text-white"} />
               </div>
-              <div className="min-w-0">
+              <div className={"min-w-0"}>
                 <h1
-                  className="text-base sm:text-lg font-bold truncate gaming-font"
+                  className={"text-base sm:text-lg font-bold truncate gaming-font"}
                   style={{ color: 'var(--text-primary)' }}
                 >
                   Stack<span style={{ color: '#f97316' }}>Send</span>
                 </h1>
                 {stxAddress && (
                   <p
-                    className="text-xs font-mono hidden sm:block"
+                    className={"text-xs font-mono hidden sm:block"}
                     style={{ color: 'var(--text-muted)' }}
                   >
                     {stxAddress.slice(0, 6)}...{stxAddress.slice(-4)}
@@ -268,8 +268,8 @@ function App() {
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-1 sm:gap-2">
-              <div className="hidden sm:flex items-center gap-2">
+            <div className={"flex items-center gap-1 sm:gap-2"}>
+              <div className={"hidden sm:flex items-center gap-2"}>
                 <NetworkToggle />
                 <PlanSelector onPlanChange={setMaxRecipients} />
               </div>
@@ -277,25 +277,25 @@ function App() {
               {/* Home - Go to Landing */}
               <button type="button"
                 onClick={handleGoToLanding}
-                className="btn-ghost p-2 rounded-lg transition-all duration-200 hover:scale-110"
+                className={"btn-ghost p-2 rounded-lg transition-all duration-200 hover:scale-110"}
                 aria-label="Go to home"
                 title="Go to landing page"
               >
-                <FiHome aria-hidden="true" className="w-5 h-5" />
+                <FiHome aria-hidden="true" className={"w-5 h-5"} />
               </button>
 
               {/* Theme Toggle */}
               <button type="button"
                 onClick={toggleTheme}
-                className="btn-ghost p-2 rounded-lg transition-all duration-200 hover:scale-110"
+                className={"btn-ghost p-2 rounded-lg transition-all duration-200 hover:scale-110"}
                 aria-label="Toggle theme"
                 aria-pressed={theme === 'dark'}
                 title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? (
-                  <FiSun aria-hidden="true" className="w-5 h-5 text-yellow-500" />
+                  <FiSun aria-hidden="true" className={"w-5 h-5 text-yellow-500"} />
                 ) : (
-                  <FiMoon aria-hidden="true" className="w-5 h-5 text-blue-500" />
+                  <FiMoon aria-hidden="true" className={"w-5 h-5 text-blue-500"} />
                 )}
               </button>
 
@@ -305,17 +305,17 @@ function App() {
                   disconnect();
                   setShowLanding(true);
                 }}
-                className="btn-ghost p-2 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 hover:scale-110"
+                className={"btn-ghost p-2 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 hover:scale-110"}
                 aria-label="Disconnect wallet"
                 title="Disconnect wallet and go to landing"
               >
-                <FiLogOut aria-hidden="true" className="w-5 h-5" />
+                <FiLogOut aria-hidden="true" className={"w-5 h-5"} />
               </button>
             </div>
           </div>
 
           {/* Mobile-only second row for Network and Plan */}
-          <div className="flex sm:hidden items-center gap-2 pb-2">
+          <div className={"flex sm:hidden items-center gap-2 pb-2"}>
             <NetworkToggle />
             <PlanSelector onPlanChange={setMaxRecipients} />
           </div>
@@ -323,87 +323,87 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 relative z-10">
+      <main className={"max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 relative z-10"}>
         {/* Plan Info Card with Glowing Border */}
-        <div className="glowing-border-container mb-6">
-          <div className="glowing-border-top"></div>
-          <div className="glowing-border-right"></div>
-          <div className="glowing-border-bottom"></div>
-          <div className="glowing-border-left"></div>
+        <div className={"glowing-border-container mb-6"}>
+          <div className={"glowing-border-top"}></div>
+          <div className={"glowing-border-right"}></div>
+          <div className={"glowing-border-bottom"}></div>
+          <div className={"glowing-border-left"}></div>
 
           <div
-            className="card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300 hover:shadow-md"
+            className={"card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300 hover:shadow-md"}
             style={{
               backgroundColor: 'var(--bg-secondary)',
               border: '1px solid rgba(249, 115, 22, 0.1)',
               borderRadius: '12px'
             }}
           >
-            <div className="flex items-center gap-3 flex-1">
+            <div className={"flex items-center gap-3 flex-1"}>
               <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                className={"w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"}
                 style={{
                   backgroundColor: 'var(--accent-orange-light)',
                   boxShadow: '0 0 20px rgba(249, 115, 22, 0.1)'
                 }}
               >
-                <MdLayers aria-hidden="true" className="w-5 h-5" style={{ color: 'var(--accent-orange)' }} />
+                <MdLayers aria-hidden="true" className={"w-5 h-5"} style={{ color: 'var(--accent-orange)' }} />
               </div>
               <div>
-                <p role="status" aria-live="polite" className="text-sm font-medium gaming-font" style={{ color: 'var(--text-primary)' }}>
+                <p role="status" aria-live="polite" className={"text-sm font-medium gaming-font"} style={{ color: 'var(--text-primary)' }}>
                   Current Plan Limit
                 </p>
-                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                  You can send to up to <strong className="font-semibold gaming-font" style={{ color: 'var(--accent-orange)' }}>{maxRecipients}</strong> recipients per transaction
+                <p className={"text-xs"} style={{ color: 'var(--text-muted)' }}>
+                  You can send to up to <strong className={"font-semibold gaming-font"} style={{ color: 'var(--accent-orange)' }}>{maxRecipients}</strong> recipients per transaction
                 </p>
               </div>
             </div>
             {/* Status Indicator */}
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.2)' }}>
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-xs font-medium gaming-font" style={{ color: 'var(--success)' }}>Active</span>
+            <div className={"flex items-center gap-2 px-3 py-2 rounded-lg"} style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.2)' }}>
+              <div className={"w-2 h-2 rounded-full bg-green-500 animate-pulse"}></div>
+              <span className={"text-xs font-medium gaming-font"} style={{ color: 'var(--success)' }}>Active</span>
             </div>
           </div>
         </div>
 
         {/* Recipient Table with Glowing Border */}
-        <div className="glowing-border-container mb-6">
-          <div className="glowing-border-top"></div>
-          <div className="glowing-border-right"></div>
-          <div className="glowing-border-bottom"></div>
-          <div className="glowing-border-left"></div>
+        <div className={"glowing-border-container mb-6"}>
+          <div className={"glowing-border-top"}></div>
+          <div className={"glowing-border-right"}></div>
+          <div className={"glowing-border-bottom"}></div>
+          <div className={"glowing-border-left"}></div>
 
-          <div className="card transition-all duration-300" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+          <div className={"card transition-all duration-300"} style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <RecipientTable contractAddress={contractAddress} maxRecipients={maxRecipients} />
           </div>
         </div>
 
         {/* Telegram Notifications with Glowing Border */}
-        <div className="mt-8 glowing-border-container">
-          <div className="glowing-border-top"></div>
-          <div className="glowing-border-right"></div>
-          <div className="glowing-border-bottom"></div>
-          <div className="glowing-border-left"></div>
+        <div className={"mt-8 glowing-border-container"}>
+          <div className={"glowing-border-top"}></div>
+          <div className={"glowing-border-right"}></div>
+          <div className={"glowing-border-bottom"}></div>
+          <div className={"glowing-border-left"}></div>
           <TelegramLinkWidget walletAddress={stxAddress} />
         </div>
 
         {/* Activity Feed with Glowing Border */}
-        <div className="mt-8 glowing-border-container">
-          <div className="glowing-border-top"></div>
-          <div className="glowing-border-right"></div>
-          <div className="glowing-border-bottom"></div>
-          <div className="glowing-border-left"></div>
+        <div className={"mt-8 glowing-border-container"}>
+          <div className={"glowing-border-top"}></div>
+          <div className={"glowing-border-right"}></div>
+          <div className={"glowing-border-bottom"}></div>
+          <div className={"glowing-border-left"}></div>
           <ActivityFeed walletAddress={stxAddress} />
         </div>
       </main>
 
       {/* Footer with Enhanced Styling */}
       <footer
-        className="border-t py-6 mt-auto transition-all duration-300 relative z-10"
+        className={"border-t py-6 mt-auto transition-all duration-300 relative z-10"}
         style={{ borderColor: 'var(--border-color)' }}
       >
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="text-sm gaming-font" style={{ color: 'var(--text-muted)' }}>
+        <div className={"max-w-6xl mx-auto px-4 text-center"}>
+          <p className={"text-sm gaming-font"} style={{ color: 'var(--text-muted)' }}>
             Built on Stacks • Secured by Bitcoin • L2
           </p>
         </div>
