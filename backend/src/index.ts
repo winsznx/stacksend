@@ -82,7 +82,7 @@ app.post('/api/telegram/link', async (req, res) => {
         await telegramService.sendWelcomeMessage(chatId, walletAddress);
 
         res.json({ success: true, message: 'Telegram linked successfully' });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ Telegram link error:', error);
         res.status(500).json({ error: error.message });
     }
@@ -100,7 +100,7 @@ app.get('/api/users/:address/activity', async (req, res) => {
         const activity = await db.getUserActivity(address, limit);
 
         res.json({ activity });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ Activity fetch error:', error);
         res.status(500).json({ error: error.message });
     }
@@ -129,7 +129,7 @@ app.get('/api/users/:address', async (req, res) => {
                 updated_at: user.updated_at,
             },
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ User fetch error:', error);
         res.status(500).json({ error: error.message });
     }
@@ -166,7 +166,7 @@ app.post('/api/users/:address/notifications', async (req, res) => {
         await db.setNotificationEnabled(address, enabled);
 
         res.json({ success: true, enabled });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ Notification update error:', error);
         res.status(500).json({ error: error.message });
     }
@@ -179,7 +179,7 @@ app.get('/api/transfers/recent', async (req, res) => {
         const transfers = await db.getRecentTransfers(limit);
 
         res.json({ transfers });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ Transfers fetch error:', error);
         res.status(500).json({ error: error.message });
     }
