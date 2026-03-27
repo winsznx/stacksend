@@ -26,6 +26,7 @@ const metadata = {
 };
 
 // Create and export the AppKit modal instance
+
 export const reownModal = projectId ? createAppKit({
     adapters: [bitcoinAdapter],
     networks: [...networks],
@@ -39,4 +40,5 @@ export const reownModal = projectId ? createAppKit({
 }) : null;
 
 // Export helper to check if Reown is configured
+
 export const isReownConfigured = () => !!projectId;
