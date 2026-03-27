@@ -21,8 +21,8 @@
 )
 
 ;; Private: Fold helper for STX - accumulates results and performs transfers
-(define-private (fold-stx-transfer 
-  (recipient {to: principal, ustx: uint}) 
+(define-private (fold-stx-transfer
+  (recipient {to: principal, ustx: uint})
   (prev-result (response bool uint)))
   (match prev-result
     success (send-stx-single recipient)
@@ -93,7 +93,7 @@
 ;; Public: Send FT to multiple recipients
 ;; Due to Clarity's fold limitations with traits, we handle up to 10 recipients inline
 ;; For more recipients, call this function multiple times
-(define-public (send-many-ft 
+(define-public (send-many-ft
   (token-contract <sip-010-trait>)
   (recipients (list 10 {to: principal, amount: uint})))
   (let
@@ -107,7 +107,7 @@
     (asserts! (> total-amount u0) ERR_ZERO_AMOUNT)
     ;; Verify it's a valid contract using Clarity 4 contract-hash?
     (try! (contract-hash? token-principal))
-    
+
     ;; Execute transfers - unrolled loop for up to 10 recipients
     ;; This is the standard pattern in Clarity when you need to use traits in a loop
     (transfer-ft-recipients token-contract recipients)
