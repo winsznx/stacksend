@@ -42,7 +42,7 @@ class TelegramService {
                         await this.sendWelcomeMessage(chatId, walletAddress);
 
                         console.log(`✅ Linked wallet ${walletAddress} to Telegram chat ${chatId}`);
-                    } catch (error: any) {
+                    } catch (error: unknown) {
                         console.error('Failed to link Telegram:', error);
                         await this.bot.sendMessage(chatId, '❌ Failed to link your wallet. Please try again.');
                     }
@@ -138,7 +138,7 @@ class TelegramService {
             });
             console.log(`✅ Telegram notification sent to ${chatId} for tx ${txId.slice(0, 10)}...`);
             return result.message_id;
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(`❌ Failed to send Telegram message to ${chatId}:`, error.message);
             return null;
         }
@@ -178,7 +178,7 @@ class TelegramService {
             });
             console.log(`✅ Sender notification sent to ${chatId} for tx ${txId.slice(0, 10)}...`);
             return result.message_id;
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(`❌ Failed to send sender notification to ${chatId}:`, error.message);
             return null;
         }
@@ -208,7 +208,7 @@ You'll receive instant notifications whenever you receive STX or fungible tokens
         try {
             await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
             console.log(`✅ Welcome message sent to ${chatId}`);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(`❌ Failed to send welcome message:`, error.message);
         }
     }
@@ -221,7 +221,7 @@ You'll receive instant notifications whenever you receive STX or fungible tokens
         try {
             await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
             console.log(`✅ Test notification sent to ${chatId}`);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(`❌ Failed to send test notification:`, error.message);
         }
     }
@@ -243,7 +243,7 @@ ${enabled ? 'You will receive notifications when you receive STX or fungible tok
 
         try {
             await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(`❌ Failed to send status message:`, error.message);
         }
     }
@@ -273,7 +273,7 @@ Once linked, you'll receive instant notifications whenever you receive STX or fu
 
         try {
             await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(`❌ Failed to handle /start command:`, error.message);
         }
     }
