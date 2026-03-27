@@ -275,7 +275,7 @@ function App() {
               </div>
 
               {/* Home - Go to Landing */}
-              <button
+              <button type="button"
                 onClick={handleGoToLanding}
                 className="btn-ghost p-2 rounded-lg transition-all duration-200 hover:scale-110"
                 aria-label="Go to home"
@@ -285,7 +285,7 @@ function App() {
               </button>
 
               {/* Theme Toggle */}
-              <button
+              <button type="button"
                 onClick={toggleTheme}
                 className="btn-ghost p-2 rounded-lg transition-all duration-200 hover:scale-110"
                 aria-label="Toggle theme"
@@ -300,7 +300,7 @@ function App() {
               </button>
 
               {/* Disconnect */}
-              <button
+              <button type="button"
                 onClick={() => {
                   disconnect();
                   setShowLanding(true);
