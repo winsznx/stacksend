@@ -75,7 +75,7 @@ function App() {
           letter-spacing: 0.02em;
           font-weight: 600;
         }
-        
+
         /* Animated Grid Background */
         .grid-background {
           position: fixed;
@@ -87,25 +87,25 @@ function App() {
           z-index: 0;
           opacity: 0.5;
         }
-        
+
         .grid-background-light {
-          background-image: 
+          background-image:
             linear-gradient(0deg, transparent 24%, rgba(249, 115, 22, 0.08) 25%, rgba(249, 115, 22, 0.08) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.08) 75%, rgba(249, 115, 22, 0.08) 76%, transparent 77%, transparent),
             linear-gradient(90deg, transparent 24%, rgba(249, 115, 22, 0.08) 25%, rgba(249, 115, 22, 0.08) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.08) 75%, rgba(249, 115, 22, 0.08) 76%, transparent 77%, transparent);
           background-size: 50px 50px;
           background-position: 0 0, 25px 25px;
           animation: gridShift 30s linear infinite;
         }
-        
+
         .grid-background-dark {
-          background-image: 
+          background-image:
             linear-gradient(0deg, transparent 24%, rgba(249, 115, 22, 0.12) 25%, rgba(249, 115, 22, 0.12) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.12) 75%, rgba(249, 115, 22, 0.12) 76%, transparent 77%, transparent),
             linear-gradient(90deg, transparent 24%, rgba(249, 115, 22, 0.12) 25%, rgba(249, 115, 22, 0.12) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.12) 75%, rgba(249, 115, 22, 0.12) 76%, transparent 77%, transparent);
           background-size: 50px 50px;
           background-position: 0 0, 25px 25px;
           animation: gridShift 30s linear infinite;
         }
-        
+
         @keyframes gridShift {
           0% {
             background-position: 0 0, 25px 25px;
@@ -114,14 +114,14 @@ function App() {
             background-position: 50px 50px, 75px 75px;
           }
         }
-        
+
         /* Moving Glowing Border Container */
         .glowing-border-container {
           position: relative;
           border-radius: 12px;
           overflow: hidden;
         }
-        
+
         /* Top border glow - moves left to right */
         .glowing-border-top {
           position: absolute;
@@ -134,7 +134,7 @@ function App() {
           animation: borderTopMove 3s ease-in-out infinite;
           z-index: 2;
         }
-        
+
         /* Right border glow - moves top to bottom */
         .glowing-border-right {
           position: absolute;
@@ -148,7 +148,7 @@ function App() {
           animation-delay: 0.75s;
           z-index: 2;
         }
-        
+
         /* Bottom border glow - moves right to left */
         .glowing-border-bottom {
           position: absolute;
@@ -162,7 +162,7 @@ function App() {
           animation-delay: 1.5s;
           z-index: 2;
         }
-        
+
         /* Left border glow - moves bottom to top */
         .glowing-border-left {
           position: absolute;
@@ -176,7 +176,7 @@ function App() {
           animation-delay: 2.25s;
           z-index: 2;
         }
-        
+
         /* Top border animation - left to right */
         @keyframes borderTopMove {
           0% {
@@ -189,7 +189,7 @@ function App() {
             left: 100%;
           }
         }
-        
+
         /* Right border animation - top to bottom */
         @keyframes borderRightMove {
           0% {
@@ -202,7 +202,7 @@ function App() {
             top: 100%;
           }
         }
-        
+
         /* Bottom border animation - right to left */
         @keyframes borderBottomMove {
           0% {
@@ -215,7 +215,7 @@ function App() {
             right: 100%;
           }
         }
-        
+
         /* Left border animation - bottom to top */
         @keyframes borderLeftMove {
           0% {
@@ -250,7 +250,7 @@ function App() {
                 <MdLayers aria-hidden="true" className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div className="min-w-0">
-                <h1 
+                <h1
                   className="text-base sm:text-lg font-bold truncate gaming-font"
                   style={{ color: 'var(--text-primary)' }}
                 >
@@ -330,10 +330,10 @@ function App() {
           <div className="glowing-border-right"></div>
           <div className="glowing-border-bottom"></div>
           <div className="glowing-border-left"></div>
-          
+
           <div
             className="card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300 hover:shadow-md"
-            style={{ 
+            style={{
               backgroundColor: 'var(--bg-secondary)',
               border: '1px solid rgba(249, 115, 22, 0.1)',
               borderRadius: '12px'
@@ -342,7 +342,7 @@ function App() {
             <div className="flex items-center gap-3 flex-1">
               <div
                 className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ 
+                style={{
                   backgroundColor: 'var(--accent-orange-light)',
                   boxShadow: '0 0 20px rgba(249, 115, 22, 0.1)'
                 }}
@@ -372,7 +372,7 @@ function App() {
           <div className="glowing-border-right"></div>
           <div className="glowing-border-bottom"></div>
           <div className="glowing-border-left"></div>
-          
+
           <div className="card transition-all duration-300" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <RecipientTable contractAddress={contractAddress} maxRecipients={maxRecipients} />
           </div>
