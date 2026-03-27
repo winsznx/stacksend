@@ -48,7 +48,7 @@
         (sender tx-sender)
     )
     (asserts! (< sold max) ERR-SOLD-OUT)
-    
+
     (try! (stx-transfer? (get price event) sender (as-contract tx-sender)))
     (try! (nft-mint? event-ticket ticket-id sender))
 
