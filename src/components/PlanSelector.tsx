@@ -16,13 +16,13 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({ onPlanChange }) => {
     };
 
     return (
-        <div className="relative">
+        <div className={"relative"}>
             <select
                 onChange={handleChange}
                 value={selected}
                 aria-label="Select recipient plan limit"
                 title="Select recipient plan limit"
-                className="appearance-none cursor-pointer pl-3 pr-8 py-2 text-sm font-medium rounded-lg transition-colors"
+                className={"appearance-none cursor-pointer pl-3 pr-8 py-2 text-sm font-medium rounded-lg transition-colors"}
                 style={{
                     backgroundColor: 'var(--bg-tertiary)',
                     color: 'var(--text-primary)',
@@ -37,7 +37,7 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({ onPlanChange }) => {
             </select>
             <ChevronDown
                 aria-hidden="true"
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
+                className={"absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"}
                 style={{ color: 'var(--text-muted)' }}
             />
         </div>
