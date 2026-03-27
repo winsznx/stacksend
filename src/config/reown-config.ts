@@ -42,3 +42,6 @@ export const reownModal = projectId ? createAppKit({
 // Export helper to check if Reown is configured
 
 export const isReownConfigured = () => !!projectId;
+
+
+export type {};
