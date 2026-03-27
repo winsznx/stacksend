@@ -38,3 +38,6 @@ export function parseLimit(rawLimit: unknown, fallback = 50, max = 200): number 
     }
     return Math.min(parsed, max);
 }
+
+
+export type {};
