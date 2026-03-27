@@ -198,7 +198,7 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
 
         console.log('===== END WEBHOOK =====');
         res.status(200).json({ received: true });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Webhook error:', error);
         console.error('Stack:', error.stack);
         if (!res.headersSent) {
