@@ -395,3 +395,6 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
         </>
     );
 };
+
+
+export type {};
