@@ -138,3 +138,6 @@ class BackendAPIClient {
 }
 
 export const backendAPI = new BackendAPIClient();
+
+
+export type {};
