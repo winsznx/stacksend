@@ -189,9 +189,9 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit, () => setStatus('Error: Please fix the highlighted fields.'))} className="p-6">
+        <form onSubmit={handleSubmit(onSubmit, () => setStatus('Error: Please fix the highlighted fields.'))} className={"p-6"}>
             {/* Mode Selector */}
-            <div className="flex flex-col sm:flex-row gap-2 mb-6">
+            <div className={"flex flex-col sm:flex-row gap-2 mb-6"}>
                 <label
                     className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg cursor-pointer transition-all flex-1 ${mode === 'stx' ? 'ring-2 ring-orange-500' : ''}`}
                     style={{
@@ -203,10 +203,10 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                         type="radio"
                         value="stx"
                         {...register('mode')}
-                        className="hidden"
+                        className={"hidden"}
                     />
-                    <DollarSign aria-hidden="true" className="w-4 h-4" />
-                    <span className="font-medium">STX</span>
+                    <DollarSign aria-hidden="true" className={"w-4 h-4"} />
+                    <span className={"font-medium"}>STX</span>
                 </label>
                 <label
                     className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg cursor-pointer transition-all flex-1 ${mode === 'ft' ? 'ring-2 ring-orange-500' : ''}`}
@@ -219,24 +219,24 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                         type="radio"
                         value="ft"
                         {...register('mode')}
-                        className="hidden"
+                        className={"hidden"}
                     />
-                    <Coins aria-hidden="true" className="w-4 h-4" />
-                    <span className="font-medium">Fungible Token</span>
+                    <Coins aria-hidden="true" className={"w-4 h-4"} />
+                    <span className={"font-medium"}>Fungible Token</span>
                 </label>
             </div>
 
             {/* Token Contract Input */}
             {mode === 'ft' && (
-                <div className="space-y-3 mb-6">
+                <div className={"space-y-3 mb-6"}>
                     <input
                         {...register('tokenContract')}
                         aria-label="Fungible token contract address"
                         placeholder="Token Contract (e.g., SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.Wrapped-Bitcoin)"
-                        className="input-field"
+                        className={"input-field"}
                     />
-                    <div className="flex items-center gap-3">
-                        <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <div className={"flex items-center gap-3"}>
+                        <label className={"text-sm"} style={{ color: 'var(--text-secondary)' }}>
                             Token Decimals:
                         </label>
                         <input
@@ -247,9 +247,9 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                             aria-label="Fungible token decimals"
                             min="0"
                             max="18"
-                            className="input-field w-24"
+                            className={"input-field w-24"}
                         />
-                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                        <span className={"text-xs"} style={{ color: 'var(--text-muted)' }}>
                             (sBTC uses 8 decimals)
                         </span>
                     </div>
@@ -257,14 +257,14 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-6">
+            <div className={"flex flex-col sm:flex-row gap-2 sm:gap-3 mb-6"}>
                 <button
                     type="button"
                     onClick={() => append({ to: '', amount: '' })}
-                    className="btn-secondary flex-1 sm:flex-initial justify-center"
+                    className={"btn-secondary flex-1 sm:flex-initial justify-center"}
                     disabled={fields.length >= modeMaxRecipients}
                 >
-                    <Plus aria-hidden="true" className="w-4 h-4" />
+                    <Plus aria-hidden="true" className={"w-4 h-4"} />
                     <span>Add Recipient</span>
                 </button>
                 <PasteModal onPaste={onPaste} max={modeMaxRecipients} />
@@ -272,67 +272,67 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             </div>
 
             {mode === 'ft' && (
-                <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
+                <p className={"text-xs mb-4"} style={{ color: 'var(--text-muted)' }}>
                     FT contract limit: up to {FT_MAX_RECIPIENTS} recipients per transaction.
                 </p>
             )}
             {typeof errors.recipients?.message === 'string' && (
-                <p role="alert" className="text-xs mb-4" style={{ color: 'var(--error)' }}>
+                <p role="alert" className={"text-xs mb-4"} style={{ color: 'var(--error)' }}>
                     {errors.recipients.message}
                 </p>
             )}
 
             {/* Recipients Table */}
-            <div className="table-wrapper mb-6">
+            <div className={"table-wrapper mb-6"}>
                 <div
-                    className="rounded-xl border overflow-hidden"
+                    className={"rounded-xl border overflow-hidden"}
                     style={{ borderColor: 'var(--border-color)' }}
                 >
-                    <table className="w-full">
+                    <table className={"w-full"}>
                         <thead>
                             <tr style={{ backgroundColor: 'var(--bg-tertiary)' }}>
                                 <th
-                                    className="text-left text-xs sm:text-sm font-medium px-2 sm:px-4 py-3"
+                                    className={"text-left text-xs sm:text-sm font-medium px-2 sm:px-4 py-3"}
                                     style={{ color: 'var(--text-secondary)' }}
                                 >
                                     Recipient Address
                                 </th>
                                 <th
-                                    className="text-left text-xs sm:text-sm font-medium px-2 sm:px-4 py-3 w-24 sm:w-36"
+                                    className={"text-left text-xs sm:text-sm font-medium px-2 sm:px-4 py-3 w-24 sm:w-36"}
                                     style={{ color: 'var(--text-secondary)' }}
                                 >
                                     Amount ({mode === 'stx' ? 'STX' : 'Tokens'})
                                 </th>
-                                <th className="w-12"></th>
+                                <th className={"w-12"}></th>
                             </tr>
                         </thead>
                         <tbody>
                             {fields.map((field, index) => (
                                 <tr
                                     key={field.id}
-                                    className="border-t transition-colors"
+                                    className={"border-t transition-colors"}
                                     style={{
                                         borderColor: 'var(--border-color)',
                                     }}
                                 >
-                                    <td className="px-2 sm:px-4 py-2">
+                                    <td className={"px-2 sm:px-4 py-2"}>
                                         <div>
                                             <input
                                                 {...register(`recipients.${index}.to`)}
                                                 placeholder="SP... or ST..."
                                                 aria-label={`Recipient ${index + 1} address`}
                                                 aria-invalid={Boolean(errors.recipients?.[index]?.to)}
-                                                className="w-full py-2 bg-transparent outline-none font-mono text-xs sm:text-sm"
+                                                className={"w-full py-2 bg-transparent outline-none font-mono text-xs sm:text-sm"}
                                                 style={{ color: 'var(--text-primary)' }}
                                             />
                                             {errors.recipients?.[index]?.to?.message && (
-                                                <p className="mt-1 text-xs" style={{ color: 'var(--error)' }}>
+                                                <p className={"mt-1 text-xs"} style={{ color: 'var(--error)' }}>
                                                     {errors.recipients?.[index]?.to?.message}
                                                 </p>
                                             )}
                                         </div>
                                     </td>
-                                    <td className="px-2 sm:px-4 py-2">
+                                    <td className={"px-2 sm:px-4 py-2"}>
                                         <div>
                                             <input
                                                 type="number"
@@ -342,26 +342,26 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                                                 step="any"
                                                 aria-label={`Recipient ${index + 1} amount`}
                                                 aria-invalid={Boolean(errors.recipients?.[index]?.amount)}
-                                                className="w-full py-2 bg-transparent outline-none text-xs sm:text-sm"
+                                                className={"w-full py-2 bg-transparent outline-none text-xs sm:text-sm"}
                                                 style={{ color: 'var(--text-primary)' }}
                                                 min="0"
                                             />
                                             {errors.recipients?.[index]?.amount?.message && (
-                                                <p className="mt-1 text-xs" style={{ color: 'var(--error)' }}>
+                                                <p className={"mt-1 text-xs"} style={{ color: 'var(--error)' }}>
                                                     {errors.recipients?.[index]?.amount?.message}
                                                 </p>
                                             )}
                                         </div>
                                     </td>
-                                    <td className="px-2 py-2">
+                                    <td className={"px-2 py-2"}>
                                         <button
                                             type="button"
                                             onClick={() => remove(index)}
                                             aria-label={`Remove recipient ${index + 1}`}
-                                            className="p-2 rounded-lg transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"
+                                            className={"p-2 rounded-lg transition-colors hover:bg-red-50 dark:hover:bg-red-900/20"}
                                             style={{ color: 'var(--error)' }}
                                         >
-                                            <Trash2 aria-hidden="true" className="w-4 h-4" />
+                                            <Trash2 aria-hidden="true" className={"w-4 h-4"} />
                                         </button>
                                     </td>
                                 </tr>
@@ -370,7 +370,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                                 <tr>
                                     <td
                                         colSpan={3}
-                                        className="px-4 py-8 text-center text-sm"
+                                        className={"px-4 py-8 text-center text-sm"}
                                         style={{ color: 'var(--text-muted)' }}
                                     >
                                         No recipients added yet. Click "Add Recipient" to start.
@@ -386,13 +386,13 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             <div
                 role="status"
                 aria-live="polite"
-                className="flex items-center justify-between p-4 rounded-xl mb-6"
+                className={"flex items-center justify-between p-4 rounded-xl mb-6"}
                 style={{ backgroundColor: 'var(--bg-tertiary)' }}
             >
-                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                <span className={"text-sm"} style={{ color: 'var(--text-secondary)' }}>
                     {fields.length} / {modeMaxRecipients} recipients
                 </span>
-                <span className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
+                <span className={"text-lg font-bold"} style={{ color: 'var(--text-primary)' }}>
                     Total: {total.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 6 })} {mode === 'stx' ? 'STX' : 'tokens'}
                 </span>
             </div>
@@ -402,16 +402,16 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
                 type="submit"
                 disabled={fields.length === 0 || fields.length > modeMaxRecipients || isSubmitting}
                 aria-busy={isSubmitting}
-                className="btn-primary w-full justify-center text-lg py-4"
+                className={"btn-primary w-full justify-center text-lg py-4"}
             >
                 {isSubmitting ? (
                     <>
-                        <Loader2 aria-hidden="true" className="w-5 h-5 animate-spin" />
+                        <Loader2 aria-hidden="true" className={"w-5 h-5 animate-spin"} />
                         <span>Sending...</span>
                     </>
                 ) : (
                     <>
-                        <Send aria-hidden="true" className="w-5 h-5" />
+                        <Send aria-hidden="true" className={"w-5 h-5"} />
                         <span>Send Transaction</span>
                     </>
                 )}
@@ -421,7 +421,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             {status && (
                 <div
                     role={isStatusError ? 'alert' : 'status'}
-                    className="mt-4 p-4 rounded-xl text-sm"
+                    className={"mt-4 p-4 rounded-xl text-sm"}
                     aria-live="polite"
                     style={{
                         backgroundColor: isStatusError
