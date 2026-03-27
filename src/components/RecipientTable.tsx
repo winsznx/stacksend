@@ -176,7 +176,7 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             } else {
                 setStatus('Transaction submitted. Check your wallet for confirmation.');
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Transaction error:', err);
             if (err.code === 4001) {
                 setStatus('Transaction was cancelled by user.');
