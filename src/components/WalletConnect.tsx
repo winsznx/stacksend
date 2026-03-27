@@ -74,7 +74,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
     const isDark = theme === 'dark';
 
     return (
-        <div 
+        <div
             className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden transition-colors duration-300"
             style={{
                 backgroundColor: isDark ? 'var(--bg-primary)' : '#fafafa'
@@ -87,13 +87,13 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     letter-spacing: 0.02em;
                     font-weight: 600;
                 }
-                
+
                 .gaming-font-title {
                     font-family: 'Orbitron', 'Inter', sans-serif;
                     letter-spacing: 0.03em;
                     font-weight: 900;
                 }
-                
+
                 /* Animated Grid Background */
                 .grid-background {
                     position: fixed;
@@ -105,25 +105,25 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     z-index: 0;
                     opacity: 0.5;
                 }
-                
+
                 .grid-background-light {
-                    background-image: 
+                    background-image:
                         linear-gradient(0deg, transparent 24%, rgba(249, 115, 22, 0.08) 25%, rgba(249, 115, 22, 0.08) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.08) 75%, rgba(249, 115, 22, 0.08) 76%, transparent 77%, transparent),
                         linear-gradient(90deg, transparent 24%, rgba(249, 115, 22, 0.08) 25%, rgba(249, 115, 22, 0.08) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.08) 75%, rgba(249, 115, 22, 0.08) 76%, transparent 77%, transparent);
                     background-size: 50px 50px;
                     background-position: 0 0, 25px 25px;
                     animation: gridShift 30s linear infinite;
                 }
-                
+
                 .grid-background-dark {
-                    background-image: 
+                    background-image:
                         linear-gradient(0deg, transparent 24%, rgba(249, 115, 22, 0.12) 25%, rgba(249, 115, 22, 0.12) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.12) 75%, rgba(249, 115, 22, 0.12) 76%, transparent 77%, transparent),
                         linear-gradient(90deg, transparent 24%, rgba(249, 115, 22, 0.12) 25%, rgba(249, 115, 22, 0.12) 26%, transparent 27%, transparent 74%, rgba(249, 115, 22, 0.12) 75%, rgba(249, 115, 22, 0.12) 76%, transparent 77%, transparent);
                     background-size: 50px 50px;
                     background-position: 0 0, 25px 25px;
                     animation: gridShift 30s linear infinite;
                 }
-                
+
                 @keyframes gridShift {
                     0% {
                         background-position: 0 0, 25px 25px;
@@ -132,14 +132,14 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         background-position: 50px 50px, 75px 75px;
                     }
                 }
-                
+
                 /* Moving Glowing Border Container */
                 .glowing-border-container {
                     position: relative;
                     border-radius: 12px;
                     overflow: hidden;
                 }
-                
+
                 /* Top border glow - moves left to right */
                 .glowing-border-top {
                     position: absolute;
@@ -152,7 +152,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     animation: borderTopMove 3s ease-in-out infinite;
                     z-index: 2;
                 }
-                
+
                 /* Right border glow - moves top to bottom */
                 .glowing-border-right {
                     position: absolute;
@@ -166,7 +166,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     animation-delay: 0.75s;
                     z-index: 2;
                 }
-                
+
                 /* Bottom border glow - moves right to left */
                 .glowing-border-bottom {
                     position: absolute;
@@ -180,7 +180,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     animation-delay: 1.5s;
                     z-index: 2;
                 }
-                
+
                 /* Left border glow - moves bottom to top */
                 .glowing-border-left {
                     position: absolute;
@@ -194,7 +194,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     animation-delay: 2.25s;
                     z-index: 2;
                 }
-                
+
                 /* Top border animation - left to right */
                 @keyframes borderTopMove {
                     0% {
@@ -207,7 +207,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         left: 100%;
                     }
                 }
-                
+
                 /* Right border animation - top to bottom */
                 @keyframes borderRightMove {
                     0% {
@@ -220,7 +220,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         top: 100%;
                     }
                 }
-                
+
                 /* Bottom border animation - right to left */
                 @keyframes borderBottomMove {
                     0% {
@@ -233,7 +233,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         right: 100%;
                     }
                 }
-                
+
                 /* Left border animation - bottom to top */
                 @keyframes borderLeftMove {
                     0% {
@@ -246,7 +246,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         bottom: 100%;
                     }
                 }
-                
+
                 /* Glossy Card Effect */
                 .glossy-card {
                     position: relative;
@@ -254,25 +254,25 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     border-radius: 12px;
                     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
                 }
-                
+
                 .glossy-card-light {
                     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 244, 245, 0.95) 100%);
                     border: 1.5px solid rgba(249, 115, 22, 0.15);
                     backdrop-filter: blur(8px);
-                    box-shadow: 
+                    box-shadow:
                         0 4px 6px rgba(0, 0, 0, 0.05),
                         inset 0 1px 0 rgba(255, 255, 255, 0.8);
                 }
-                
+
                 .glossy-card-dark {
                     background: linear-gradient(135deg, rgba(24, 24, 27, 0.9) 0%, rgba(39, 39, 42, 0.9) 100%);
                     border: 1.5px solid rgba(249, 115, 22, 0.2);
                     backdrop-filter: blur(8px);
-                    box-shadow: 
+                    box-shadow:
                         0 4px 6px rgba(0, 0, 0, 0.3),
                         inset 0 1px 0 rgba(255, 255, 255, 0.05);
                 }
-                
+
                 .glossy-card::before {
                     content: '';
                     position: absolute;
@@ -284,7 +284,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     animation: shine 4s infinite;
                     pointer-events: none;
                 }
-                
+
                 @keyframes shine {
                     0% {
                         transform: translateX(-100%) translateY(-100%) rotate(45deg);
@@ -293,25 +293,25 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         transform: translateX(100%) translateY(100%) rotate(45deg);
                     }
                 }
-                
+
                 .glossy-card:hover {
                     transform: translateY(-6px);
                 }
-                
+
                 .glossy-card-light:hover {
                     border-color: rgba(249, 115, 22, 0.35);
-                    box-shadow: 
+                    box-shadow:
                         0 12px 24px rgba(249, 115, 22, 0.12),
                         inset 0 1px 0 rgba(255, 255, 255, 0.8);
                 }
-                
+
                 .glossy-card-dark:hover {
                     border-color: rgba(249, 115, 22, 0.4);
-                    box-shadow: 
+                    box-shadow:
                         0 12px 24px rgba(249, 115, 22, 0.2),
                         inset 0 1px 0 rgba(255, 255, 255, 0.05);
                 }
-                
+
                 /* Primary Button Styles */
                 .glow-button {
                     position: relative;
@@ -327,13 +327,13 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     align-items: center;
                     justify-content: center;
                     gap: 0.5rem;
-                    box-shadow: 
+                    box-shadow:
                         0 4px 15px rgba(249, 115, 22, 0.3),
                         inset 0 1px 0 rgba(255, 255, 255, 0.2);
                     font-family: 'Inter', system-ui, sans-serif;
                     overflow: hidden;
                 }
-                
+
                 .glow-button::before {
                     content: '';
                     position: absolute;
@@ -344,24 +344,24 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
                     animation: shine 3s infinite;
                 }
-                
+
                 .glow-button:hover:not(:disabled) {
-                    box-shadow: 
+                    box-shadow:
                         0 8px 30px rgba(249, 115, 22, 0.6),
                         inset 0 1px 0 rgba(255, 255, 255, 0.3);
                     transform: translateY(-3px) scale(1.02);
                     border-color: rgba(255, 255, 255, 0.4);
                 }
-                
+
                 .glow-button:active:not(:disabled) {
                     transform: translateY(-1px) scale(0.98);
                 }
-                
+
                 .glow-button:disabled {
                     opacity: 0.5;
                     cursor: not-allowed;
                 }
-                
+
                 /* Secondary Button */
                 .secondary-button {
                     position: relative;
@@ -376,36 +376,36 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     padding: 0.875rem 1.75rem;
                     font-family: 'Inter', system-ui, sans-serif;
                 }
-                
+
                 .secondary-button-light {
                     background: linear-gradient(135deg, rgba(244, 244, 245, 0.95) 0%, rgba(229, 229, 231, 0.95) 100%);
                     border: 1.5px solid rgba(249, 115, 22, 0.2);
                     color: #18181b;
                     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
                 }
-                
+
                 .secondary-button-dark {
                     background: linear-gradient(135deg, rgba(39, 39, 42, 0.8) 0%, rgba(24, 24, 27, 0.8) 100%);
                     border: 1.5px solid rgba(249, 115, 22, 0.25);
                     color: #fafafa;
                     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
                 }
-                
+
                 .secondary-button:hover {
                     border-color: rgba(249, 115, 22, 0.5);
                     transform: translateY(-2px);
                 }
-                
+
                 .secondary-button-light:hover {
                     box-shadow: 0 8px 16px rgba(249, 115, 22, 0.15);
                     background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(244, 244, 245, 0.95) 100%);
                 }
-                
+
                 .secondary-button-dark:hover {
                     box-shadow: 0 8px 16px rgba(249, 115, 22, 0.25);
                     background: linear-gradient(135deg, rgba(52, 52, 55, 0.9) 0%, rgba(39, 39, 42, 0.9) 100%);
                 }
-                
+
                 /* Theme Toggle */
                 .theme-toggle {
                     background: transparent;
@@ -419,29 +419,29 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     align-items: center;
                     justify-content: center;
                 }
-                
+
                 .theme-toggle:hover {
                     border-color: rgba(249, 115, 22, 0.5);
                     box-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
                     transform: scale(1.1);
                 }
-                
+
                 /* Error Box */
                 .error-box-light {
                     background: linear-gradient(135deg, rgba(254, 242, 242, 0.95) 0%, rgba(254, 226, 226, 0.95) 100%);
                     border: 1.5px solid rgba(239, 68, 68, 0.3);
                 }
-                
+
                 .error-box-dark {
                     background: linear-gradient(135deg, rgba(127, 29, 29, 0.2) 0%, rgba(153, 27, 27, 0.15) 100%);
                     border: 1.5px solid rgba(239, 68, 68, 0.3);
                 }
-                
+
                 /* Animations */
                 .animate-slide-up {
                     animation: slideUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
                 }
-                
+
                 @keyframes slideUp {
                     from {
                         opacity: 0;
@@ -452,7 +452,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         transform: translateY(0);
                     }
                 }
-                
+
                 /* Neon Text Effect */
                 .neon-text-light {
                     background: linear-gradient(90deg, #f97316, #ea580c, #f97316);
@@ -460,14 +460,14 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     -webkit-text-fill-color: transparent;
                     background-clip: text;
                 }
-                
+
                 .neon-text-dark {
                     background: linear-gradient(90deg, #fb923c, #f97316, #fb923c);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                     background-clip: text;
                 }
-                
+
                 /* Status Indicator */
                 .status-indicator {
                     display: inline-flex;
@@ -477,19 +477,19 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     border-radius: 10px;
                     font-size: 0.875rem;
                 }
-                
+
                 .status-indicator-light {
                     background: rgba(244, 244, 245, 0.95);
                     border: 1px solid rgba(249, 115, 22, 0.2);
                     color: #18181b;
                 }
-                
+
                 .status-indicator-dark {
                     background: rgba(39, 39, 42, 0.9);
                     border: 1px solid rgba(249, 115, 22, 0.3);
                     color: #fafafa;
                 }
-                
+
                 /* Feature Card */
                 .feature-card {
                     padding: 1.5rem;
@@ -497,31 +497,31 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     text-align: center;
                     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
                 }
-                
+
                 .feature-card-light {
                     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 244, 245, 0.9) 100%);
                     border: 1.5px solid rgba(249, 115, 22, 0.15);
                 }
-                
+
                 .feature-card-dark {
                     background: linear-gradient(135deg, rgba(39, 39, 42, 0.8) 0%, rgba(24, 24, 27, 0.8) 100%);
                     border: 1.5px solid rgba(249, 115, 22, 0.2);
                 }
-                
+
                 .feature-card:hover {
                     transform: translateY(-8px);
                 }
-                
+
                 .feature-card-light:hover {
                     border-color: rgba(249, 115, 22, 0.35);
                     box-shadow: 0 12px 24px rgba(249, 115, 22, 0.1);
                 }
-                
+
                 .feature-card-dark:hover {
                     border-color: rgba(249, 115, 22, 0.4);
                     box-shadow: 0 12px 24px rgba(249, 115, 22, 0.15);
                 }
-                
+
                 /* Icon Background */
                 .icon-bg {
                     width: 3rem;
@@ -533,13 +533,13 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     margin: 0 auto 1rem;
                     background: linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0.05) 100%);
                 }
-                
+
                 /* Responsive */
                 @media (max-width: 640px) {
                     .gaming-font-title {
                         font-size: 2.25rem;
                     }
-                    
+
                     .glow-button, .secondary-button {
                         padding: 0.75rem 1.5rem;
                         font-size: 0.875rem;
@@ -569,8 +569,8 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                 {/* Logo */}
                 <div className="flex justify-center mb-8">
                     <div className={`w-20 h-20 rounded-2xl flex items-center justify-center shadow-2xl relative group ${
-                        isDark 
-                            ? 'bg-gradient-to-br from-orange-600 to-orange-700 shadow-orange-500/30' 
+                        isDark
+                            ? 'bg-gradient-to-br from-orange-600 to-orange-700 shadow-orange-500/30'
                             : 'bg-gradient-to-br from-orange-500 to-orange-600 shadow-orange-400/30'
                     }`}>
                         <div className={`absolute inset-0 rounded-2xl ${isDark ? 'bg-gradient-to-t from-transparent via-white/5 to-transparent' : 'bg-gradient-to-t from-transparent via-white/20 to-transparent'}`}></div>
