@@ -50,3 +50,6 @@ export const NETWORKS = Object.freeze({
         explorerUrl: 'https://explorer.stacks.co/?chain=testnet',
     },
 } as const;
+
+
+export type {};
