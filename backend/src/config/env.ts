@@ -72,3 +72,6 @@ export const config = {
         secret: parsed.data.WEBHOOK_SECRET ?? null,
     },
 };
+
+
+export type {};
