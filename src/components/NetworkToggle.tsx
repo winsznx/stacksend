@@ -34,10 +34,10 @@ export const NetworkToggle: React.FC = () => {
     };
 
     return (
-        <div className="relative">
+        <div className={"relative"}>
             <button type="button"
                 onClick={toggle}
-                className="btn-ghost text-sm"
+                className={"btn-ghost text-sm"}
                 aria-label={`Switch to ${isMainnet ? 'Testnet' : 'Mainnet'}`}
                 aria-pressed={!isMainnet}
                 style={{
@@ -47,13 +47,13 @@ export const NetworkToggle: React.FC = () => {
             >
                 {isMainnet ? (
                     <>
-                        <Globe className="w-4 h-4" />
-                        <span className="hidden sm:inline">Mainnet</span>
+                        <Globe className={"w-4 h-4"} />
+                        <span className={"hidden sm:inline"}>Mainnet</span>
                     </>
                 ) : (
                     <>
-                        <TestTube className="w-4 h-4" />
-                        <span className="hidden sm:inline">Testnet</span>
+                        <TestTube className={"w-4 h-4"} />
+                        <span className={"hidden sm:inline"}>Testnet</span>
                     </>
                 )}
             </button>
@@ -62,20 +62,20 @@ export const NetworkToggle: React.FC = () => {
             {showAlert && (
                 <div
                     role="status"
-                    className="absolute top-full right-0 mt-2 p-3 rounded-lg shadow-lg z-50 w-64 animate-slide-up"
+                    className={"absolute top-full right-0 mt-2 p-3 rounded-lg shadow-lg z-50 w-64 animate-slide-up"}
                     aria-live="polite"
                     style={{
                         backgroundColor: 'var(--bg-secondary)',
                         border: '1px solid var(--border-color)'
                     }}
                 >
-                    <div className="flex items-start gap-2">
-                        <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: 'var(--warning)' }} />
+                    <div className={"flex items-start gap-2"}>
+                        <AlertCircle className={"w-4 h-4 flex-shrink-0 mt-0.5"} style={{ color: 'var(--warning)' }} />
                         <div>
-                            <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                            <p className={"text-sm font-medium"} style={{ color: 'var(--text-primary)' }}>
                                 Switched to {isMainnet ? 'Mainnet' : 'Testnet'}
                             </p>
-                            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                            <p className={"text-xs mt-1"} style={{ color: 'var(--text-muted)' }}>
                                 Please also switch your wallet to {isMainnet ? 'Mainnet' : 'Testnet'} for transactions to work.
                             </p>
                         </div>
