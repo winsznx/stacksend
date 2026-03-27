@@ -26,14 +26,14 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
             <button
                 type="button"
                 onClick={() => setIsOpen(true)}
-                className="btn-secondary flex-1 sm:flex-initial justify-center"
+                className={"btn-secondary flex-1 sm:flex-initial justify-center"}
             >
-                <Clipboard aria-hidden="true" className="w-4 h-4" />
+                <Clipboard aria-hidden="true" className={"w-4 h-4"} />
                 <span>Paste Addresses</span>
             </button>
 
             <Transition show={isOpen} as={Fragment}>
-                <Dialog onClose={() => setIsOpen(false)} className="relative z-50">
+                <Dialog onClose={() => setIsOpen(false)} className={"relative z-50"}>
                     {/* Backdrop */}
                     <Transition.Child
                         as={Fragment}
@@ -44,11 +44,11 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
+                        <div className={"fixed inset-0 bg-black/50 backdrop-blur-sm"} />
                     </Transition.Child>
 
                     {/* Modal */}
-                    <div className="fixed inset-0 flex items-center justify-center p-4">
+                    <div className={"fixed inset-0 flex items-center justify-center p-4"}>
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-200"
@@ -59,12 +59,12 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel
-                                className="w-full max-w-lg rounded-2xl p-4 sm:p-6 shadow-2xl"
+                                className={"w-full max-w-lg rounded-2xl p-4 sm:p-6 shadow-2xl"}
                                 style={{ backgroundColor: 'var(--bg-secondary)' }}
                             >
-                                <div className="flex items-center justify-between mb-4">
+                                <div className={"flex items-center justify-between mb-4"}>
                                     <Dialog.Title
-                                        className="text-lg font-semibold"
+                                        className={"text-lg font-semibold"}
                                         style={{ color: 'var(--text-primary)' }}
                                     >
                                         Paste Addresses
@@ -72,15 +72,15 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                     <button type="button"
                                         onClick={() => setIsOpen(false)}
                                         aria-label="Close paste addresses dialog"
-                                        className="p-2 rounded-lg transition-colors"
+                                        className={"p-2 rounded-lg transition-colors"}
                                         style={{ color: 'var(--text-muted)' }}
                                     >
-                                        <X aria-hidden="true" className="w-5 h-5" />
+                                        <X aria-hidden="true" className={"w-5 h-5"} />
                                     </button>
                                 </div>
 
                                 <p
-                                    className="text-sm mb-4"
+                                    className={"text-sm mb-4"}
                                     style={{ color: 'var(--text-secondary)' }}
                                 >
                                     Paste multiple addresses, one per line or comma-separated.
@@ -92,12 +92,12 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                     spellCheck={false}
                                     aria-label="Paste recipient addresses"
                                     placeholder="SP1234...&#10;SP5678...&#10;or SP1234..., SP5678..."
-                                    className="input-field h-40 resize-none font-mono text-sm mb-4"
+                                    className={"input-field h-40 resize-none font-mono text-sm mb-4"}
                                 />
 
                                 <div
                                     role="status"
-                                    className="flex items-center justify-between text-sm mb-4"
+                                    className={"flex items-center justify-between text-sm mb-4"}
                                     aria-live="polite"
                                     style={{ color: 'var(--text-muted)' }}
                                 >
@@ -109,18 +109,18 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                     </span>
                                 </div>
 
-                                <div className="flex flex-col-reverse sm:flex-row gap-3 justify-end">
+                                <div className={"flex flex-col-reverse sm:flex-row gap-3 justify-end"}>
                                     <button
                                         type="button"
                                         onClick={() => setIsOpen(false)}
-                                        className="btn-ghost justify-center"
+                                        className={"btn-ghost justify-center"}
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="button"
                                         onClick={handlePaste}
-                                        className="btn-primary justify-center"
+                                        className={"btn-primary justify-center"}
                                         disabled={addressCount === 0}
                                     >
                                         Add {Math.min(addressCount, max)} Address{addressCount !== 1 ? 'es' : ''}
