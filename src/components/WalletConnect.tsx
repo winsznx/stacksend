@@ -41,7 +41,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
         setIsConnecting(true);
         try {
             await authenticate();
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Stacks connection error:', err);
             setError(err?.message || 'Failed to connect Stacks wallet. Please try again.');
         } finally {
@@ -54,7 +54,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
         setIsConnecting(true);
         try {
             await connectBitcoin();
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Bitcoin connection error:', err);
             setError(err?.message || 'Failed to connect Bitcoin wallet. Please try again.');
         } finally {
