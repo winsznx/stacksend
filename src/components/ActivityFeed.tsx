@@ -249,3 +249,6 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
         </div>
     );
 }
+
+
+export type {};
