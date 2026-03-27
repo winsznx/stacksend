@@ -94,3 +94,6 @@ export const stxToMicroStx = (stx: number): number => {
 export const microStxToStx = (microStx: number): number => {
   return microStx / 1_000_000;
 };
+
+
+export type {};
