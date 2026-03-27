@@ -134,3 +134,6 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
         </>
     );
 };
+
+
+export type {};
