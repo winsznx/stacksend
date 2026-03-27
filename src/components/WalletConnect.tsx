@@ -75,7 +75,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
 
     return (
         <div
-            className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden transition-colors duration-300"
+            className={"min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden transition-colors duration-300"}
             style={{
                 backgroundColor: isDark ? 'var(--bg-primary)' : '#fafafa'
             }}
@@ -553,28 +553,28 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
             {/* Theme Toggle - Top Right */}
             <button
                 onClick={toggleTheme}
-                className="absolute top-6 right-6 theme-toggle z-20"
+                className={"absolute top-6 right-6 theme-toggle z-20"}
                 aria-label="Toggle theme"
                 aria-pressed={isDark}
                 title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
                 {isDark ? (
-                    <FiSun className="w-5 h-5" />
+                    <FiSun className={"w-5 h-5"} />
                 ) : (
-                    <FiMoon className="w-5 h-5" />
+                    <FiMoon className={"w-5 h-5"} />
                 )}
             </button>
 
-            <div className="max-w-2xl w-full text-center animate-slide-up relative z-10">
+            <div className={"max-w-2xl w-full text-center animate-slide-up relative z-10"}>
                 {/* Logo */}
-                <div className="flex justify-center mb-8">
+                <div className={"flex justify-center mb-8"}>
                     <div className={`w-20 h-20 rounded-2xl flex items-center justify-center shadow-2xl relative group ${
                         isDark
                             ? 'bg-gradient-to-br from-orange-600 to-orange-700 shadow-orange-500/30'
                             : 'bg-gradient-to-br from-orange-500 to-orange-600 shadow-orange-400/30'
                     }`}>
                         <div className={`absolute inset-0 rounded-2xl ${isDark ? 'bg-gradient-to-t from-transparent via-white/5 to-transparent' : 'bg-gradient-to-t from-transparent via-white/20 to-transparent'}`}></div>
-                        <MdLayers className="w-10 h-10 text-white relative z-10" />
+                        <MdLayers className={"w-10 h-10 text-white relative z-10"} />
                     </div>
                 </div>
 
@@ -593,26 +593,26 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                 {/* Main Content Area */}
                 {isAuthenticated ? (
                     /* Already Connected - Show Go to App */
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                    <div className={"flex flex-col sm:flex-row gap-4 justify-center mb-8"}>
                         <button
                             onClick={handleEnterApp}
-                            className="glow-button"
+                            className={"glow-button"}
                         >
-                            <FiLogIn className="w-5 h-5" />
+                            <FiLogIn className={"w-5 h-5"} />
                             <span>Go to App</span>
-                            <FiArrowRight className="w-5 h-5" />
+                            <FiArrowRight className={"w-5 h-5"} />
                         </button>
                         <div
                             role="status"
                             aria-live="polite"
                             className={`status-indicator ${isDark ? 'status-indicator-dark' : 'status-indicator-light'}`}
                         >
-                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                            <span className="text-sm font-mono">
+                            <div className={"w-2 h-2 rounded-full bg-green-500 animate-pulse"}></div>
+                            <span className={"text-sm font-mono"}>
                                 {walletType === 'stacks' && stxAddress && `${stxAddress.slice(0, 8)}...${stxAddress.slice(-6)}`}
                                 {walletType === 'bitcoin' && btcAddress && `${btcAddress.slice(0, 8)}...${btcAddress.slice(-6)}`}
                             </span>
-                            <span className="text-xs px-2 py-1 rounded bg-orange-500/20 text-orange-600 dark:text-orange-300 border border-orange-500/40">
+                            <span className={"text-xs px-2 py-1 rounded bg-orange-500/20 text-orange-600 dark:text-orange-300 border border-orange-500/40"}>
                                 {walletType === 'stacks' ? 'Stacks' : 'Bitcoin'}
                             </span>
                         </div>
@@ -623,19 +623,19 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         <p className={`text-base mb-6 gaming-font ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                             Choose your wallet type to connect
                         </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-8">
+                        <div className={"grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-8"}>
                             {/* Stacks Wallet Option */}
-                            <div className="glowing-border-container">
-                                <div className="glowing-border-top"></div>
-                                <div className="glowing-border-right"></div>
-                                <div className="glowing-border-bottom"></div>
-                                <div className="glowing-border-left"></div>
+                            <div className={"glowing-border-container"}>
+                                <div className={"glowing-border-top"}></div>
+                                <div className={"glowing-border-right"}></div>
+                                <div className={"glowing-border-bottom"}></div>
+                                <div className={"glowing-border-left"}></div>
                                 <button
                                     onClick={() => setSelectedWalletType('stacks')}
                                     className={`glossy-card ${isDark ? 'glossy-card-dark' : 'glossy-card-light'} p-6 text-center w-full`}
                                 >
-                                    <div className="icon-bg">
-                                        <MdLayers className="w-6 h-6 text-orange-600" />
+                                    <div className={"icon-bg"}>
+                                        <MdLayers className={"w-6 h-6 text-orange-600"} />
                                     </div>
                                     <h3 className={`gaming-font font-semibold text-lg mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                         Stacks Wallet
@@ -647,18 +647,18 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                             </div>
 
                             {/* Bitcoin Wallet Option */}
-                            <div className="glowing-border-container">
-                                <div className="glowing-border-top"></div>
-                                <div className="glowing-border-right"></div>
-                                <div className="glowing-border-bottom"></div>
-                                <div className="glowing-border-left"></div>
+                            <div className={"glowing-border-container"}>
+                                <div className={"glowing-border-top"}></div>
+                                <div className={"glowing-border-right"}></div>
+                                <div className={"glowing-border-bottom"}></div>
+                                <div className={"glowing-border-left"}></div>
                                 <button
                                     onClick={() => setSelectedWalletType('bitcoin')}
                                     disabled={!isReownConfigured}
                                     className={`glossy-card ${isDark ? 'glossy-card-dark' : 'glossy-card-light'} p-6 text-center w-full disabled:opacity-50 disabled:cursor-not-allowed`}
                                 >
-                                    <div className="icon-bg">
-                                        <SiBitcoin className="w-6 h-6 text-orange-600" />
+                                    <div className={"icon-bg"}>
+                                        <SiBitcoin className={"w-6 h-6 text-orange-600"} />
                                     </div>
                                     <h3 className={`gaming-font font-semibold text-lg mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                         Bitcoin Wallet
@@ -667,7 +667,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                                         Connect with Leather, Xverse, or other Bitcoin wallets
                                     </p>
                                     {!isReownConfigured && (
-                                        <p className="text-xs mt-2 text-red-600 dark:text-red-400">
+                                        <p className={"text-xs mt-2 text-red-600 dark:text-red-400"}>
                                             Configuration required
                                         </p>
                                     )}
@@ -685,27 +685,27 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                     </>
                 ) : (
                     /* Step 2: Connect Selected Wallet Type */
-                    <div className="flex flex-col gap-4 max-w-md mx-auto mb-8">
+                    <div className={"flex flex-col gap-4 max-w-md mx-auto mb-8"}>
                         <button
                             onClick={selectedWalletType === 'stacks' ? handleConnectStacks : handleConnectBitcoin}
                             disabled={isConnecting || loading}
                             aria-busy={isConnecting || loading}
-                            className="glow-button w-full"
+                            className={"glow-button w-full"}
                         >
                             {isConnecting || loading ? (
                                 <>
-                                    <AiOutlineLoading3Quarters className="w-5 h-5 animate-spin" />
+                                    <AiOutlineLoading3Quarters className={"w-5 h-5 animate-spin"} />
                                     <span>Connecting...</span>
                                 </>
                             ) : (
                                 <>
                                     {selectedWalletType === 'stacks' ? (
-                                        <MdLayers className="w-5 h-5" />
+                                        <MdLayers className={"w-5 h-5"} />
                                     ) : (
-                                        <SiBitcoin className="w-5 h-5" />
+                                        <SiBitcoin className={"w-5 h-5"} />
                                     )}
                                     <span>Connect {selectedWalletType === 'stacks' ? 'Stacks' : 'Bitcoin'} Wallet</span>
-                                    <FiArrowRight className="w-5 h-5" />
+                                    <FiArrowRight className={"w-5 h-5"} />
                                 </>
                             )}
                         </button>
@@ -738,14 +738,14 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
 
                 {/* Feature Cards */}
                 <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 border-t ${isDark ? 'border-orange-500/15' : 'border-orange-500/10'}`}>
-                    <div className="glowing-border-container">
-                        <div className="glowing-border-top"></div>
-                        <div className="glowing-border-right"></div>
-                        <div className="glowing-border-bottom"></div>
-                        <div className="glowing-border-left"></div>
+                    <div className={"glowing-border-container"}>
+                        <div className={"glowing-border-top"}></div>
+                        <div className={"glowing-border-right"}></div>
+                        <div className={"glowing-border-bottom"}></div>
+                        <div className={"glowing-border-left"}></div>
                         <div className={`feature-card ${isDark ? 'feature-card-dark' : 'feature-card-light'}`}>
-                            <div className="icon-bg">
-                                <FiZap className="w-6 h-6 text-orange-600" />
+                            <div className={"icon-bg"}>
+                                <FiZap className={"w-6 h-6 text-orange-600"} />
                             </div>
                             <h3 className={`gaming-font font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                 Efficient
@@ -756,14 +756,14 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         </div>
                     </div>
 
-                    <div className="glowing-border-container">
-                        <div className="glowing-border-top"></div>
-                        <div className="glowing-border-right"></div>
-                        <div className="glowing-border-bottom"></div>
-                        <div className="glowing-border-left"></div>
+                    <div className={"glowing-border-container"}>
+                        <div className={"glowing-border-top"}></div>
+                        <div className={"glowing-border-right"}></div>
+                        <div className={"glowing-border-bottom"}></div>
+                        <div className={"glowing-border-left"}></div>
                         <div className={`feature-card ${isDark ? 'feature-card-dark' : 'feature-card-light'}`}>
-                            <div className="icon-bg">
-                                <FiShield className="w-6 h-6 text-orange-600" />
+                            <div className={"icon-bg"}>
+                                <FiShield className={"w-6 h-6 text-orange-600"} />
                             </div>
                             <h3 className={`gaming-font font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                 Secure
@@ -774,14 +774,14 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
                         </div>
                     </div>
 
-                    <div className="glowing-border-container">
-                        <div className="glowing-border-top"></div>
-                        <div className="glowing-border-right"></div>
-                        <div className="glowing-border-bottom"></div>
-                        <div className="glowing-border-left"></div>
+                    <div className={"glowing-border-container"}>
+                        <div className={"glowing-border-top"}></div>
+                        <div className={"glowing-border-right"}></div>
+                        <div className={"glowing-border-bottom"}></div>
+                        <div className={"glowing-border-left"}></div>
                         <div className={`feature-card ${isDark ? 'feature-card-dark' : 'feature-card-light'}`}>
-                            <div className="icon-bg">
-                                <FiUsers className="w-6 h-6 text-orange-600" />
+                            <div className={"icon-bg"}>
+                                <FiUsers className={"w-6 h-6 text-orange-600"} />
                             </div>
                             <h3 className={`gaming-font font-semibold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
                                 User Friendly
