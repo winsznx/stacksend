@@ -128,15 +128,15 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
             <button
                 type="button"
                 onClick={() => setIsOpen(true)}
-                className="btn-secondary flex-1 sm:flex-initial justify-center"
+                className={"btn-secondary flex-1 sm:flex-initial justify-center"}
                 disabled={recipientCount === 0}
             >
-                <Calculator className="w-4 h-4" />
+                <Calculator className={"w-4 h-4"} />
                 <span>Bulk Amount</span>
             </button>
 
             <Transition show={isOpen} as={Fragment}>
-                <Dialog onClose={handleClose} className="relative z-50">
+                <Dialog onClose={handleClose} className={"relative z-50"}>
                     {/* Backdrop */}
                     <Transition.Child
                         as={Fragment}
@@ -147,11 +147,11 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
+                        <div className={"fixed inset-0 bg-black/50 backdrop-blur-sm"} />
                     </Transition.Child>
 
                     {/* Modal */}
-                    <div className="fixed inset-0 flex items-center justify-center p-4">
+                    <div className={"fixed inset-0 flex items-center justify-center p-4"}>
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-200"
@@ -162,12 +162,12 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel
-                                className="w-full max-w-2xl rounded-2xl p-4 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto"
+                                className={"w-full max-w-2xl rounded-2xl p-4 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto"}
                                 style={{ backgroundColor: 'var(--bg-secondary)' }}
                             >
-                                <div className="flex items-center justify-between mb-4">
+                                <div className={"flex items-center justify-between mb-4"}>
                                     <Dialog.Title
-                                        className="text-lg font-semibold"
+                                        className={"text-lg font-semibold"}
                                         style={{ color: 'var(--text-primary)' }}
                                     >
                                         Bulk Amount Assignment
@@ -175,22 +175,22 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                     <button type="button"
                                         onClick={handleClose}
                                         aria-label="Close bulk amount dialog"
-                                        className="p-2 rounded-lg transition-colors"
+                                        className={"p-2 rounded-lg transition-colors"}
                                         style={{ color: 'var(--text-muted)' }}
                                     >
-                                        <X className="w-5 h-5" />
+                                        <X className={"w-5 h-5"} />
                                     </button>
                                 </div>
 
                                 <p
-                                    className="text-sm mb-4"
+                                    className={"text-sm mb-4"}
                                     style={{ color: 'var(--text-secondary)' }}
                                 >
                                     Assign amounts to multiple recipients at once. You have {recipientCount} recipient{recipientCount !== 1 ? 's' : ''}.
                                 </p>
 
                                 {/* Mode Selector */}
-                                <div className="flex flex-col sm:flex-row gap-2 mb-6">
+                                <div className={"flex flex-col sm:flex-row gap-2 mb-6"}>
                                     <label
                                         className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg cursor-pointer transition-all flex-1 ${mode === 'fill-all' ? 'ring-2 ring-orange-500' : ''}`}
                                         style={{
@@ -204,9 +204,9 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                             value="fill-all"
                                             checked={mode === 'fill-all'}
                                             onChange={(e) => setMode(e.target.value as InputMode)}
-                                            className="hidden"
+                                            className={"hidden"}
                                         />
-                                        <span className="font-medium text-sm sm:text-base">Fill All</span>
+                                        <span className={"font-medium text-sm sm:text-base"}>Fill All</span>
                                     </label>
                                     <label
                                         className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg cursor-pointer transition-all flex-1 ${mode === 'ranges' ? 'ring-2 ring-orange-500' : ''}`}
@@ -221,17 +221,17 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                             value="ranges"
                                             checked={mode === 'ranges'}
                                             onChange={(e) => setMode(e.target.value as InputMode)}
-                                            className="hidden"
+                                            className={"hidden"}
                                         />
-                                        <span className="font-medium text-sm sm:text-base">Range-Based</span>
+                                        <span className={"font-medium text-sm sm:text-base"}>Range-Based</span>
                                     </label>
                                 </div>
 
                                 {/* Fill All Mode */}
                                 {mode === 'fill-all' && (
-                                    <div className="mb-6">
+                                    <div className={"mb-6"}>
                                         <label
-                                            className="block text-sm font-medium mb-2"
+                                            className={"block text-sm font-medium mb-2"}
                                             style={{ color: 'var(--text-secondary)' }}
                                         >
                                             Amount for all recipients
@@ -245,17 +245,17 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                             placeholder="0.001"
                                             step="any"
                                             min="0"
-                                            className="input-field"
+                                            className={"input-field"}
                                         />
                                     </div>
                                 )}
 
                                 {/* Range-Based Mode */}
                                 {mode === 'ranges' && (
-                                    <div className="mb-6">
-                                        <div className="flex items-center justify-between mb-3">
+                                    <div className={"mb-6"}>
+                                        <div className={"flex items-center justify-between mb-3"}>
                                             <label
-                                                className="text-sm font-medium"
+                                                className={"text-sm font-medium"}
                                                 style={{ color: 'var(--text-secondary)' }}
                                             >
                                                 Amount Ranges
@@ -263,24 +263,24 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                             <button
                                                 type="button"
                                                 onClick={addRange}
-                                                className="btn-ghost text-xs sm:text-sm"
+                                                className={"btn-ghost text-xs sm:text-sm"}
                                             >
-                                                <Plus className="w-4 h-4" />
+                                                <Plus className={"w-4 h-4"} />
                                                 <span>Add Range</span>
                                             </button>
                                         </div>
 
-                                        <div className="space-y-3">
+                                        <div className={"space-y-3"}>
                                             {ranges.map((range, index) => (
                                                 <div
                                                     key={index}
-                                                    className="flex flex-col sm:flex-row gap-2 p-3 rounded-lg"
+                                                    className={"flex flex-col sm:flex-row gap-2 p-3 rounded-lg"}
                                                     style={{ backgroundColor: 'var(--bg-tertiary)' }}
                                                 >
-                                                    <div className="flex-1 grid grid-cols-2 gap-2">
+                                                    <div className={"flex-1 grid grid-cols-2 gap-2"}>
                                                         <div>
                                                             <label
-                                                                className="block text-xs mb-1"
+                                                                className={"block text-xs mb-1"}
                                                                 style={{ color: 'var(--text-muted)' }}
                                                             >
                                                                 From
@@ -293,12 +293,12 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                                 aria-label={`Range ${index + 1} start recipient index`}
                                                                 min="1"
                                                                 max={recipientCount}
-                                                                className="input-field text-sm"
+                                                                className={"input-field text-sm"}
                                                             />
                                                         </div>
                                                         <div>
                                                             <label
-                                                                className="block text-xs mb-1"
+                                                                className={"block text-xs mb-1"}
                                                                 style={{ color: 'var(--text-muted)' }}
                                                             >
                                                                 To
@@ -311,13 +311,13 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                                 aria-label={`Range ${index + 1} end recipient index`}
                                                                 min="1"
                                                                 max={recipientCount}
-                                                                className="input-field text-sm"
+                                                                className={"input-field text-sm"}
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div className="flex-1">
+                                                    <div className={"flex-1"}>
                                                         <label
-                                                            className="block text-xs mb-1"
+                                                            className={"block text-xs mb-1"}
                                                             style={{ color: 'var(--text-muted)' }}
                                                         >
                                                             Amount
@@ -331,19 +331,19 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                                             placeholder="0.001"
                                                             step="any"
                                                             min="0"
-                                                            className="input-field text-sm"
+                                                            className={"input-field text-sm"}
                                                         />
                                                     </div>
-                                                    <div className="flex items-end">
+                                                    <div className={"flex items-end"}>
                                                         <button
                                                             type="button"
                                                             onClick={() => removeRange(index)}
                                                             disabled={ranges.length === 1}
                                                             aria-label={`Remove range ${index + 1}`}
-                                                            className="p-2 rounded-lg transition-colors hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                            className={"p-2 rounded-lg transition-colors hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-30 disabled:cursor-not-allowed"}
                                                             style={{ color: 'var(--error)' }}
                                                         >
-                                                            <Trash2 className="w-4 h-4" />
+                                                            <Trash2 className={"w-4 h-4"} />
                                                         </button>
                                                     </div>
                                                 </div>
@@ -356,13 +356,13 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                 {errors.length > 0 && (
                                     <div
                                         role="alert"
-                                        className="mb-4 p-3 rounded-lg text-sm"
+                                        className={"mb-4 p-3 rounded-lg text-sm"}
                                         style={{
                                             backgroundColor: 'var(--error-light)',
                                             color: 'var(--error)'
                                         }}
                                     >
-                                        <ul className="list-disc list-inside space-y-1">
+                                        <ul className={"list-disc list-inside space-y-1"}>
                                             {errors.map((error, index) => (
                                                 <li key={index}>{error}</li>
                                             ))}
@@ -371,18 +371,18 @@ export const BulkAmountModal: React.FC<BulkAmountModalProps> = ({ onApply, recip
                                 )}
 
                                 {/* Action Buttons */}
-                                <div className="flex flex-col-reverse sm:flex-row gap-3 justify-end">
+                                <div className={"flex flex-col-reverse sm:flex-row gap-3 justify-end"}>
                                     <button
                                         type="button"
                                         onClick={handleClose}
-                                        className="btn-ghost justify-center"
+                                        className={"btn-ghost justify-center"}
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="button"
                                         onClick={handleApply}
-                                        className="btn-primary justify-center"
+                                        className={"btn-primary justify-center"}
                                     >
                                         Apply Amounts
                                     </button>
