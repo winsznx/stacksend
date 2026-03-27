@@ -8,17 +8,22 @@ import { db } from './db/client.js';
 import { telegramService } from './services/telegram.js';
 import { isValidStacksAddress, parseLimit, safeSecretCompare } from './utils/security.js';
 
+
 const app = express();
+
 const defaultDevOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
+
 const allowedOrigins = config.server.allowedOrigins.length > 0
     ? config.server.allowedOrigins
     : (config.server.env === 'development' ? defaultDevOrigins : []);
+
 
 const telegramLinkRequestSchema = z.object({
     walletAddress: z.string().trim().refine(isValidStacksAddress, 'Invalid wallet address'),
     chatId: z.coerce.number().int().positive(),
     username: z.string().trim().min(1).max(64).optional(),
 });
+
 
 const notificationToggleSchema = z.object({
     enabled: z.boolean(),
@@ -197,6 +202,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // Start server
+
 const port = config.server.port;
 app.listen(port, () => {
     console.log(`✅ Server running on port ${port}`);
