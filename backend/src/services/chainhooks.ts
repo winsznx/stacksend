@@ -13,6 +13,7 @@ function withWebhookSecret(path: string): string {
 /**
  * Register STX transfer chainhook
  */
+
 export async function registerSTXTransferChainhook(network: 'mainnet' | 'testnet') {
     const client = new ChainhooksClient({
         baseUrl: network === 'mainnet' ? CHAINHOOKS_BASE_URL.mainnet : CHAINHOOKS_BASE_URL.testnet,
@@ -60,6 +61,7 @@ export async function registerSTXTransferChainhook(network: 'mainnet' | 'testnet
 /**
  * Register FT transfer chainhook
  */
+
 export async function registerFTTransferChainhook(network: 'mainnet' | 'testnet') {
     const client = new ChainhooksClient({
         baseUrl: network === 'mainnet' ? CHAINHOOKS_BASE_URL.mainnet : CHAINHOOKS_BASE_URL.testnet,
@@ -107,6 +109,7 @@ export async function registerFTTransferChainhook(network: 'mainnet' | 'testnet'
 /**
  * Register all chainhooks
  */
+
 export async function registerAllChainhooks() {
     console.log('📡 Registering chainhooks...');
 
