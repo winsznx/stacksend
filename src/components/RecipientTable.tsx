@@ -438,3 +438,6 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
         </form>
     );
 };
+
+
+export type {};
