@@ -135,3 +135,6 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
         </div>
     );
 }
+
+
+export type {};
