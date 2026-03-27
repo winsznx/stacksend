@@ -189,7 +189,7 @@ class DatabaseClient {
         event_type: 'received' | 'sent';
         transfer_id: number;
         recipient_id: number | null;
-        metadata?: any;
+        metadata?: unknown;
     }): Promise<void> {
         const query = `
       INSERT INTO activity_feed (
