@@ -51,7 +51,7 @@ export async function registerSTXTransferChainhook(network: 'mainnet' | 'testnet
         const result = await client.registerChainhook(chainhook);
         console.log(`✅ STX transfer chainhook registered for ${network}:`, result.uuid);
         return result;
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error(`❌ Failed to register STX chainhook for ${network}:`, error);
         throw error;
     }
@@ -98,7 +98,7 @@ export async function registerFTTransferChainhook(network: 'mainnet' | 'testnet'
         const result = await client.registerChainhook(chainhook);
         console.log(`✅ FT transfer chainhook registered for ${network}:`, result.uuid);
         return result;
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error(`❌ Failed to register FT chainhook for ${network}:`, error);
         throw error;
     }
