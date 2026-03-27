@@ -7,6 +7,7 @@ const STANDARD_PRINCIPAL_REGEX = /^S[TPM][0-9A-HJ-NP-Za-km-z]{33,41}$/;
 const CONTRACT_PRINCIPAL_REGEX = /^S[TPM][0-9A-HJ-NP-Za-km-z]{33,41}\.[a-zA-Z][a-zA-Z0-9-]*$/;
 
 // Validate if string is a valid Stacks principal (standard or contract)
+
 export const isValidPrincipal = (address: string): boolean => {
   if (!address || typeof address !== 'string') return false;
   const trimmed = address.trim();
@@ -14,18 +15,21 @@ export const isValidPrincipal = (address: string): boolean => {
 };
 
 // Zod schema for standard principal address
+
 export const StandardPrincipalSchema = z.string().refine(
   (p) => STANDARD_PRINCIPAL_REGEX.test(p.trim()),
   { message: 'Invalid Stacks address. Must start with SP (mainnet) or ST (testnet).' }
 );
 
 // Zod schema for any principal (standard or contract)
+
 export const PrincipalSchema = z.string().refine(
   (p) => isValidPrincipal(p),
   { message: 'Invalid Stacks principal address.' }
 );
 
 // Zod schema for positive amount
+
 export const AmountSchema = z.string().refine(
   (val) => {
     const num = Number(val);
@@ -35,6 +39,7 @@ export const AmountSchema = z.string().refine(
 );
 
 // Parse addresses from pasted input (newline or comma separated)
+
 export const parseAddresses = (input: string): string[] => {
   if (!input || typeof input !== 'string') return [];
 
@@ -49,6 +54,7 @@ export const parseAddresses = (input: string): string[] => {
 };
 
 // Validate a single recipient entry
+
 export const validateRecipient = (address: string, amount: string): { valid: boolean; errors: string[] } => {
   const errors: string[] = [];
 
@@ -71,17 +77,20 @@ export const validateRecipient = (address: string, amount: string): { valid: boo
 };
 
 // Format address for display (truncate middle)
+
 export const formatAddress = (address: string, startChars = 6, endChars = 4): string => {
   if (!address || address.length <= startChars + endChars) return address;
   return `${address.slice(0, startChars)}...${address.slice(-endChars)}`;
 };
 
 // Convert STX to microSTX (1 STX = 1,000,000 microSTX)
+
 export const stxToMicroStx = (stx: number): number => {
   return Math.floor(stx * 1_000_000);
 };
 
 // Convert microSTX to STX
+
 export const microStxToStx = (microStx: number): number => {
   return microStx / 1_000_000;
 };
