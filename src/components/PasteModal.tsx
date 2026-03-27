@@ -69,7 +69,7 @@ export const PasteModal: React.FC<PasteModalProps> = ({ onPaste, max }) => {
                                     >
                                         Paste Addresses
                                     </Dialog.Title>
-                                    <button
+                                    <button type="button"
                                         onClick={() => setIsOpen(false)}
                                         aria-label="Close paste addresses dialog"
                                         className="p-2 rounded-lg transition-colors"
