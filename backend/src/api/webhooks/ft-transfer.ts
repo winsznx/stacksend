@@ -193,7 +193,7 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
 
         console.log('===== END WEBHOOK =====');
         res.status(200).json({ received: true });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Webhook error:', error);
         console.error('Stack:', error.stack);
         if (!res.headersSent) {
