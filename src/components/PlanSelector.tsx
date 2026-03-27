@@ -43,3 +43,6 @@ export const PlanSelector: React.FC<PlanSelectorProps> = ({ onPlanChange }) => {
         </div>
     );
 };
+
+
+export type {};
