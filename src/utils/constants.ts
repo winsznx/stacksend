@@ -14,7 +14,7 @@ export const getContractAddress = (isMainnet: boolean): string => {
 export const MAX_RECIPIENTS_CONTRACT = 50;
 
 // Plan configurations
-export const PLANS = {
+export const PLANS = Object.freeze({
     starter: {
         name: 'Starter',
         maxRecipients: 5,
@@ -40,7 +40,7 @@ export const PLANS = {
 export type PlanKey = keyof typeof PLANS;
 
 // Network configurations
-export const NETWORKS = {
+export const NETWORKS = Object.freeze({
     mainnet: {
         name: 'Mainnet',
         explorerUrl: 'https://explorer.stacks.co',
