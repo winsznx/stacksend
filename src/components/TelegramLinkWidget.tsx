@@ -30,7 +30,7 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
         try {
             const userData = await backendAPI.getUser(walletAddress);
             setUser(userData);
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Failed to load user:', err);
             setError('Unable to load Telegram link status right now.');
         } finally {
