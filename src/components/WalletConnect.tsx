@@ -801,3 +801,6 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ onEnterApp }) => {
         </div>
     );
 };
+
+
+export type {};
