@@ -21,22 +21,22 @@ function App() {
   const isMainnet = network?.chainId !== 2147483648; // testnet chainId
   const contractAddress = getContractAddress(isMainnet);
 
-  // Theme management
-  useEffect(() => {
-    const saved = localStorage.getItem('theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    setTheme(saved);
-    applyTheme(saved);
-  }, []);
-
-  const applyTheme = (newTheme: string) => {
+  const applyTheme = useCallback((newTheme: string) => {
     document.documentElement.setAttribute('data-theme', newTheme);
     if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  };
+  }, []);
+
+  // Theme management
+  useEffect(() => {
+    const saved = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(saved);
+    applyTheme(saved);
+  }, [applyTheme]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
