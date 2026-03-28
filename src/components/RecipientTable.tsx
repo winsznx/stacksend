@@ -178,10 +178,11 @@ export const RecipientTable: React.FC<RecipientTableProps> = ({ contractAddress,
             }
         } catch (err: unknown) {
             console.error('Transaction error:', err);
-            if (err.code === 4001) {
+            const error = err as { code?: number; message?: string };
+            if (error.code === 4001) {
                 setStatus('Transaction was cancelled by user.');
             } else {
-                setStatus(`Error: ${err.message || 'Unknown error occurred'}`);
+                setStatus(`Error: ${error.message || 'Unknown error occurred'}`);
             }
         } finally {
             setIsSubmitting(false);
