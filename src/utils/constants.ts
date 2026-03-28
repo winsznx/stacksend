@@ -35,7 +35,7 @@ export const PLANS = Object.freeze({
         maxRecipients: 50,
         description: 'Maximum capacity',
     },
-} as const;
+} as const);
 
 export type PlanKey = keyof typeof PLANS;
 
@@ -49,7 +49,7 @@ export const NETWORKS = Object.freeze({
         name: 'Testnet',
         explorerUrl: 'https://explorer.stacks.co/?chain=testnet',
     },
-} as const;
+} as const);
 
 
 export type {};
