@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ArrowUpRight, ArrowDownRight, ExternalLink, Loader2 } from 'lucide-react';
 import { backendAPI, type ActivityEvent } from '../lib/backend-api';
 
@@ -11,17 +11,7 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (walletAddress) {
-            loadActivity();
-            return;
-        }
-
-        setActivity([]);
-        setError(null);
-    }, [walletAddress]);
-
-    const loadActivity = async () => {
+    const loadActivity = useCallback(async () => {
         if (!walletAddress) return;
 
         setLoading(true);
@@ -32,11 +22,21 @@ export function ActivityFeed({ walletAddress }: ActivityFeedProps) {
             const events = await backendAPI.getUserActivity(walletAddress, 50);
             setActivity(events);
         } catch (err: unknown) {
-            setError(err?.message || 'Unable to load transfer activity right now.');
+            setError((err as Error)?.message || 'Unable to load transfer activity right now.');
         } finally {
             setLoading(false);
         }
-    };
+    }, [walletAddress]);
+
+    useEffect(() => {
+        if (walletAddress) {
+            loadActivity();
+            return;
+        }
+
+        setActivity([]);
+        setError(null);
+    }, [walletAddress, loadActivity]);
 
     const formatAmount = (event: ActivityEvent) => {
         if (event.amount_decimals) {
