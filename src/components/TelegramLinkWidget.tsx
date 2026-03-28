@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { ExternalLink } from 'lucide-react';
-import { backendAPI } from '../lib/backend-api';
+import { backendAPI, type User } from '../lib/backend-api';
 
 interface TelegramLinkWidgetProps {
     walletAddress: string | null;
 }
 
 export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -85,8 +85,8 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                                 <div className={"w-2 h-2 rounded-full animate-pulse"} style={{ backgroundColor: 'var(--success)' }} />
                                 <span className={"font-semibold"} style={{ color: 'var(--success)' }}>Connected</span>
                             </div>
-                            {user.telegram_username && (
-                                <p className={"text-sm"} style={{ color: 'var(--text-secondary)' }}>@{user.telegram_username}</p>
+                            {user?.telegram_username && (
+                                <p className={"text-sm"} style={{ color: 'var(--text-secondary)' }}>@{user?.telegram_username}</p>
                             )}
                         </div>
                         <div className={"text-right"}>
@@ -101,7 +101,7 @@ export function TelegramLinkWidget({ walletAddress }: TelegramLinkWidgetProps) {
                             ✅ You'll receive notifications when you receive STX or fungible tokens via StackSend
                         </p>
                         <p className={"text-xs"} style={{ color: 'var(--text-muted)' }}>
-                            Connected on {new Date(user.created_at).toLocaleDateString()}
+                            Connected on {user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'Unknown'}
                         </p>
                         <p className={"text-xs mt-2"} style={{ color: 'var(--text-muted)' }}>
                             Manage notifications in Telegram using <code>/enable</code> and <code>/disable</code>.
