@@ -1,14 +1,15 @@
 import { registerAllChainhooks } from '../services/chainhooks.js';
+import { logger } from '../utils/logger.js';
 
 async function main() {
-    console.log('🚀 Registering chainhooks...');
+    logger.info('🚀 Registering chainhooks...');
 
     try {
         await registerAllChainhooks();
-        console.log('✅ All chainhooks registered successfully!');
+        logger.info('✅ All chainhooks registered successfully!');
         process.exit(0);
     } catch (error) {
-        console.error('❌ Failed to register chainhooks:', error);
+        logger.error('❌ Failed to register chainhooks:', error);
         process.exit(1);
     }
 }
