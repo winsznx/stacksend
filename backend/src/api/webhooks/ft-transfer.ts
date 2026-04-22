@@ -61,7 +61,7 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
                 }
 
                 const contractCallOp = operations.find(
-                    (op: any) => op.type === 'CONTRACT_CALL' && op.metadata?.function_name === 'send-many-ft'
+                    (op: { type?: string; metadata?: { function_name?: string; function_args_decoded?: unknown[]; function_args?: unknown[] }; account?: { address?: string } }) => op.type === 'CONTRACT_CALL' && op.metadata?.function_name === 'send-many-ft'
                 );
 
                 if (!contractCallOp) {
@@ -89,8 +89,8 @@ export async function handleFTTransferWebhook(req: Request, res: Response): Prom
                     : tokenContract.split('.').pop() || 'FT';
                 const decimals = tokenSymbol === 'sBTC' ? 8 : 6;
 
-                const totalAmount = recipientsList.reduce((sum: number, r: any) => {
-                    return sum + (typeof r.amount === 'number' ? r.amount : Number.parseInt(r.amount || '0', 10));
+                const totalAmount = recipientsList.reduce((sum: number, r: { amount?: string | number }) => {
+                    return sum + (typeof r.amount === 'number' ? r.amount : Number.parseInt(String(r.amount || '0'), 10));
                 }, 0);
 
                 const alreadyProcessed = await db.transferExists(txId);
