@@ -1,6 +1,7 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { db } from '../db/client.js';
 import { config } from '../config/env.js';
+import { logger } from '../utils/logger.js';
 
 class TelegramService {
     private bot: TelegramBot;
@@ -12,7 +13,7 @@ class TelegramService {
         // Set up command handlers
         this.setupCommands();
 
-        console.log('✅ Telegram bot initialized with polling');
+        logger.info('✅ Telegram bot initialized with polling');
     }
 
     private escapeMarkdown(text: string): string {
@@ -41,9 +42,9 @@ class TelegramService {
                         // Send success message
                         await this.sendWelcomeMessage(chatId, walletAddress);
 
-                        console.log(`✅ Linked wallet ${walletAddress} to Telegram chat ${chatId}`);
+                        logger.info(`✅ Linked wallet ${walletAddress} to Telegram chat ${chatId}`);
                     } catch (error: unknown) {
-                        console.error('Failed to link Telegram:', error);
+                        logger.error('Failed to link Telegram:', error);
                         await this.bot.sendMessage(chatId, '❌ Failed to link your wallet. Please try again.');
                     }
                 } else {
@@ -97,7 +98,7 @@ class TelegramService {
             await this.bot.sendMessage(chatId, '🔕 Notifications disabled.');
         });
 
-        console.log('✅ Bot commands registered');
+        logger.info('✅ Bot commands registered');
     }
 
     /**
@@ -136,10 +137,10 @@ class TelegramService {
                 parse_mode: 'Markdown',
                 disable_web_page_preview: false,
             });
-            console.log(`✅ Telegram notification sent to ${chatId} for tx ${txId.slice(0, 10)}...`);
+            logger.info(`✅ Telegram notification sent to ${chatId} for tx ${txId.slice(0, 10)}...`);
             return result.message_id;
         } catch (error: unknown) {
-            console.error(`❌ Failed to send Telegram message to ${chatId}:`, error.message);
+            logger.error(`❌ Failed to send Telegram message to ${chatId}:`, error instanceof Error ? error.message : String(error));
             return null;
         }
     }
@@ -176,10 +177,10 @@ class TelegramService {
                 parse_mode: 'Markdown',
                 disable_web_page_preview: false,
             });
-            console.log(`✅ Sender notification sent to ${chatId} for tx ${txId.slice(0, 10)}...`);
+            logger.info(`✅ Sender notification sent to ${chatId} for tx ${txId.slice(0, 10)}...`);
             return result.message_id;
         } catch (error: unknown) {
-            console.error(`❌ Failed to send sender notification to ${chatId}:`, error.message);
+            logger.error(`❌ Failed to send sender notification to ${chatId}:`, error instanceof Error ? error.message : String(error));
             return null;
         }
     }
@@ -207,9 +208,9 @@ You'll receive instant notifications whenever you receive STX or fungible tokens
 
         try {
             await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
-            console.log(`✅ Welcome message sent to ${chatId}`);
+            logger.info(`✅ Welcome message sent to ${chatId}`);
         } catch (error: unknown) {
-            console.error(`❌ Failed to send welcome message:`, error.message);
+            logger.error(`❌ Failed to send welcome message:`, error instanceof Error ? error.message : String(error));
         }
     }
 
@@ -220,9 +221,9 @@ You'll receive instant notifications whenever you receive STX or fungible tokens
         const message = '✅ *Test notification successful!*\n\nYou\'re all set up to receive StackSend notifications.';
         try {
             await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
-            console.log(`✅ Test notification sent to ${chatId}`);
+            logger.info(`✅ Test notification sent to ${chatId}`);
         } catch (error: unknown) {
-            console.error(`❌ Failed to send test notification:`, error.message);
+            logger.error(`❌ Failed to send test notification:`, error instanceof Error ? error.message : String(error));
         }
     }
 
@@ -244,7 +245,7 @@ ${enabled ? 'You will receive notifications when you receive STX or fungible tok
         try {
             await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
         } catch (error: unknown) {
-            console.error(`❌ Failed to send status message:`, error.message);
+            logger.error(`❌ Failed to send status message:`, error instanceof Error ? error.message : String(error));
         }
     }
 
@@ -274,7 +275,7 @@ Once linked, you'll receive instant notifications whenever you receive STX or fu
         try {
             await this.bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
         } catch (error: unknown) {
-            console.error(`❌ Failed to handle /start command:`, error.message);
+            logger.error(`❌ Failed to handle /start command:`, error instanceof Error ? error.message : String(error));
         }
     }
 }
