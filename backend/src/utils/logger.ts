@@ -9,16 +9,16 @@ function shouldLog(level: LogLevel): boolean {
 }
 
 export const logger = {
-  debug(message: string, meta?: Record<string, unknown>) {
+  debug(message: string, meta?: unknown) {
     if (shouldLog('debug')) console.debug(`[DEBUG] ${message}`, meta ?? '');
   },
-  info(message: string, meta?: Record<string, unknown>) {
+  info(message: string, meta?: unknown) {
     if (shouldLog('info')) console.info(`[INFO] ${message}`, meta ?? '');
   },
-  warn(message: string, meta?: Record<string, unknown>) {
+  warn(message: string, meta?: unknown) {
     if (shouldLog('warn')) console.warn(`[WARN] ${message}`, meta ?? '');
   },
-  error(message: string, meta?: Record<string, unknown>) {
+  error(message: string, meta?: unknown) {
     if (shouldLog('error')) console.error(`[ERROR] ${message}`, meta ?? '');
   },
 };
