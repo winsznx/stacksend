@@ -1,5 +1,6 @@
 import { Pool, PoolClient } from 'pg';
 import { config } from '../config/env.js';
+import { logger } from '../utils/logger.js';
 
 class DatabaseClient {
     private pool: Pool;
@@ -19,10 +20,10 @@ class DatabaseClient {
     private async testConnection() {
         try {
             const result = await this.pool.query('SELECT NOW()');
-            console.log('✅ Database connected:', result.rows[0].now);
+            logger.info('✅ Database connected: ' + result.rows[0].now);
         } catch (error) {
-            console.warn('⚠️  Database connection failed (server will continue):', error instanceof Error ? error.message : error);
-            console.warn('⚠️  Database features will not work until connection is established');
+            logger.warn('⚠️  Database connection failed (server will continue): ' + (error instanceof Error ? error.message : String(error)));
+            logger.warn('⚠️  Database features will not work until connection is established');
             // Don't throw - allow server to start without DB
         }
     }
