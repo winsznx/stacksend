@@ -1,5 +1,6 @@
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 import { config } from '../config/env.js';
+import { logger } from '../utils/logger.js';
 
 function withWebhookSecret(path: string): string {
     const base = `${config.server.url}${path}`;
@@ -50,10 +51,10 @@ export async function registerSTXTransferChainhook(network: 'mainnet' | 'testnet
 
     try {
         const result = await client.registerChainhook(chainhook);
-        console.log(`✅ STX transfer chainhook registered for ${network}:`, result.uuid);
+        logger.info(`✅ STX transfer chainhook registered for ${network}: ${result.uuid}`);
         return result;
     } catch (error: unknown) {
-        console.error(`❌ Failed to register STX chainhook for ${network}:`, error);
+        logger.error(`❌ Failed to register STX chainhook for ${network}:`, error);
         throw error;
     }
 }
@@ -98,10 +99,10 @@ export async function registerFTTransferChainhook(network: 'mainnet' | 'testnet'
 
     try {
         const result = await client.registerChainhook(chainhook);
-        console.log(`✅ FT transfer chainhook registered for ${network}:`, result.uuid);
+        logger.info(`✅ FT transfer chainhook registered for ${network}: ${result.uuid}`);
         return result;
     } catch (error: unknown) {
-        console.error(`❌ Failed to register FT chainhook for ${network}:`, error);
+        logger.error(`❌ Failed to register FT chainhook for ${network}:`, error);
         throw error;
     }
 }
@@ -111,7 +112,7 @@ export async function registerFTTransferChainhook(network: 'mainnet' | 'testnet'
  */
 
 export async function registerAllChainhooks() {
-    console.log('📡 Registering chainhooks...');
+    logger.info('📡 Registering chainhooks...');
 
     try {
         await registerSTXTransferChainhook('mainnet');
@@ -119,9 +120,9 @@ export async function registerAllChainhooks() {
         await registerFTTransferChainhook('mainnet');
         await registerFTTransferChainhook('testnet');
 
-        console.log('✅ All chainhooks registered successfully');
+        logger.info('✅ All chainhooks registered successfully');
     } catch (error) {
-        console.error('❌ Failed to register chainhooks:', error);
+        logger.error('❌ Failed to register chainhooks:', error);
         throw error;
     }
 }
