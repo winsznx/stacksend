@@ -73,7 +73,11 @@ export async function handleSTXTransferWebhook(req: Request, res: Response): Pro
                     continue;
                 }
 
-                const creditOps = operations.filter((op: any) => op.type === 'CREDIT');
+                const creditOps = operations.filter((op: {
+                    type?: string;
+                    account?: { address?: string };
+                    amount?: { value?: string; currency?: { symbol?: string } };
+                }) => op.type === 'CREDIT');
                 const recipients: Array<{ address: string; amount: number }> = [];
                 let totalAmount = 0;
 
