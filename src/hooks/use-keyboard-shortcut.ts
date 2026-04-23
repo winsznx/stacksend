@@ -1,27 +1,30 @@
 import { useEffect } from 'react';
 
-interface ShortcutOptions {
-  key: string;
-  ctrl?: boolean;
-  shift?: boolean;
-  meta?: boolean;
-}
-
-export function useKeyboardShortcut(opts: ShortcutOptions, handler: () => void): void {
-  const { key, ctrl, shift, meta } = opts;
-
+export function useKeyboardShortcut(
+  keys: string[],
+  callback: (event: KeyboardEvent) => void,
+  options: { preventDefault?: boolean } = {}
+): void {
   useEffect(() => {
-    const listener = (e: KeyboardEvent) => {
-      if (ctrl && !e.ctrlKey) return;
-      if (shift && !e.shiftKey) return;
-      if (meta && !e.metaKey) return;
-      if (e.key.toLowerCase() !== key.toLowerCase()) return;
-      e.preventDefault();
-      handler();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const isMatch = keys.every(
+        (key) =>
+          (key.toLowerCase() === 'ctrl' && event.ctrlKey) ||
+          (key.toLowerCase() === 'alt' && event.altKey) ||
+          (key.toLowerCase() === 'shift' && event.shiftKey) ||
+          (key.toLowerCase() === 'meta' && event.metaKey) ||
+          event.key.toLowerCase() === key.toLowerCase()
+      );
+
+      if (isMatch) {
+        if (options.preventDefault) event.preventDefault();
+        callback(event);
+      }
     };
-    window.addEventListener('keydown', listener);
-    return () => window.removeEventListener('keydown', listener);
-  }, [key, ctrl, shift, meta, handler]);
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [keys, callback, options.preventDefault]);
 }
 
 export type {};
