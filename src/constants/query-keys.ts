@@ -7,3 +7,5 @@ export const queryKeys = {
 } as const;
 
 export type {};
+
+export type QueryKeysType = typeof queryKeys;
