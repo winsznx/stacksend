@@ -1,18 +1,18 @@
 export interface Recipient {
-  address: string;
-  amount: string;
+  readonly address: string;
+  readonly amount: string;
 }
 
 export interface TransferRequest {
-  recipients: Recipient[];
-  contractAddress: string;
-  network: 'mainnet' | 'testnet';
+  readonly recipients: Recipient[];
+  readonly contractAddress: string;
+  readonly network: 'mainnet' | 'testnet';
 }
 
 export interface TransferResult {
-  txId: string;
-  recipientCount: number;
-  totalAmount: number;
+  readonly txId: string;
+  readonly recipientCount: number;
+  readonly totalAmount: number;
 }
 
 export type {};
