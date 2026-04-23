@@ -1,7 +1,7 @@
 export interface PlanConfig {
-  name: string;
-  maxRecipients: number;
-  description: string;
+  readonly name: string;
+  readonly maxRecipients: number;
+  readonly description: string;
 }
 
 export type PlanTier = 'starter' | 'pro' | 'max' | 'ultra';
