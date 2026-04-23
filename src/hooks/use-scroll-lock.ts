@@ -1,12 +1,26 @@
 import { useEffect } from 'react';
 
-export function useScrollLock(locked: boolean): void {
+export function useScrollLock(lock = true): void {
   useEffect(() => {
-    if (!locked) return;
-    const original = document.body.style.overflow;
+    if (!lock) return;
+
+    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    const originalPaddingRight = window.getComputedStyle(document.body).paddingRight;
+    
+    // Calculate scrollbar width to prevent layout shift
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = original; };
-  }, [locked]);
+    
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${parseFloat(originalPaddingRight) + scrollbarWidth}px`;
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+    };
+  }, [lock]);
 }
 
 export type {};
