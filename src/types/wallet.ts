@@ -1,15 +1,15 @@
 export interface WalletState {
-  isAuthenticated: boolean;
-  stxAddress: string | null;
-  btcAddress: string | null;
-  publicKey: string | null;
-  walletType: 'stacks' | 'bitcoin' | null;
+  readonly isAuthenticated: boolean;
+  readonly stxAddress: string | null;
+  readonly btcAddress: string | null;
+  readonly publicKey: string | null;
+  readonly walletType: 'stacks' | 'bitcoin' | null;
 }
 
 export interface WalletUser {
-  stxAddress: string | null;
-  btcAddress: string | null;
-  publicKey: string | null;
+  readonly stxAddress: string | null;
+  readonly btcAddress: string | null;
+  readonly publicKey: string | null;
 }
 
 export type {};
