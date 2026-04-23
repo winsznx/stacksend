@@ -97,3 +97,6 @@ export const microStxToStx = (microStx: number): number => {
 
 
 export type {};
+
+// Type guard for strings
+export const isString = (val: unknown): val is string => typeof val === "string";
