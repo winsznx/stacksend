@@ -1,16 +1,14 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '../../lib/cn';
 
-interface DialogProps {
+export interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean;
   onClose: () => void;
   title?: string;
-  children: React.ReactNode;
-  className?: string;
 }
 
-export const Dialog: React.FC<DialogProps> = ({ open, onClose, title, children, className }) => {
+export const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(({ open, onClose, title, children, className, style, ...props }, ref) => {
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -24,11 +22,13 @@ export const Dialog: React.FC<DialogProps> = ({ open, onClose, title, children, 
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="fixed inset-0 bg-black/50" onClick={onClose} aria-hidden="true" />
       <div
+        ref={ref}
         className={cn('relative z-10 w-full max-w-md rounded-xl p-6 shadow-xl', className)}
-        style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+        style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', ...style }}
         role="dialog"
         aria-modal="true"
         aria-label={title}
+        {...props}
       >
         {title && (
           <div className="flex items-center justify-between mb-4">
@@ -42,6 +42,7 @@ export const Dialog: React.FC<DialogProps> = ({ open, onClose, title, children, 
       </div>
     </div>
   );
-};
+});
+Dialog.displayName = 'Dialog';
 
 export type {};
