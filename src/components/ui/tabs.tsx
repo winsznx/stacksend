@@ -1,3 +1,4 @@
+import React from 'react';
 import { cn } from '../../lib/cn';
 
 interface Tab {
@@ -5,7 +6,7 @@ interface Tab {
   label: string;
 }
 
-interface TabsProps {
+export interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
   tabs: Tab[];
   activeKey: string;
   onChange: (key: string) => void;
@@ -13,8 +14,8 @@ interface TabsProps {
   className?: string;
 }
 
-export const Tabs: React.FC<TabsProps> = ({ tabs, activeKey, onChange, children, className }) => (
-  <div className={className}>
+export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(({ tabs, activeKey, onChange, children, className, ...props }, ref) => (
+  <div ref={ref} className={className} {...props}>
     <div className="flex gap-1 border-b" style={{ borderColor: 'var(--border-color)' }} role="tablist">
       {tabs.map((tab) => (
         <button
@@ -36,5 +37,6 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, activeKey, onChange, children,
     <div role="tabpanel" className="pt-4">{children}</div>
   </div>
 );
+Tabs.displayName = 'Tabs';
 
 export type {};
