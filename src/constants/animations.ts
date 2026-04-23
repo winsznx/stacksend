@@ -7,3 +7,5 @@ export const ANIMATION_DURATION = {
 export const TRANSITION_EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
 
 export type {};
+
+export type AnimationSpeed = keyof typeof ANIMATION_DURATION;
