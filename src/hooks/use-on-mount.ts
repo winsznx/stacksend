@@ -1,8 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-// eslint-disable-next-line react-hooks/exhaustive-deps
-export function useOnMount(callback: () => void | (() => void)): void {
-  useEffect(callback, []);
+export function useOnMount(callback: () => void): void {
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (!isMounted.current) {
+      callback();
+      isMounted.current = true;
+    }
+  }, [callback]);
 }
 
 export type {};
