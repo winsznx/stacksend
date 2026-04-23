@@ -17,3 +17,5 @@ export function explorerAddressUrl(address: string, isMainnet: boolean): string 
 }
 
 export type {};
+
+export type ExplorerUrlKey = keyof typeof EXPLORER_URLS;
