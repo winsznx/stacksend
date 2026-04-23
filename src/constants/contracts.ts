@@ -8,3 +8,5 @@ export const MICRO_STX_PER_STX = 1_000_000;
 export const MAX_MEMO_LENGTH = 34;
 
 export type {};
+
+export type ContractName = keyof typeof CONTRACT_NAMES;
