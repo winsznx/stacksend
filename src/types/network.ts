@@ -1,8 +1,8 @@
 export interface NetworkConfig {
-  name: string;
-  chainId: number;
-  explorerUrl: string;
-  isMainnet: boolean;
+  readonly name: string;
+  readonly chainId: number;
+  readonly explorerUrl: string;
+  readonly isMainnet: boolean;
 }
 
 export type NetworkName = 'mainnet' | 'testnet';
