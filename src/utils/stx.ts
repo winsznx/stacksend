@@ -9,10 +9,12 @@ export function microToStx(micro: bigint | number): number {
 }
 
 export function isMainnetAddress(address: string): boolean {
+  if (!address) return false;
   return address.startsWith('SP');
 }
 
 export function isTestnetAddress(address: string): boolean {
+  if (!address) return false;
   return address.startsWith('ST');
 }
 
