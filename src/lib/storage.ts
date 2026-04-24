@@ -16,7 +16,10 @@ export function setStorageItem<T>(key: string, value: T): void {
 }
 
 export function removeStorageItem(key: string): void {
-  localStorage.removeItem(key);
+  try {
+    localStorage.removeItem(key);
+  } catch { /* ignore */ }
 }
+
 
 export type {};
