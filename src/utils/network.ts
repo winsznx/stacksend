@@ -9,3 +9,4 @@ export function networkLabel(isMainnet: boolean): string {
 }
 
 export type {};
+\nexport type StacksNetworkType = 'mainnet' | 'testnet';\n
