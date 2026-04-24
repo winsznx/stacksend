@@ -1,6 +1,6 @@
 // Contract addresses for each network
-export const CONTRACT_ADDRESS_MAINNET = import.meta.env.VITE_CONTRACT_ADDRESS_MAINNET || '';
-export const CONTRACT_ADDRESS_TESTNET = import.meta.env.VITE_CONTRACT_ADDRESS_TESTNET || '';
+export const CONTRACT_ADDRESS_MAINNET = (import.meta.env.VITE_CONTRACT_ADDRESS_MAINNET as string) || '';
+export const CONTRACT_ADDRESS_TESTNET = (import.meta.env.VITE_CONTRACT_ADDRESS_TESTNET as string) || '';
 
 // Legacy support - defaults to mainnet
 export const CONTRACT_ADDRESS = CONTRACT_ADDRESS_MAINNET;
