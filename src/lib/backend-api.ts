@@ -58,6 +58,7 @@ class BackendAPIClient {
         });
 
         if (!response.ok) {
+            if (response.status === 429) throw new Error('Rate limit exceeded');
             const error = await response.json();
             throw new Error(error.error || 'Failed to link Telegram');
         }
