@@ -1,25 +1,28 @@
+import React from 'react';
 import { cn } from '../../lib/cn';
 
-interface BadgeProps {
-  children: React.ReactNode;
-  variant?: 'default' | 'success' | 'warning' | 'error';
-  className?: string;
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'secondary' | 'destructive' | 'outline';
 }
 
-const VARIANT_STYLES: Record<string, React.CSSProperties> = {
-  default: { backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-secondary)' },
-  success: { backgroundColor: 'var(--success-light)', color: 'var(--success)' },
-  warning: { backgroundColor: 'var(--warning-light)', color: 'var(--warning)' },
-  error: { backgroundColor: 'var(--error-light)', color: 'var(--error)' },
-};
-
-export const Badge: React.FC<BadgeProps> = ({ children, variant = 'default', className }) => (
-  <span
-    className={cn('inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', className)}
-    style={VARIANT_STYLES[variant]}
-  >
-    {children}
-  </span>
+export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+  ({ className, variant = 'default', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+          variant === 'default' && 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
+          variant === 'secondary' && 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+          variant === 'destructive' && 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
+          variant === 'outline' && 'text-foreground',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
 );
+Badge.displayName = 'Badge';
 
 export type {};
