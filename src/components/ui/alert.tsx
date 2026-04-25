@@ -1,31 +1,28 @@
+import React from 'react';
 import { cn } from '../../lib/cn';
-import { Info, CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
 
-interface AlertProps {
-  children: React.ReactNode;
-  variant?: 'info' | 'success' | 'warning' | 'error';
-  className?: string;
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: 'default' | 'destructive' | 'success';
 }
 
-const CONFIG = {
-  info: { Icon: Info, bg: 'var(--bg-tertiary)', color: 'var(--text-secondary)' },
-  success: { Icon: CheckCircle, bg: 'var(--success-light)', color: 'var(--success)' },
-  warning: { Icon: AlertTriangle, bg: 'var(--warning-light)', color: 'var(--warning)' },
-  error: { Icon: XCircle, bg: 'var(--error-light)', color: 'var(--error)' },
-} as const;
-
-export const Alert: React.FC<AlertProps> = ({ children, variant = 'info', className }) => {
-  const { Icon, bg, color } = CONFIG[variant];
-  return (
-    <div
-      className={cn('flex items-start gap-3 p-4 rounded-lg text-sm', className)}
-      role="alert"
-      style={{ backgroundColor: bg, color }}
-    >
-      <Icon className="w-5 h-5 flex-shrink-0 mt-0.5" />
-      <div>{children}</div>
-    </div>
-  );
-};
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  ({ className, variant = 'default', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        role="alert"
+        className={cn(
+          'relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:text-foreground [&>svg]:left-4 [&>svg]:top-4 [&>svg+div]:translate-y-[-3px] [&>h5]:mb-1 [&>h5]:leading-none [&>h5]:tracking-tight [&>p]:text-sm [&>p]:leading-relaxed',
+          variant === 'destructive' && 'border-red-500/50 text-red-600 dark:border-red-500 [&>svg]:text-red-600',
+          variant === 'success' && 'border-green-500/50 text-green-600 dark:border-green-500 [&>svg]:text-green-600',
+          variant === 'default' && 'bg-background text-foreground',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
+Alert.displayName = 'Alert';
 
 export type {};
