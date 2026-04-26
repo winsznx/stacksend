@@ -1,18 +1,19 @@
+import React from 'react';
 import { cn } from '../../lib/cn';
 
-interface SkeletonProps {
-  width?: string;
-  height?: string;
-  rounded?: boolean;
-  className?: string;
-}
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Skeleton: React.FC<SkeletonProps> = ({ width, height = '1rem', rounded = false, className }) => (
-  <div
-    className={cn('animate-pulse', rounded ? 'rounded-full' : 'rounded', className)}
-    style={{ width, height, backgroundColor: 'var(--bg-tertiary)' }}
-    aria-hidden="true"
-  />
+export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn('animate-pulse rounded-md bg-muted', className)}
+        {...props}
+      />
+    );
+  }
 );
+Skeleton.displayName = 'Skeleton';
 
 export type {};
