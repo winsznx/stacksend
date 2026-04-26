@@ -1,16 +1,27 @@
+import React from 'react';
 import { cn } from '../../lib/cn';
 
-interface SeparatorProps {
+export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: 'horizontal' | 'vertical';
-  className?: string;
 }
 
-export const Separator: React.FC<SeparatorProps> = ({ orientation = 'horizontal', className }) => (
-  <div
-    role="separator"
-    className={cn(orientation === 'horizontal' ? 'h-px w-full' : 'w-px h-full', className)}
-    style={{ backgroundColor: 'var(--border-color)' }}
-  />
+export const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
+  ({ className, orientation = 'horizontal', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        role="separator"
+        aria-orientation={orientation}
+        className={cn(
+          'shrink-0 bg-border',
+          orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
 );
+Separator.displayName = 'Separator';
 
 export type {};
