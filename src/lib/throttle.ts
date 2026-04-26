@@ -1,22 +1,19 @@
-export function throttle<T extends (...args: Parameters<T>) => void>(
-  fn: T,
-  interval: number,
+export function throttle<T extends (...args: any[]) => void>(
+  func: T,
+  limit: number,
+  signal?: AbortSignal
 ): (...args: Parameters<T>) => void {
-  let lastCall = 0;
-  let pending: ReturnType<typeof setTimeout> | null = null;
-  return (...args: Parameters<T>) => {
-    const now = Date.now();
-    const remaining = interval - (now - lastCall);
-    if (remaining <= 0) {
-      if (pending) { clearTimeout(pending); pending = null; }
-      lastCall = now;
-      fn(...args);
-    } else if (!pending) {
-      pending = setTimeout(() => {
-        lastCall = Date.now();
-        pending = null;
-        fn(...args);
-      }, remaining);
+  let inThrottle: boolean;
+  return function(this: any, ...args: Parameters<T>) {
+    if (signal?.aborted) return;
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      const timeoutId = setTimeout(() => (inThrottle = false), limit);
+      signal?.addEventListener('abort', () => {
+        clearTimeout(timeoutId);
+        inThrottle = false;
+      });
     }
   };
 }
