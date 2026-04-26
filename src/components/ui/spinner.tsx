@@ -1,17 +1,30 @@
+import React from 'react';
 import { cn } from '../../lib/cn';
 
-interface SpinnerProps {
+export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'md' | 'lg';
-  className?: string;
 }
 
-const SIZES = { sm: 'w-4 h-4', md: 'w-6 h-6', lg: 'w-8 h-8' } as const;
-
-export const Spinner: React.FC<SpinnerProps> = ({ size = 'md', className }) => (
-  <svg className={cn(SIZES[size], 'animate-spin', className)} viewBox="0 0 24 24" fill="none" aria-label="Loading">
-    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-  </svg>
+export const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
+  ({ className, size = 'md', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        role="status"
+        className={cn(
+          'inline-block animate-spin rounded-full border-2 border-solid border-current border-r-transparent motion-reduce:animate-[spin_1.5s_linear_infinite]',
+          size === 'sm' && 'h-4 w-4 border-2',
+          size === 'md' && 'h-8 w-8 border-4',
+          size === 'lg' && 'h-12 w-12 border-4',
+          className
+        )}
+        {...props}
+      >
+        <span className="sr-only">Loading...</span>
+      </div>
+    );
+  }
 );
+Spinner.displayName = 'Spinner';
 
 export type {};
