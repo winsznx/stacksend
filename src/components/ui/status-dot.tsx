@@ -1,22 +1,28 @@
+import React from 'react';
 import { cn } from '../../lib/cn';
 
-interface StatusDotProps {
-  status: 'online' | 'offline' | 'pending';
-  className?: string;
+export interface StatusDotProps extends React.HTMLAttributes<HTMLDivElement> {
+  status?: 'online' | 'offline' | 'away' | 'busy';
 }
 
-const STATUS_COLORS: Record<string, string> = {
-  online: 'var(--success)',
-  offline: 'var(--text-muted)',
-  pending: 'var(--warning)',
-};
-
-export const StatusDot: React.FC<StatusDotProps> = ({ status, className }) => (
-  <span
-    className={cn('inline-block w-2 h-2 rounded-full', status === 'online' && 'animate-pulse', className)}
-    style={{ backgroundColor: STATUS_COLORS[status] }}
-    aria-label={status}
-  />
+export const StatusDot = React.forwardRef<HTMLDivElement, StatusDotProps>(
+  ({ className, status = 'online', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'h-2.5 w-2.5 rounded-full',
+          status === 'online' && 'bg-green-500',
+          status === 'offline' && 'bg-gray-500',
+          status === 'away' && 'bg-yellow-500',
+          status === 'busy' && 'bg-red-500',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
 );
+StatusDot.displayName = 'StatusDot';
 
 export type {};
